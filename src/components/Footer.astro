@@ -1,0 +1,254 @@
+---
+/**
+ * Site footer — contact, credentials, service areas.
+ *
+ * NO postal address anywhere (§3 — service-area business). "NAP" here is
+ * Name + Phone + Email only.
+ *
+ * Credentials are the strongest E-E-A-T signal (§4): each number is paired
+ * with its issuing organization. Unknown values are {{TOKENS}} — the build
+ * guard blocks any of these from reaching production unfilled.
+ *
+ * Phone href is exactly tel:2084094505 — no dashes, no parens.
+ */
+const PHONE_DISPLAY = "(208) 409-4505";
+const PHONE_HREF = "tel:2084094505";
+const EMAIL = "office@envirotechidaho.com";
+const YEAR = new Date().getFullYear();
+
+// Unfilled {{TOKENS}} must never render to the page (§5 build guard). A row
+// whose value is still a placeholder is omitted entirely; a row with a real
+// value but an unknown issuer keeps the number and drops the issuer line.
+// As real values land in §5, swap them in and the row/issuer appears.
+const isPlaceholder = (v: string | null) => !v || /^\{\{.*\}\}$/.test(v);
+
+const credentials = [
+  { label: "Idaho Contractor Registration", value: "RCE-8871958", issuer: null },
+  { label: "Asbestos / Mold Certification", value: "CMR0000023347", issuer: "{{CMR_ISSUING_ORG}}" },
+  { label: "IICRC", value: "{{IICRC_CERT}}", issuer: null },
+  { label: "Liability Coverage", value: "{{LIABILITY_COVERAGE_AMOUNT}}", issuer: null },
+  { label: "Workers' Comp", value: "{{WORKERS_COMP_STATUS}}", issuer: null },
+].filter((c) => !isPlaceholder(c.value));
+
+const cities = ["Boise", "Meridian", "Nampa", "Caldwell", "Eagle"];
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    {/* Contact — Name, Phone, Email. No address. */}
+    <div class="foot-col foot-contact">
+      <img
+        src="/enviro-tech-idaho-logo.png"
+        alt="Enviro-Tech Idaho"
+        class="foot-logo"
+        width="990"
+        height="192"
+      />
+
+      <p class="foot-tag">
+        Containment-first mold remediation, asbestos abatement, and water
+        damage restoration. Serving the Treasure Valley and all of Idaho.
+      </p>
+      <p class="foot-line">
+        <a href={PHONE_HREF} class="foot-phone mono">{PHONE_DISPLAY}</a>
+        <span class="foot-hours">Available 24/7</span>
+      </p>
+      <p class="foot-line">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </p>
+    </div>
+
+    {/* Credentials — number + issuer, mono, presented like a document. */}
+    <div class="foot-col foot-creds">
+      <h2 class="foot-head">Licensed &amp; Certified</h2>
+      <dl class="cred-list">
+        {
+          credentials.map((c) => (
+            <div class="cred">
+              <dt class="cred__label">{c.label}</dt>
+              <dd class="cred__value mono">
+                {c.value}
+                {!isPlaceholder(c.issuer) && <span class="cred__issuer">Issued by {c.issuer}</span>}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="foot-note">
+        Final asbestos clearance is performed by an independent, accredited
+        lab — not by us.
+      </p>
+    </div>
+
+    {/* Service areas — Treasure Valley cities, single statewide mention. */}
+    <div class="foot-col foot-areas">
+      <h2 class="foot-head">Service Areas</h2>
+      <ul class="area-list">
+        {
+          cities.map((city) => (
+            <li>
+              <a href={`/mold-remediation-${city.toLowerCase()}/`}>{city}, ID</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="foot-note">Statewide coverage across Idaho.</p>
+    </div>
+  </div>
+
+  <div class="site-footer__bar">
+    <div class="container site-footer__bar-inner">
+      <p>&copy; {YEAR} Enviro-Tech Idaho. All rights reserved.</p>
+      <p><a href="/privacy-policy/">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-9);
+    background: var(--ink);
+    color: var(--surface);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+  @media (min-width: 640px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 960px) {
+    .site-footer__inner {
+      grid-template-columns: 1.4fr 1fr 0.8fr;
+    }
+  }
+
+  .foot-col :is(a) {
+    color: var(--surface);
+  }
+  .foot-col a:hover {
+    color: var(--paper);
+    text-decoration: underline;
+  }
+
+  /* Contact */
+  .foot-logo {
+    height: 40px;
+    width: auto;
+    margin-block-end: var(--space-4);
+  }
+  .foot-tag {
+    color: var(--rule);
+    font-size: var(--step--1);
+    max-width: 40ch;
+    margin-block-end: var(--space-4);
+  }
+  .foot-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin-block-start: var(--space-2);
+  }
+  .foot-phone {
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+  .foot-hours {
+    font-size: var(--step--1);
+    color: var(--rule);
+  }
+
+  /* Headings — Montserrat, uppercase. Positive tracking for uppercase
+     legibility (the negative display tracking is for mixed-case headings). */
+  .foot-head {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin-block-end: var(--space-4);
+  }
+
+  /* Credentials — document-style list */
+  .cred-list {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+  }
+  .cred {
+    display: grid;
+    gap: 2px;
+    padding-block-end: var(--space-3);
+    border-block-end: 1px solid color-mix(in srgb, var(--rule) 25%, transparent);
+  }
+  .cred:last-of-type {
+    border-block-end: 0;
+  }
+  .cred__label {
+    font-size: var(--step--1);
+    color: var(--rule);
+  }
+  .cred__value {
+    font-size: var(--step-0);
+    color: var(--paper);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .cred__issuer {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    color: var(--rule);
+  }
+
+  /* Areas */
+  .area-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .area-list a {
+    text-decoration: none;
+  }
+
+  .foot-note {
+    margin-block-start: var(--space-4);
+    font-size: var(--step--1);
+    color: var(--rule);
+    max-width: 36ch;
+  }
+
+  /* Bottom bar */
+  .site-footer__bar {
+    border-block-start: 1px solid color-mix(in srgb, var(--rule) 20%, transparent);
+    /* keep clear of the fixed mobile call bar */
+    padding-block-end: calc(var(--callbar-h) + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 768px) {
+    .site-footer__bar {
+      padding-block-end: 0;
+    }
+  }
+  .site-footer__bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+    font-size: var(--step--1);
+    color: var(--rule);
+  }
+  .site-footer__bar-inner p {
+    margin: 0;
+  }
+</style>

@@ -1,17 +1,31 @@
 ---
-
+/**
+ * Placeholder home page — NOT the real homepage content.
+ *
+ * This exists only to exercise the design system (layout, header, footer,
+ * seam divider, mobile call bar) so the build pipeline can be verified
+ * end-to-end before any content pages are written (build order step 1).
+ * Replace entirely when /  is built for real.
+ */
+import Base from "../layouts/Base.astro";
+import SeamDivider from "../components/SeamDivider.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Enviro-Tech Idaho — Design System Preview"
+  description="Internal design system preview. Not a content page."
+>
+  <section class="container" style="padding-block: var(--space-8);">
+    <p class="mono" style="color: var(--seal);">Design system preview</p>
+    <h1>Containment-first restoration.</h1>
+    <p style="margin-block-start: var(--space-4);">
+      This placeholder confirms the tokens, self-hosted fonts, base layout,
+      header, footer, and mobile call bar are wired correctly. No content
+      pages have been built yet.
+    </p>
+
+    <SeamDivider />
+
+    <p class="mono">RCE-8871958</p>
+  </section>
+</Base>

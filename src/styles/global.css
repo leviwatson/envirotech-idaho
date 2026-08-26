@@ -1,0 +1,272 @@
+/* =========================================================================
+   Enviro-Tech Idaho — global tokens, fonts, reset, base type
+   Self-hosted fonts only. No CDN, no render-blocking font requests.
+   ========================================================================= */
+
+/* --- Fonts ------------------------------------------------------------- */
+
+/* Montserrat — display / headings. 600 + 700 only. */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url("/fonts/montserrat-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("/fonts/montserrat-700.woff2") format("woff2");
+}
+
+/* Inter — body. 400 + 600 only. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/inter-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url("/fonts/inter-600.woff2") format("woff2");
+}
+
+/* Roboto Mono — utility: cert numbers, step markers, timeline figures. 400. */
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/roboto-mono-400.woff2") format("woff2");
+}
+
+/* --- Tokens ------------------------------------------------------------ */
+
+:root {
+  /* Palette — tuned to the client logo (white type + mint→emerald gradient
+     on transparent). Usage rules are strict; see notes on each token.
+
+     Structure: dark bands top and bottom (--ink header + footer), light
+     field between (--surface body). No gradients anywhere except inside the
+     logo asset itself. */
+  --ink: #0d2620; /* deep green-black — header/footer background, body text */
+  --seal: #0b7a52; /* darkened emerald — links, buttons, interactive. ONLY
+                      green used for text/links/buttons; darkened for AA on
+                      light backgrounds. Never swap --spark in for these. */
+  --spark: #2ed47a; /* logo mint — THIN ACCENTS ONLY: seam divider, small
+                       icons, underlines, hairline emphasis. Never body text,
+                       never large fills, never buttons. */
+  --surface: #f4f7f5; /* page background (the light field) */
+  --paper: #ffffff; /* cards, form surfaces */
+  --caution: #e8a33d; /* amber — emergency / 24-7 ONLY, nowhere else */
+  --rule: #d5ddd8; /* hairlines, dividers */
+
+  /* Font families */
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+
+  /* Type scale — fluid, clamp-based. Body is --step-0.
+     Retuned for Montserrat: it carries a taller cap-height and sets tighter
+     than Archivo Expanded, so the display steps (2–5) are pulled down from
+     the old values and tracked negative (see --track-display). Body steps
+     hold; Inter's large x-height keeps them legible. */
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.90rem); /* fine print */
+  --step-0: clamp(1rem, 0.97rem + 0.20vw, 1.10rem); /* body */
+  --step-1: clamp(1.18rem, 1.11rem + 0.34vw, 1.38rem); /* lead / h4 */
+  --step-2: clamp(1.40rem, 1.29rem + 0.52vw, 1.72rem); /* h3 */
+  --step-3: clamp(1.66rem, 1.49rem + 0.80vw, 2.15rem); /* h2 */
+  --step-4: clamp(1.95rem, 1.70rem + 1.20vw, 2.70rem); /* h1 */
+  --step-5: clamp(2.30rem, 1.92rem + 1.85vw, 3.40rem); /* hero display */
+
+  /* Display tracking — Montserrat reads best slightly tightened at heading
+     sizes. Applied to h1–h4 and the wordmark. */
+  --track-display: -0.02em;
+
+  /* Line heights — Inter body wants a touch more room than Plex Sans did. */
+  --leading-tight: 1.12; /* large display */
+  --leading-snug: 1.28; /* h2–h4 */
+  --leading-normal: 1.65; /* body */
+
+  /* Spacing scale — 8px base unit */
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.5rem; /* 24 */
+  --space-6: 2rem; /* 32 */
+  --space-7: 3rem; /* 48 */
+  --space-8: 4rem; /* 64 */
+  --space-9: 6rem; /* 96 */
+  --space-10: 8rem; /* 128 */
+
+  /* Layout */
+  --measure: 68ch; /* readable text column */
+  --container: 72rem; /* max page width */
+  --radius: 4px; /* clinical, minimal rounding */
+  --gutter: clamp(1rem, 4vw, 2rem);
+
+  /* Mobile call bar height — reserved so fixed bar never covers content */
+  --callbar-h: 60px;
+}
+
+/* --- Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* --- Base type --------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--track-display); /* Montserrat sets best tightened */
+  line-height: var(--leading-tight);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+h2 {
+  font-size: var(--step-3);
+  line-height: var(--leading-snug);
+}
+h3 {
+  font-size: var(--step-2);
+  line-height: var(--leading-snug);
+}
+h4 {
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+}
+
+p,
+ul,
+ol {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--seal);
+  text-underline-offset: 0.15em;
+}
+a:hover {
+  text-decoration: none;
+}
+
+/* Monospace utility — cert numbers, step markers, lab data */
+.mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* --- Accessibility ----------------------------------------------------- */
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--seal);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  transform: translateY(-150%);
+  transition: transform 0.15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* --- Layout helpers ---------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

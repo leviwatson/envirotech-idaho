@@ -7,11 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run check:placeholders",
+    "check:placeholders": "! grep -rlI '{{' dist/ || (echo 'Unfilled placeholder in build output' && exit 1)",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/roboto-mono": "^5.3.0",
     "astro": "^7.2.7"
   },
   "allowScripts": {

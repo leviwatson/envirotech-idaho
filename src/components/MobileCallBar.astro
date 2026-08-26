@@ -1,0 +1,80 @@
+---
+/**
+ * Sticky mobile call bar (§10, §13).
+ *
+ * Fixed to the bottom of the viewport on small screens; hidden at >=768px.
+ * This is the 24/7 emergency CTA, so amber (--caution) is justified here —
+ * one of the only two places amber is allowed to appear.
+ *
+ * Phone href is exactly tel:2084094505 — no dashes, no parens.
+ * body padding for this bar is reserved via --callbar-h in the footer.
+ */
+const PHONE_DISPLAY = "(208) 409-4505";
+const PHONE_HREF = "tel:2084094505";
+---
+
+<a href={PHONE_HREF} class="callbar" aria-label={`Call Enviro-Tech Idaho 24/7 at ${PHONE_DISPLAY}`}>
+  <svg class="callbar__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      d="M6.6 10.8a15.6 15.6 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .58 3.6 1 1 0 0 1-.24 1L6.6 10.8Z"
+    ></path>
+  </svg>
+  <span class="callbar__text">
+    <span class="callbar__badge">24/7</span>
+    <span class="callbar__num mono">{PHONE_DISPLAY}</span>
+  </span>
+</a>
+
+<style>
+  .callbar {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    min-height: var(--callbar-h);
+    padding: var(--space-3) var(--space-4);
+    padding-block-end: calc(var(--space-3) + env(safe-area-inset-bottom));
+    background: var(--caution);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 -2px 12px rgba(16, 38, 43, 0.18);
+  }
+  .callbar:active {
+    background: color-mix(in srgb, var(--caution) 88%, black);
+  }
+
+  .callbar__icon {
+    flex: none;
+  }
+  .callbar__text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .callbar__badge {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--caution);
+  }
+  .callbar__num {
+    font-size: var(--step-1);
+    line-height: 1;
+  }
+
+  /* Mobile only. */
+  @media (min-width: 768px) {
+    .callbar {
+      display: none;
+    }
+  }
+</style>

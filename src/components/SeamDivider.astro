@@ -1,0 +1,60 @@
+---
+/**
+ * SeamDivider — the signature "containment seam" motif (§13).
+ * A double hairline with a small notched corner, echoing taped poly seams.
+ * This is the ONE decorative device on the site. Do not add a second.
+ *
+ * Use between major page sections — never within a section, never repeated
+ * decoratively. Purely presentational, so it is hidden from assistive tech.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={["seam", className]} role="presentation" aria-hidden="true">
+  <span class="seam__notch"></span>
+</div>
+
+<style>
+  .seam {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    margin-block: var(--space-7);
+  }
+
+  /* Top hairline */
+  .seam::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Bottom hairline — offset 4px, the second taped edge */
+  .seam::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 4px;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Notched corner — a filled triangle sitting on the top hairline, set in
+     from the right edge. This is the seam's single accent, so it carries
+     --spark (thin accent use only — never a fill elsewhere). */
+  .seam__notch {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 12%;
+    width: 8px;
+    height: 8px;
+    background: var(--spark);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+</style>

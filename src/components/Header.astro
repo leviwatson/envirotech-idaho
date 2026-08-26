@@ -1,0 +1,225 @@
+---
+/**
+ * Site header — wordmark logo, primary nav, phone CTA.
+ *
+ * Nav is the full §9 architecture, stubbed now so structure is right from
+ * the start and never needs retrofitting across pages. It is rendered but
+ * visually hidden until pages exist (see .nav[hidden] handling below); the
+ * markup + URLs are canonical. Real logo asset drops into .brand later.
+ *
+ * Phone href is the exact string tel:2084094505 — no dashes, no parens.
+ */
+const PHONE_DISPLAY = "(208) 409-4505";
+const PHONE_HREF = "tel:2084094505";
+
+// Canonical §9 URLs. Trailing slashes, lowercase, hyphens. Grouped for the
+// future mega-nav. Kept here so the header is the single source of structure.
+const nav = [
+  {
+    label: "Services",
+    href: "/services/",
+    children: [
+      { label: "Mold Remediation", href: "/mold-remediation/" },
+      { label: "Mold Inspection & Testing", href: "/mold-inspection-testing/" },
+      { label: "Asbestos Abatement", href: "/asbestos-abatement/" },
+      { label: "Asbestos Testing", href: "/asbestos-testing/" },
+      { label: "Water Damage Restoration", href: "/water-damage-restoration/" },
+      { label: "Emergency Water Damage", href: "/emergency-water-damage/" },
+      { label: "Crawlspace Drainage", href: "/crawlspace-drainage/" },
+      { label: "Crawlspace Encapsulation", href: "/crawlspace-encapsulation/" },
+      { label: "Reconstruction", href: "/reconstruction/" },
+    ],
+  },
+  {
+    label: "Cities",
+    href: "/service-areas/",
+    children: [
+      { label: "Mold Remediation Boise", href: "/mold-remediation-boise/" },
+      { label: "Mold Remediation Meridian", href: "/mold-remediation-meridian/" },
+      { label: "Mold Remediation Nampa", href: "/mold-remediation-nampa/" },
+      { label: "Mold Remediation Caldwell", href: "/mold-remediation-caldwell/" },
+      { label: "Mold Remediation Eagle", href: "/mold-remediation-eagle/" },
+    ],
+  },
+  {
+    label: "Common Problems",
+    href: "#",
+    children: [
+      { label: "Mold Found During Home Inspection", href: "/mold-found-during-home-inspection/" },
+      { label: "Black Mold in Crawl Space", href: "/black-mold-in-crawl-space/" },
+      { label: "Musty Smell in Basement", href: "/musty-smell-in-basement/" },
+      { label: "Water Stain on Ceiling", href: "/water-stain-on-ceiling/" },
+      { label: "Popcorn Ceiling Asbestos", href: "/popcorn-ceiling-asbestos/" },
+      { label: "Vermiculite Insulation", href: "/vermiculite-insulation/" },
+      { label: "Asbestos Testing Before Remodel", href: "/asbestos-testing-before-remodel/" },
+      { label: "Does Insurance Cover Mold?", href: "/does-homeowners-insurance-cover-mold/" },
+      { label: "Mold Remediation Cost in Idaho", href: "/mold-remediation-cost-idaho/" },
+      { label: "Is Black Mold Dangerous?", href: "/is-black-mold-dangerous/" },
+    ],
+  },
+  {
+    label: "Who We Help",
+    href: "#",
+    children: [
+      { label: "For Realtors", href: "/for-realtors/" },
+      { label: "For Builders", href: "/for-builders/" },
+      { label: "For Property Managers", href: "/for-property-managers/" },
+      { label: "Commercial", href: "/commercial/" },
+    ],
+  },
+  {
+    label: "About",
+    href: "/about/",
+    children: [
+      { label: "Our Containment Process", href: "/our-containment-process/" },
+      { label: "Certifications", href: "/certifications/" },
+      { label: "About", href: "/about/" },
+      { label: "Service Areas", href: "/service-areas/" },
+      { label: "FAQ", href: "/faq/" },
+      { label: "Reviews", href: "/reviews/" },
+      { label: "Contact", href: "/contact/" },
+    ],
+  },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="brand" aria-label="Enviro-Tech Idaho — home">
+      <img
+        src="/enviro-tech-idaho-logo.png"
+        alt="Enviro-Tech Idaho"
+        class="brand__logo"
+        width="990"
+        height="192"
+      />
+    </a>
+
+    {/*
+      Full §9 nav, stubbed. Structure is canonical; hidden until the pages
+      exist. Remove the `hidden` attribute (and wire the mobile toggle) as
+      pages ship — the URLs here do not change.
+    */}
+    <nav class="nav" aria-label="Primary" hidden>
+      <ul class="nav__list">
+        {
+          nav.map((group) => (
+            <li class="nav__group">
+              <a href={group.href}>{group.label}</a>
+              {group.children && (
+                <ul class="nav__sub">
+                  {group.children.map((item) => (
+                    <li>
+                      <a href={item.href}>{item.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a href={PHONE_HREF} class="header-call">
+      <span class="header-call__label">Call 24/7</span>
+      <span class="header-call__num mono">{PHONE_DISPLAY}</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  /* Dark band at the top of the page — light type + logo on --ink. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--ink);
+    border-block-end: 1px solid color-mix(in srgb, var(--spark) 40%, transparent);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: 64px;
+    padding-block: var(--space-3);
+  }
+
+  /* Logo — the supplied asset (white type + green mark) on the dark header.
+     990×192 native; height-constrained, width auto to preserve ratio. */
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .brand__logo {
+    height: 34px;
+    width: auto;
+  }
+
+  /* Nav — desktop styling ready for when it un-hides. Light type on --ink;
+     --spark used only as a thin hover accent, never as a fill. */
+  .nav__list {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__group > a {
+    display: inline-block;
+    padding-block: var(--space-2);
+    font-weight: 600;
+    color: var(--surface);
+    text-decoration: none;
+  }
+  .nav__group > a:hover {
+    color: var(--spark);
+  }
+  .nav__sub {
+    /* dropdown scaffolding — refined when nav goes live */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Phone CTA — filled seal button (NOT amber; amber is emergency-only). */
+  .header-call {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: var(--space-2) var(--space-4);
+    min-height: 44px;
+    justify-content: center;
+    background: var(--seal);
+    color: var(--paper);
+    border-radius: var(--radius);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .header-call:hover {
+    background: color-mix(in srgb, var(--seal) 88%, black);
+  }
+  .header-call__label {
+    font-size: var(--step--1);
+    line-height: 1;
+    opacity: 0.9;
+  }
+  .header-call__num {
+    font-size: var(--step-0);
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  @media (max-width: 560px) {
+    .header-call__label {
+      display: none;
+    }
+    .brand__logo {
+      height: 28px;
+    }
+  }
+</style>
