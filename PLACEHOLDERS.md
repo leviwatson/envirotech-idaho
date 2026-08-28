@@ -94,18 +94,27 @@ carried as `data-photo` rather than a `{{TOKEN}}`, because these have to be
 able to ship to a live page while the photos are still outstanding — the build
 guard rejects `{{` in `dist/`.
 
-**Shot list for Cody — /mold-remediation/ (5 photos):**
+**Shot list for Cody — /mold-remediation/ (6 photos):**
 
 | Slot | Ratio | Where it appears | What to shoot |
 |---|---|---|---|
 | `PHOTO_HERO` | **4:3** | Hero, under the call button | The crew working, or a containment in place. This is the first image on the page — it should look like competence, not damage. |
+| `PHOTO_INTRO_1` | **3:4 portrait** | Beside "What mold remediation actually is", sticky on desktop | Shot vertically. Moisture meter against framing or drywall, or a hand-held reading. Portrait suits the tall column — do not send a cropped landscape. |
 | `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band | The signature shot: poly sheeting with taped seams, negative air machine, ducting to an exterior opening. A visible manometer reading is a bonus. |
 | `PHOTO_PROCESS_1` | **3:2** | Inside the process list, after step 04 (Removal) | Affected material bagged inside the containment, before it crosses the barrier. |
 | `PHOTO_BEFORE_1` | **4:3** | "Before and after", left | Before. Must be the same angle and framing as the after shot. |
 | `PHOTO_AFTER_1` | **4:3** | "Before and after", right | After. Same camera position as the before shot — a mismatched pair reads as a different house. |
 
-Shoot wider than the crop. Landscape orientation throughout. Note the city for
-each job so alt text can be truthfully local (§11).
+Shoot wider than the crop. Landscape throughout except `PHOTO_INTRO_1`, which
+is portrait. Note the city for each job so alt text can be truthfully local
+(§11).
+
+**Weight cap: 200KB per image after optimization**, enforced by
+`npm run check:images` — the build fails on anything larger. Send full-size
+originals; Astro generates AVIF and WebP at 400/800/1200/1600 and the page
+serves the smallest candidate that fits the slot. Nothing needs pre-resizing,
+but anything dropped straight into `public/` bypasses that and must already be
+under the cap.
 
 Still needed beyond this page:
 

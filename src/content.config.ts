@@ -106,6 +106,7 @@ const services = defineCollection({
       photos: z
         .object({
           hero: slot(image).optional(),
+          intro: slot(image).optional(),
           containment: slot(image).optional(),
           /** afterStep is 1-based and names the process step it follows. */
           process: slot(image).extend({ afterStep: z.number().int().min(1) }).optional(),

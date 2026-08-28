@@ -106,6 +106,10 @@ photos:
     name: PHOTO_HERO
     ratio: 4/3
     alt: ""
+  intro:
+    name: PHOTO_INTRO_1
+    ratio: 3/4
+    caption: "Moisture mapping runs before anything comes apart — the reading decides how far the removal goes."
   containment:
     name: PHOTO_CONTAINMENT_1
     ratio: 3/2

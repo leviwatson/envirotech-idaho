@@ -14,7 +14,7 @@
  * tone="dark" is for slots sitting on the --ink containment band, where a
  * light skeleton would read as a bright hole rather than a pending image.
  */
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
 interface Props {
   /** Slot name, e.g. PHOTO_HERO. Tracked in PLACEHOLDERS.md. */
@@ -26,7 +26,14 @@ interface Props {
   src?: ImageMetadata;
   alt?: string;
   tone?: "light" | "dark";
+  /** Only the hero slot is eager. Everything below the fold lazy-loads. */
   loading?: "lazy" | "eager";
+  /**
+   * How wide this slot actually renders, so the browser picks the smallest
+   * adequate candidate. Getting this wrong is how a phone ends up pulling the
+   * 1600px file, which is the whole thing we are avoiding.
+   */
+  sizes?: string;
   class?: string;
 }
 
@@ -38,6 +45,7 @@ const {
   alt,
   tone = "light",
   loading = "lazy",
+  sizes = "(min-width: 900px) 40vw, 100vw",
   class: className,
 } = Astro.props;
 ---
@@ -49,12 +57,16 @@ const {
 >
   {
     src ? (
-      <Image
+      <Picture
         src={src}
         alt={alt ?? ""}
-        widths={[480, 800, 1200]}
-        sizes="(min-width: 900px) 40vw, 100vw"
+        formats={["avif", "webp"]}
+        fallbackFormat="jpeg"
+        widths={[400, 800, 1200, 1600]}
+        sizes={sizes}
         loading={loading}
+        decoding={loading === "eager" ? "auto" : "async"}
+        fetchpriority={loading === "eager" ? "high" : "auto"}
         class="photo__img"
       />
     ) : (

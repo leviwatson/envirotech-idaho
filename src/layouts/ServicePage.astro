@@ -134,14 +134,32 @@ const schema = [
             src={photos.hero.src}
             tone={photos.hero.tone}
             loading="eager"
+            sizes="(min-width: 900px) 38rem, 100vw"
             class="hero__photo"
           />
         )
       }
     </div>
 
-    <div class="hero__form">
-      <LeadForm id="inspection" heading="Get a free inspection" />
+    <div class="hero__side">
+      <div class="hero__form">
+        <LeadForm id="inspection" heading="Get a free inspection" />
+      </div>
+
+      {
+        photos?.intro && (
+          <PhotoSlot
+            name={photos.intro.name}
+            ratio={photos.intro.ratio}
+            caption={photos.intro.caption}
+            alt={photos.intro.alt}
+            src={photos.intro.src}
+            tone={photos.intro.tone}
+            sizes="(min-width: 900px) 31rem, 100vw"
+            class="hero__intro-photo"
+          />
+        )
+      }
     </div>
 
     {/* Intro sits in the hero grid, under the copy and beside the form. The
@@ -375,19 +393,29 @@ const schema = [
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
       gap: 0 var(--space-7);
     }
-    /* Copy and intro stack in column 1; the form spans both rows in column 2.
-       This is what removes the void — not an alignment property. */
+    /* Copy and intro stack in column 1; the form and the sticky intro photo
+       share column 2. Column 2 stretches across both rows so the photo has
+       travel to stick against. */
     .hero__copy {
       grid-column: 1;
       grid-row: 1;
     }
-    .hero__form {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
     .hero__intro {
       grid-column: 1;
       grid-row: 2;
+    }
+    .hero__side {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    /* Holds position while the intro copy scrolls past it. */
+    .hero__intro-photo {
+      position: sticky;
+      top: calc(var(--header-h, 65px) + var(--space-5));
     }
   }
   .hero__subhead {
@@ -529,6 +557,28 @@ const schema = [
     margin-block-start: var(--space-6);
   }
 
+  @media (max-width: 899px) {
+    /* display:contents promotes the form and photo to grid items so they can
+       be ordered independently: copy, form, intro, then the photo below the
+       text it belongs to. Not sticky at this width. */
+    .hero__side {
+      display: contents;
+    }
+    .hero__copy {
+      order: 1;
+    }
+    .hero__form {
+      order: 2;
+    }
+    .hero__intro {
+      order: 3;
+    }
+    .hero__intro-photo {
+      order: 4;
+      position: static;
+    }
+  }
+
   .step__photo {
     margin-block-start: var(--space-4);
   }
@@ -539,7 +589,9 @@ const schema = [
     grid-template-columns: 1fr;
     gap: var(--space-5);
   }
-  @media (min-width: 700px) {
+  /* Stacked and full width on phones; two-up only when the pair can be read
+     side by side without either shot going postage-stamp. */
+  @media (min-width: 760px) {
     .ba {
       grid-template-columns: 1fr 1fr;
     }
