@@ -26,6 +26,17 @@ interface Props {
   src?: ImageMetadata;
   alt?: string;
   tone?: "light" | "dark";
+  /**
+   * Rendered cap, e.g. "560px". Applied to the figure itself rather than by a
+   * rule in the consuming layout — a class passed into this component lands
+   * on an element carrying THIS component's style scope, so parent-authored
+   * selectors need :global() and silently do nothing without it. Sizing that
+   * matters belongs on the element.
+   */
+  maxWidth?: string;
+  align?: "start" | "center";
+  /** Holds position while adjacent copy scrolls. Static below 900px. */
+  sticky?: boolean;
   /** Only the hero slot is eager. Everything below the fold lazy-loads. */
   loading?: "lazy" | "eager";
   /**
@@ -44,6 +55,9 @@ const {
   src,
   alt,
   tone = "light",
+  maxWidth,
+  align = "start",
+  sticky = false,
   loading = "lazy",
   sizes = "(min-width: 900px) 40vw, 100vw",
   class: className,
@@ -51,9 +65,15 @@ const {
 ---
 
 <figure
-  class:list={["photo", `photo--${tone}`, className]}
+  class:list={[
+    "photo",
+    `photo--${tone}`,
+    `photo--${align}`,
+    sticky && "photo--sticky",
+    className,
+  ]}
   data-photo={name}
-  style={`--photo-ratio: ${ratio};`}
+  style={`--photo-ratio: ${ratio}; --photo-max: ${maxWidth ?? "100%"};`}
 >
   {
     src ? (
@@ -80,6 +100,25 @@ const {
 <style>
   .photo {
     margin: 0;
+    width: 100%;
+    /* The cap lives here, on the element, driven by an inline custom property.
+       Nothing about a slot's size depends on the layout that placed it. */
+    max-width: var(--photo-max, 100%);
+  }
+  .photo--center {
+    margin-inline: auto;
+  }
+  .photo--start {
+    margin-inline-end: auto;
+  }
+  .photo--sticky {
+    position: sticky;
+    top: calc(var(--header-h, 65px) + var(--space-5));
+  }
+  @media (max-width: 899px) {
+    .photo--sticky {
+      position: static;
+    }
   }
 
   .photo__img,
@@ -142,6 +181,10 @@ const {
   }
 
   .photo__caption {
+    /* Wraps inside the slot. Without this a long caption sets the figure's
+       width and drags the image out with it. */
+    max-width: 100%;
+    overflow-wrap: break-word;
     margin-block-start: var(--space-3);
     font-size: var(--step--1);
     color: color-mix(in srgb, var(--ink) 66%, var(--surface));

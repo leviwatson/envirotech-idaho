@@ -117,6 +117,10 @@
 
   /* Mobile call bar height — reserved so fixed bar never covers content */
   --callbar-h: 60px;
+
+  /* Sticky header height. Global so sticky offsets elsewhere can reference it
+     without depending on the header component's scope. */
+  --header-h: 65px;
 }
 
 /* --- Reset ------------------------------------------------------------- */
