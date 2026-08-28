@@ -113,6 +113,13 @@ owner-operator is the wedge against franchise competitors).
   in Resend so `website@envirotechidaho.com` can send. Resend will not send
   from an unverified domain, and its test sender only delivers to the Resend
   account owner, so there is no workaround that reaches `office@`.
+- **`STAGING_NOINDEX` in `src/data/site.ts` is `true`.** Every page emits
+  `<meta name="robots" content="noindex">` while the site is on workers.dev,
+  because the canonical already points at `https://envirotechidaho.com` and an
+  indexed staging copy would either duplicate the real domain or give Google a
+  canonical to a page that does not exist. **Set to `false` at DNS cutover** —
+  leaving it on means the launched site is invisible to search, which is the
+  worst possible failure mode for this project.
 - **GTM container `GTM-N9GZF7W7`** exists on the current Wix site. Confirm
   whether it is still in use before carrying it over (§16).
 - **Full Wix URL list.** Required before decommissioning, for 301 mapping in

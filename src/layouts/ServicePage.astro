@@ -256,16 +256,16 @@ const schema = [
     {/* --- FAQ ---------------------------------------------------------- */}
     <section class="band">
       <h2>Common questions</h2>
-      <dl class="faq">
+      <div class="faq">
         {
           d.faqs.map((faq) => (
             <div class="faq__item">
-              <dt class="faq__q">{faq.question}</dt>
-              <dd class="faq__a" set:html={renderProse(faq.answer)} />
+              <h3 class="faq__q">{faq.question}</h3>
+              <p class="faq__a" set:html={renderProse(faq.answer)} />
             </div>
           ))
         }
-      </dl>
+      </div>
     </section>
 
     {/* --- Related reading. Unbuilt targets are already filtered out. ---- */}
@@ -581,10 +581,7 @@ const schema = [
     gap: var(--space-5);
   }
   .faq__q {
-    font-family: var(--font-display);
-    font-weight: 600;
     font-size: var(--step-1);
-    letter-spacing: var(--track-display);
     margin-block-end: var(--space-2);
   }
   .faq__a {

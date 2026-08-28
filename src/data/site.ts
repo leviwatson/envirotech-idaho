@@ -22,13 +22,31 @@ export const CITIES = ["Boise", "Meridian", "Nampa", "Caldwell", "Eagle"] as con
 /**
  * Where the lead form posts.
  *
- * NOT YET IMPLEMENTED — no handler exists at this path. wrangler.jsonc is
- * currently assets-only, so this route 404s until either a Worker script is
- * added (`main` + `run_worker_first` for /api/*) or this is pointed at a
- * hosted form endpoint. The form degrades to a native POST without JS, so
- * whichever way it is wired, this constant is the only thing that changes.
+ * Handled by src/worker/index.ts, scoped to /api/* via run_worker_first in
+ * wrangler.jsonc. Delivery still needs RESEND_API_KEY set and the domain
+ * verified in Resend — see PLACEHOLDERS.md. The form degrades to a native
+ * POST without JS, so this constant is the only thing that changes if the
+ * endpoint ever moves.
  */
 export const LEAD_ENDPOINT = "/api/lead";
+
+/**
+ * ============================================================
+ *  STAGING NOINDEX — SET TO false AT DNS CUTOVER
+ * ============================================================
+ *
+ * While the site lives on workers.dev it must not be indexed. The canonical
+ * on every page already points at https://envirotechidaho.com, so an indexed
+ * staging copy would either duplicate the real domain or hand Google a
+ * canonical to a page that does not exist yet.
+ *
+ * true  -> every page emits <meta name="robots" content="noindex">
+ * false -> only pages that ask for it (e.g. /thank-you/) are noindexed
+ *
+ * This is the single switch. Flip it, rebuild, deploy. Tracked in
+ * PLACEHOLDERS.md as a cutover step.
+ */
+export const STAGING_NOINDEX = true;
 
 /**
  * Lead form service options. Values are the §9 service slugs so a submission

@@ -70,9 +70,10 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   >
     <input type="hidden" name="source" value={sourcePath} />
 
-    {/* Honeypot. Real people never see it; bots fill it and get dropped. */}
+    {/* Honeypot. No label — nothing here is meant to be read. Bots fill it
+        and get dropped; the field is off-screen, untabbable, and hidden from
+        assistive tech. */}
     <div class="lead__trap" aria-hidden="true">
-      <label for={`${uid}-company`}>Company</label>
       <input
         type="text"
         id={`${uid}-company`}
@@ -176,6 +177,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 
 <style>
   .lead {
+    position: relative; /* scopes the off-screen honeypot */
     background: var(--paper);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
@@ -357,16 +359,16 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 
   /* --- Honeypot -------------------------------------------------------- */
 
+  /* Moved off-screen rather than clipped. A honeypot has to stay a real,
+     filled-in-able input for bots, so it cannot use display:none or the
+     hidden attribute — but nothing about it should ever reach a person. */
   .lead__trap {
     position: absolute;
+    inset-inline-start: -9999px;
+    inset-block-start: auto;
     width: 1px;
     height: 1px;
-    padding: 0;
-    margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>
 
