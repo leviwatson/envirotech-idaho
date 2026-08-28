@@ -342,6 +342,17 @@ Self-host all three via Fontsource. Copy only the weights in use into `/public/f
 
 The notch sits at the **right end of the top hairline**, flush to the edge. Inset from the edge it stops reading as a corner and reads as a stray mark. The rule spans `--measure`, not the container: it separates body copy, so it aligns to the copy rather than overrunning it.
 
+**Measure discipline.** `--measure` (68ch) is the readable text width, and **every functional hairline inside a prose section is capped to it** — process step dividers, timeline row rules, and any separator that sits between pieces of body copy. A rule that runs to the container edge while the copy above it stops at 68ch leaves a long tail of line pointing at nothing. Rules end where the text ends.
+
+The list itself carries the cap (`max-width: var(--measure)` on the container of the rows), not the individual rule, so the copy and its separators share one edge.
+
+Two things are exempt and run the full container:
+
+- **The seam divider motif.** It is structure, not a separator inside copy.
+- **The dark containment band.** Full-bleed by design.
+
+**No trailing rule on a final item.** The last step, the last timeline row, the last credential: `:last-child` clears the border. A rule below the final item closes a box that isn't there.
+
 **Divider placement is a rule, not a judgment call.** A service page gets exactly four, at the four thematic shifts:
 
 | Position | The shift it marks |

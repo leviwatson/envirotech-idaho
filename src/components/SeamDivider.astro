@@ -21,10 +21,10 @@ const { class: className } = Astro.props;
   .seam {
     position: relative;
     width: 100%;
-    /* Aligned to the readable text column, not the container. The container
-       runs to 78rem while paragraphs cap at --measure, so a full-container
-       rule overruns the copy it is separating. */
-    max-width: var(--measure);
+    /* Full container width, deliberately. The seam is the page's structural
+       motif, not a functional separator inside prose — functional hairlines
+       are capped at --measure (§13). This and the containment band are the
+       only two things that run the full container. */
     height: 6px;
     margin-block: var(--space-6);
   }
