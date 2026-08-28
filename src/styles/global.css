@@ -108,9 +108,12 @@
 
   /* Layout */
   --measure: 68ch; /* readable text column */
-  --container: 72rem; /* max page width */
+  /* Max page width. At 72rem the hero's 55% copy column came to 572px, and
+     the H1 needs ~612px to hold two lines at its top size — hence the third
+     line. The far-left space is this max-width centring, not padding. */
+  --container: 78rem;
   --radius: 4px; /* clinical, minimal rounding */
-  --gutter: clamp(1rem, 4vw, 2rem);
+  --gutter: clamp(1rem, 4vw, 1.5rem); /* unchanged below 600px */
 
   /* Mobile call bar height — reserved so fixed bar never covers content */
   --callbar-h: 60px;

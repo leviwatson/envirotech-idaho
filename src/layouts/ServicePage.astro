@@ -134,7 +134,7 @@ const schema = [
             src={photos.hero.src}
             tone={photos.hero.tone}
             loading="eager"
-            sizes="(min-width: 900px) 38rem, 100vw"
+            sizes="(min-width: 900px) 560px, 100vw"
             class="hero__photo"
           />
         )
@@ -553,8 +553,12 @@ const schema = [
   .containment p + p {
     margin-block-start: var(--space-4);
   }
+  /* A supporting image, not a column-width block: capped and left-aligned
+     under the call button rather than filling the copy column. */
   .hero__photo {
-    margin-block-start: var(--space-6);
+    margin-block-start: var(--space-4);
+    max-width: 560px;
+    margin-inline-end: auto;
   }
 
   @media (max-width: 899px) {

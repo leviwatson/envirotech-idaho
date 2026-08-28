@@ -98,7 +98,7 @@ guard rejects `{{` in `dist/`.
 
 | Slot | Ratio | Where it appears | What to shoot |
 |---|---|---|---|
-| `PHOTO_HERO` | **4:3** | Hero, under the call button | The crew working, or a containment in place. This is the first image on the page — it should look like competence, not damage. |
+| `PHOTO_HERO` | **16:9** | Hero, under the call button | The crew working, or a containment in place. This is the first image on the page — it should look like competence, not damage. Wide crop; it renders at most 560px across. |
 | `PHOTO_INTRO_1` | **3:4 portrait** | Beside "What mold remediation actually is", sticky on desktop | Shot vertically. Moisture meter against framing or drywall, or a hand-held reading. Portrait suits the tall column — do not send a cropped landscape. |
 | `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band | The signature shot: poly sheeting with taped seams, negative air machine, ducting to an exterior opening. A visible manometer reading is a bonus. |
 | `PHOTO_PROCESS_1` | **3:2** | Inside the process list, after step 04 (Removal) | Affected material bagged inside the containment, before it crosses the barrier. |

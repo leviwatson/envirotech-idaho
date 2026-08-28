@@ -104,7 +104,7 @@ faqs:
 photos:
   hero:
     name: PHOTO_HERO
-    ratio: 4/3
+    ratio: 16/9
     alt: ""
   intro:
     name: PHOTO_INTRO_1
