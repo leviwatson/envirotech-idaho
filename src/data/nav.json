@@ -33,7 +33,7 @@
       "label": "Services",
       "kind": "group",
       "children": [
-        { "label": "Mold Remediation", "href": "/mold-remediation/", "built": false },
+        { "label": "Mold Remediation", "href": "/mold-remediation/", "built": true },
         { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": false },
         { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": false },
         { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": false },

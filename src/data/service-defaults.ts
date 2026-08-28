@@ -1,0 +1,54 @@
+/**
+ * Sitewide section copy shared by every service page.
+ *
+ * These paragraphs are fixed by CLAUDE.md §6 and must read identically on
+ * every page — the insurance wording in particular is specified verbatim and
+ * must not be paraphrased. Keeping them here rather than in the layout means
+ * the template still holds no copy, and a service can override any of them
+ * through its collection entry when it genuinely needs its own version.
+ */
+
+export const TRUST_STRIP = [
+  { label: "Licensed & certified", detail: "Idaho registration RCE-8871958" },
+  { label: "Available 24/7", detail: "Someone answers, any hour" },
+  { label: "Third-party clearance", detail: "An independent lab signs off, not us" },
+] as const;
+
+/** §6 pillar 1. The single most concrete thing the business does. */
+export const CONTAINMENT = {
+  heading: "Containment goes up before anything else",
+  paragraphs: [
+    "A negative-pressure containment goes up before any work starts. Every job, mold or asbestos, regardless of size. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so nothing airborne leaves the work area.",
+    "That last part is what matters to you. The pressure inside the containment is lower than the pressure in the rest of your house, so air moves in, never out. Spores and dust that get disturbed during removal go into the filter stack and out the duct instead of into your hallway, your vents, or the room your kids sleep in.",
+    "Most of the fear people have about this work is not about the mold itself. It is about spreading it. Containment is the answer to that, and it is why we do not treat it as optional on small jobs.",
+  ],
+  /** Real job-site photo pending — tracked in PLACEHOLDERS.md. */
+  photo: "PHOTO_CONTAINMENT_1",
+  photoCaption:
+    "Negative-pressure containment on a Treasure Valley job: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening.",
+} as const;
+
+/** §6. These are different things and the copy must never blur them. */
+export const INSPECTION_TESTING = {
+  heading: "The inspection is free. Testing is not.",
+  paragraphs: [
+    "Someone comes out, looks at the problem, and writes you an estimate. That visit costs nothing and there is no obligation attached to it.",
+    "Testing is a separate, paid service. If samples need to be collected, they go to an independent accredited lab and you get documented results back. We tell you what it costs before anything is collected.",
+    "The reason it works that way is worth saying plainly: the company that gets paid to remove mold should not also be the company deciding whether you have mold. Keeping the lab independent is what makes the result mean something to an insurer, a buyer's agent, or you.",
+  ],
+} as const;
+
+/** §6 — worded exactly as specified. Do not paraphrase. */
+export const INSURANCE = {
+  heading: "Insurance handled, you represented",
+  paragraphs: [
+    "We bill your insurance directly and work with your adjuster — and we document every step so your scope holds up. You're the client. The paperwork just goes to them.",
+    "In practice that means photographing conditions before we touch anything, recording moisture readings as they change, and writing a scope specific enough that it does not come back denied for vagueness. Documentation is the difference between a claim that pays and a claim that argues.",
+  ],
+} as const;
+
+export const SERVICE_AREAS = {
+  heading: "Where we work",
+  blurb:
+    "Treasure Valley focus, with statewide coverage across Idaho. Response times below are for the cities listed.",
+} as const;

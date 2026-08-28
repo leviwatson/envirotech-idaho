@@ -16,8 +16,10 @@ interface Props {
   description?: string;
   /** Keeps a page out of the index. Conversion confirmations only. */
   noindex?: boolean;
+  /** JSON-LD blocks. §11: no PostalAddress, no aggregateRating, ever. */
+  schema?: Record<string, unknown>[];
 }
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, schema = [] } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 ---
@@ -50,6 +52,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
       type="font/woff2"
       crossorigin
     />
+
+    {
+      schema.map((block) => (
+        <script type="application/ld+json" set:html={JSON.stringify(block)} />
+      ))
+    }
 
     <meta name="generator" content={Astro.generator} />
   </head>

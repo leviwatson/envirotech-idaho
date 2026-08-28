@@ -1,0 +1,20 @@
+---
+/**
+ * Generates every /{service}/ page from the services collection (§14).
+ * Explicit pages (/contact/, /thank-you/) take precedence over this route.
+ */
+import { getCollection } from "astro:content";
+import ServicePage from "../layouts/ServicePage.astro";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.map((entry) => ({
+    params: { service: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<ServicePage entry={entry} />
