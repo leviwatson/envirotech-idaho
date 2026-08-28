@@ -392,6 +392,10 @@ const schema = [
          instead of three. The form keeps a usable floor. */
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
       gap: 0 var(--space-7);
+      /* Pack rows to the top. The side column spans both rows and is taller
+         than the copy, and without this the grid distributes that surplus
+         BETWEEN the rows — which is the dead space under the hero photo. */
+      align-content: start;
     }
     /* Copy and intro stack in column 1; the form and the sticky intro photo
        share column 2. Column 2 stretches across both rows so the photo has
@@ -403,6 +407,7 @@ const schema = [
     .hero__intro {
       grid-column: 1;
       grid-row: 2;
+      padding-block-start: 0;
     }
     .hero__side {
       grid-column: 2;
@@ -413,7 +418,7 @@ const schema = [
       gap: var(--space-6);
     }
     /* Holds position while the intro copy scrolls past it. */
-    .hero__intro-photo {
+    .hero__side :global(.hero__intro-photo) {
       position: sticky;
       top: calc(var(--header-h, 65px) + var(--space-5));
     }
@@ -554,9 +559,13 @@ const schema = [
     margin-block-start: var(--space-4);
   }
   /* A supporting image, not a column-width block: capped and left-aligned
-     under the call button rather than filling the copy column. */
-  .hero__photo {
-    margin-block-start: var(--space-4);
+     under the call button rather than filling the copy column.
+     :global() is required — the class lands on PhotoSlot's <figure>, which
+     carries PhotoSlot's scope attribute rather than this layout's, so a
+     plain .hero__photo selector never matches. Same for every rule below
+     that targets a class handed to a child component. */
+  .hero__copy :global(.hero__photo) {
+    margin-block-start: var(--space-3);
     max-width: 560px;
     margin-inline-end: auto;
   }
@@ -577,13 +586,13 @@ const schema = [
     .hero__intro {
       order: 3;
     }
-    .hero__intro-photo {
+    .hero__side :global(.hero__intro-photo) {
       order: 4;
       position: static;
     }
   }
 
-  .step__photo {
+  .step__body :global(.step__photo) {
     margin-block-start: var(--space-4);
   }
 

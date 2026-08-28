@@ -106,6 +106,8 @@ photos:
     name: PHOTO_HERO
     ratio: 16/9
     alt: ""
+    caption: "Negative-pressure containment on a Treasure Valley job — sealed poly, taped seams, HEPA ducted to an exterior opening."
+
   intro:
     name: PHOTO_INTRO_1
     ratio: 3/4
