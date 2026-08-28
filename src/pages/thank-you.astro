@@ -1,0 +1,39 @@
+---
+/**
+ * Lead confirmation — the no-JS submit target.
+ *
+ * With JS the form swaps its result in place and never navigates here; this
+ * exists so the native POST path ends somewhere human. noindex: it is a
+ * conversion confirmation, not a page anyone should reach from search.
+ */
+import Base from "../layouts/Base.astro";
+import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
+---
+
+<Base
+  title="Request received | Enviro-Tech Idaho"
+  description="Your inspection request reached us. We will call you to schedule."
+  noindex
+>
+  <section class="container thanks">
+    <h1>We got it.</h1>
+    <p class="thanks__lead">
+      Someone will call you to set up the inspection, usually the same day.
+      For non-emergency work we are typically on site within one to two days.
+    </p>
+    <p>
+      If it cannot wait, call <a href={PHONE_HREF} class="mono">{PHONE_DISPLAY}</a>.
+      Someone answers 24/7.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    padding-block: var(--space-9);
+  }
+  .thanks__lead {
+    margin-block: var(--space-5) var(--space-4);
+    font-size: var(--step-1);
+  }
+</style>

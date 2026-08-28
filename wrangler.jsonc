@@ -1,5 +1,27 @@
 {
   "name": "envirotech-idaho",
   "compatibility_date": "2026-08-25",
-  "assets": { "directory": "./dist", "not_found_handling": "404-page" }
+
+  // The site is static. This Worker exists only for POST /api/lead —
+  // `run_worker_first` scopes it to /api/*, so every other request is served
+  // straight from ./dist by Cloudflare's asset layer, no Worker invocation.
+  "main": "./src/worker/index.ts",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+
+  "observability": { "enabled": true },
+
+  "vars": {
+    // Canonical business inbox (CLAUDE.md §3).
+    "LEAD_TO": "office@envirotechidaho.com",
+    // Must be on a domain verified in Resend before real sending works.
+    "LEAD_FROM": "website@envirotechidaho.com",
+    "LEAD_FROM_NAME": "Enviro-Tech Idaho Website"
+  }
+
+  // Secret, never committed:  npx wrangler secret put RESEND_API_KEY
 }

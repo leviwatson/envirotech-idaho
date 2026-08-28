@@ -31,29 +31,7 @@ import LeadForm from "../components/LeadForm.astro";
 
     <SeamDivider />
 
-    {/* Lead form preview — full width here, compact variant below, so both
-        layouts get exercised before any real page consumes them. */}
-    <div class="form-preview">
-      <LeadForm id="lead-form" />
-      <LeadForm
-        id="lead-form-compact"
-        compact
-        heading="Free inspection"
-        blurb="Tell us what you are seeing and we will come look at it."
-      />
-    </div>
+    <LeadForm id="lead-form" />
   </section>
 </Base>
 
-<style>
-  .form-preview {
-    display: grid;
-    gap: var(--space-6);
-    align-items: start;
-  }
-  @media (min-width: 900px) {
-    .form-preview {
-      grid-template-columns: 1.6fr 1fr;
-    }
-  }
-</style>

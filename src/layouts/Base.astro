@@ -14,8 +14,10 @@ import MobileCallBar from "../components/MobileCallBar.astro";
 interface Props {
   title: string;
   description?: string;
+  /** Keeps a page out of the index. Conversion confirmations only. */
+  noindex?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 ---
@@ -30,6 +32,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     {/* Preload the fonts used above the fold — self-hosted, no CDN.
         Montserrat 700 (headings) + Inter 400 (body). */}
