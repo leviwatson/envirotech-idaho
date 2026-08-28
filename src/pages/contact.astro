@@ -1,0 +1,179 @@
+---
+/**
+ * /contact/ — the form is the page. Everything else on it exists to give a
+ * reader who does not want to fill in a form a faster way to reach someone.
+ *
+ * No address anywhere (§3 — service-area business).
+ *
+ * Contextual internal links (§12) are not here yet because no other content
+ * page exists to link to. They go in as /mold-remediation/, /our-containment-
+ * process/, and the city pages ship.
+ */
+import Base from "../layouts/Base.astro";
+import LeadForm from "../components/LeadForm.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES } from "../data/site";
+---
+
+<Base
+  title="Contact Enviro-Tech Idaho | Free Inspection, 24/7"
+  description="Reach Enviro-Tech Idaho about mold, asbestos, or water damage in Boise and across the Treasure Valley. The inspection is free and someone answers 24/7."
+>
+  <section class="container contact">
+    <div class="contact__intro">
+      <h1>Contact Enviro-Tech Idaho</h1>
+      <p class="contact__lead">
+        Tell us what you found and we will come look at it. The inspection is
+        free, and you will get an estimate you can hand to an adjuster or a
+        buyer's agent.
+      </p>
+    </div>
+
+    <div class="contact__grid">
+      <div class="contact__form">
+        <LeadForm
+          id="contact-form"
+          heading="Request a free inspection"
+          blurb="Two required fields. We call you back to schedule."
+        />
+      </div>
+
+      <aside class="contact__details">
+        <div class="detail">
+          <h2 class="detail__head">Call</h2>
+          <p>
+            <a href={PHONE_HREF} class="detail__phone mono">{PHONE_DISPLAY}</a>
+          </p>
+          <p class="detail__note">
+            Someone answers 24 hours a day, including weekends. For active
+            water damage this is the fastest way to reach us.
+          </p>
+        </div>
+
+        <div class="detail">
+          <h2 class="detail__head">Email</h2>
+          <p><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+          <p class="detail__note">
+            Best for documentation, scopes, and anything an adjuster needs in
+            writing.
+          </p>
+        </div>
+
+        <div class="detail">
+          <h2 class="detail__head">Hours</h2>
+          <p class="detail__strong">Open 24/7</p>
+          <p class="detail__note">
+            Emergency water damage gets a response any hour. For everything
+            else we are usually on site within one to two days.
+          </p>
+        </div>
+
+        <div class="detail">
+          <h2 class="detail__head">Service area</h2>
+          <ul class="detail__cities">
+            {CITIES.map((city) => <li>{city}</li>)}
+          </ul>
+          <p class="detail__note">
+            Treasure Valley focus, with statewide coverage across Idaho.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <SeamDivider />
+
+    <div class="contact__foot">
+      <h2>What happens after you get in touch</h2>
+      <p>
+        We call you back to schedule the inspection. Someone comes out, looks
+        at the problem, and writes an estimate. That visit costs nothing.
+      </p>
+      <p>
+        If samples need to go to a lab, that is a separate paid service and we
+        tell you the cost before anything is collected. Samples are processed
+        by an independent accredited lab, not by us. The company that gets paid
+        to remove mold should not also be the company deciding whether you have
+        mold.
+      </p>
+      <p>
+        If the work is going through insurance, we bill your insurer directly
+        and work with your adjuster, and we document the scope so it holds up.
+        You are the client. The paperwork just goes to them.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact {
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .contact__intro {
+    max-width: 60ch;
+    margin-block-end: var(--space-7);
+  }
+  .contact__lead {
+    margin-block-start: var(--space-4);
+    font-size: var(--step-1);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .contact__grid {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+
+  .contact__details {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .detail__head {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--ink) 70%, var(--surface));
+    margin-block-end: var(--space-2);
+  }
+  .detail__phone {
+    font-size: var(--step-2);
+    text-decoration: none;
+  }
+  .detail__strong {
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+  .detail__note {
+    margin-block-start: var(--space-2);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 68%, var(--surface));
+  }
+  .detail__cities {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-weight: 600;
+  }
+
+  .contact__foot {
+    max-width: var(--measure);
+  }
+  .contact__foot h2 {
+    margin-block-end: var(--space-4);
+  }
+  .contact__foot p + p {
+    margin-block-start: var(--space-4);
+  }
+</style>

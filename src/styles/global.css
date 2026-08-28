@@ -270,3 +270,8 @@ a:hover {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Scroll lock while the mobile nav panel is open. */
+body.nav-open {
+  overflow: hidden;
+}

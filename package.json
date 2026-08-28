@@ -7,10 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run check:placeholders",
+    "build": "astro build && npm run check:placeholders && npm run check:nav",
     "check:placeholders": "! grep -rlI '{{' dist/ || (echo 'Unfilled placeholder in build output' && exit 1)",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:nav": "node scripts/check-nav.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

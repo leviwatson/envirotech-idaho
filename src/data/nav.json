@@ -1,0 +1,89 @@
+{
+  "_comment": [
+    "Single source of truth for site navigation (CLAUDE.md §9).",
+    "",
+    "Every §9 URL is listed here. `built` controls whether a link renders:",
+    "false means the page does not exist yet and the header skips it, so the",
+    "live nav never contains a dead link. Create the page, flip the flag, and",
+    "the link appears — no template edit.",
+    "",
+    "`primary` is the header nav. `secondary` holds the rest of §9 so the URLs",
+    "are declared once and are ready for the footer, sitemap, and link map.",
+    "",
+    "/lead-paint-removal/ is deliberately absent. §2.6 blocks building, linking",
+    "to, or referencing it until the real EPA RRP firm number is supplied.",
+    "",
+    "Guarded by scripts/check-nav.mjs: any built:true URL missing from dist/",
+    "fails the build."
+  ],
+
+  "primary": [
+    {
+      "label": "Services",
+      "kind": "group",
+      "children": [
+        { "label": "Mold Remediation", "href": "/mold-remediation/", "built": false },
+        { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": false },
+        { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": false },
+        { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": false },
+        { "label": "Water Damage Restoration", "href": "/water-damage-restoration/", "built": false },
+        { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": false },
+        { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": false }
+      ]
+    },
+    { "label": "Service Areas", "href": "/service-areas/", "built": false },
+    { "label": "Our Process", "href": "/our-containment-process/", "built": false },
+    { "label": "Certifications", "href": "/certifications/", "built": false },
+    { "label": "Contact", "href": "/contact/", "built": true }
+  ],
+
+  "secondary": {
+    "_comment": "Declared, not rendered in the header. For footer, sitemap, and src/data/link-map.json.",
+
+    "services": [
+      { "label": "Emergency Water Damage", "href": "/emergency-water-damage/", "built": false },
+      { "label": "Reconstruction After Remediation", "href": "/reconstruction/", "built": false }
+    ],
+
+    "cities": [
+      { "label": "Mold Remediation in Boise", "href": "/mold-remediation-boise/", "built": false },
+      { "label": "Mold Remediation in Meridian", "href": "/mold-remediation-meridian/", "built": false },
+      { "label": "Mold Remediation in Nampa", "href": "/mold-remediation-nampa/", "built": false },
+      { "label": "Mold Remediation in Caldwell", "href": "/mold-remediation-caldwell/", "built": false },
+      { "label": "Mold Remediation in Eagle", "href": "/mold-remediation-eagle/", "built": false },
+
+      { "label": "Asbestos Removal in Boise", "href": "/asbestos-removal-boise/", "built": false, "phase": 2 },
+      { "label": "Asbestos Removal in Meridian", "href": "/asbestos-removal-meridian/", "built": false, "phase": 2 },
+      { "label": "Asbestos Removal in Nampa", "href": "/asbestos-removal-nampa/", "built": false, "phase": 2 },
+      { "label": "Asbestos Removal in Caldwell", "href": "/asbestos-removal-caldwell/", "built": false, "phase": 2 },
+      { "label": "Asbestos Removal in Eagle", "href": "/asbestos-removal-eagle/", "built": false, "phase": 2 }
+    ],
+
+    "problems": [
+      { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": false },
+      { "label": "Black Mold in a Crawl Space", "href": "/black-mold-in-crawl-space/", "built": false },
+      { "label": "Musty Smell in a Basement", "href": "/musty-smell-in-basement/", "built": false },
+      { "label": "Water Stain on a Ceiling", "href": "/water-stain-on-ceiling/", "built": false },
+      { "label": "Popcorn Ceiling Asbestos", "href": "/popcorn-ceiling-asbestos/", "built": false },
+      { "label": "Vermiculite Insulation", "href": "/vermiculite-insulation/", "built": false },
+      { "label": "Asbestos Testing Before a Remodel", "href": "/asbestos-testing-before-remodel/", "built": false },
+      { "label": "Does Homeowners Insurance Cover Mold?", "href": "/does-homeowners-insurance-cover-mold/", "built": false },
+      { "label": "Mold Remediation Cost in Idaho", "href": "/mold-remediation-cost-idaho/", "built": false },
+      { "label": "Is Black Mold Dangerous?", "href": "/is-black-mold-dangerous/", "built": false }
+    ],
+
+    "audiences": [
+      { "label": "For Realtors", "href": "/for-realtors/", "built": false },
+      { "label": "For Builders", "href": "/for-builders/", "built": false },
+      { "label": "For Property Managers", "href": "/for-property-managers/", "built": false },
+      { "label": "Commercial", "href": "/commercial/", "built": false }
+    ],
+
+    "trust": [
+      { "label": "About", "href": "/about/", "built": false },
+      { "label": "FAQ", "href": "/faq/", "built": false },
+      { "label": "Reviews", "href": "/reviews/", "built": false },
+      { "label": "Privacy Policy", "href": "/privacy-policy/", "built": false }
+    ]
+  }
+}

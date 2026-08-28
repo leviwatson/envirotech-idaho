@@ -1,85 +1,38 @@
 ---
 /**
- * Site header — wordmark logo, primary nav, phone CTA.
+ * Site header — logo, primary nav, phone CTA.
  *
- * Nav is the full §9 architecture, stubbed now so structure is right from
- * the start and never needs retrofitting across pages. It is rendered but
- * visually hidden until pages exist (see .nav[hidden] handling below); the
- * markup + URLs are canonical. Real logo asset drops into .brand later.
+ * Nav comes from src/data/nav.json (§9) so structure is declared once and
+ * cannot drift as pages ship. Only entries flagged `built` render, so the
+ * live nav never contains a dead link; scripts/check-nav.mjs fails the build
+ * if a built:true URL has no page in dist/.
+ *
+ * A dropdown group disappears entirely when none of its children are built —
+ * an empty "Services" menu is worse than no menu.
  *
  * Phone href is the exact string tel:2084094505 — no dashes, no parens.
  */
 import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
+import navData from "../data/nav.json";
 
-// Canonical §9 URLs. Trailing slashes, lowercase, hyphens. Grouped for the
-// future mega-nav. Kept here so the header is the single source of structure.
-const nav = [
-  {
-    label: "Services",
-    href: "/services/",
-    children: [
-      { label: "Mold Remediation", href: "/mold-remediation/" },
-      { label: "Mold Inspection & Testing", href: "/mold-inspection-testing/" },
-      { label: "Asbestos Abatement", href: "/asbestos-abatement/" },
-      { label: "Asbestos Testing", href: "/asbestos-testing/" },
-      { label: "Water Damage Restoration", href: "/water-damage-restoration/" },
-      { label: "Emergency Water Damage", href: "/emergency-water-damage/" },
-      { label: "Crawlspace Drainage", href: "/crawlspace-drainage/" },
-      { label: "Crawlspace Encapsulation", href: "/crawlspace-encapsulation/" },
-      { label: "Reconstruction", href: "/reconstruction/" },
-    ],
-  },
-  {
-    label: "Cities",
-    href: "/service-areas/",
-    children: [
-      { label: "Mold Remediation Boise", href: "/mold-remediation-boise/" },
-      { label: "Mold Remediation Meridian", href: "/mold-remediation-meridian/" },
-      { label: "Mold Remediation Nampa", href: "/mold-remediation-nampa/" },
-      { label: "Mold Remediation Caldwell", href: "/mold-remediation-caldwell/" },
-      { label: "Mold Remediation Eagle", href: "/mold-remediation-eagle/" },
-    ],
-  },
-  {
-    label: "Common Problems",
-    href: "#",
-    children: [
-      { label: "Mold Found During Home Inspection", href: "/mold-found-during-home-inspection/" },
-      { label: "Black Mold in Crawl Space", href: "/black-mold-in-crawl-space/" },
-      { label: "Musty Smell in Basement", href: "/musty-smell-in-basement/" },
-      { label: "Water Stain on Ceiling", href: "/water-stain-on-ceiling/" },
-      { label: "Popcorn Ceiling Asbestos", href: "/popcorn-ceiling-asbestos/" },
-      { label: "Vermiculite Insulation", href: "/vermiculite-insulation/" },
-      { label: "Asbestos Testing Before Remodel", href: "/asbestos-testing-before-remodel/" },
-      { label: "Does Insurance Cover Mold?", href: "/does-homeowners-insurance-cover-mold/" },
-      { label: "Mold Remediation Cost in Idaho", href: "/mold-remediation-cost-idaho/" },
-      { label: "Is Black Mold Dangerous?", href: "/is-black-mold-dangerous/" },
-    ],
-  },
-  {
-    label: "Who We Help",
-    href: "#",
-    children: [
-      { label: "For Realtors", href: "/for-realtors/" },
-      { label: "For Builders", href: "/for-builders/" },
-      { label: "For Property Managers", href: "/for-property-managers/" },
-      { label: "Commercial", href: "/commercial/" },
-    ],
-  },
-  {
-    label: "About",
-    href: "/about/",
-    children: [
-      { label: "Our Containment Process", href: "/our-containment-process/" },
-      { label: "Certifications", href: "/certifications/" },
-      { label: "About", href: "/about/" },
-      { label: "Service Areas", href: "/service-areas/" },
-      { label: "FAQ", href: "/faq/" },
-      { label: "Reviews", href: "/reviews/" },
-      { label: "Contact", href: "/contact/" },
-    ],
-  },
-];
+type Link = { label: string; href: string; built: boolean };
+type Group = { label: string; kind: "group"; children: Link[] };
+type Item = Link | Group;
+
+const isGroup = (item: Item): item is Group =>
+  "kind" in item && item.kind === "group";
+
+// Filter to what actually exists. Groups keep only built children, then drop
+// out entirely if that leaves them empty.
+const nav = (navData.primary as Item[])
+  .map((item) =>
+    isGroup(item)
+      ? { ...item, children: item.children.filter((c) => c.built) }
+      : item,
+  )
+  .filter((item) => (isGroup(item) ? item.children.length > 0 : item.built));
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
@@ -94,31 +47,84 @@ const nav = [
       />
     </a>
 
-    {/*
-      Full §9 nav, stubbed. Structure is canonical; hidden until the pages
-      exist. Remove the `hidden` attribute (and wire the mobile toggle) as
-      pages ship — the URLs here do not change.
-    */}
-    <nav class="nav" aria-label="Primary" hidden>
-      <ul class="nav__list">
-        {
-          nav.map((group) => (
-            <li class="nav__group">
-              <a href={group.href}>{group.label}</a>
-              {group.children && (
-                <ul class="nav__sub">
-                  {group.children.map((item) => (
-                    <li>
-                      <a href={item.href}>{item.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    {
+      nav.length > 0 && (
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Open menu"
+          data-nav-toggle
+        >
+          <span class="nav-toggle__bars" aria-hidden="true">
+            <span /><span /><span />
+          </span>
+        </button>
+      )
+    }
+
+    {
+      nav.length > 0 && (
+        <nav class="nav" id="site-nav" aria-label="Primary" data-nav>
+          <ul class="nav__list">
+            {nav.map((item) =>
+              isGroup(item) ? (
+                <li class="nav__item nav__item--group" data-nav-group>
+                  <button
+                    type="button"
+                    class="nav__trigger"
+                    aria-expanded="false"
+                    aria-controls={`submenu-${item.label.toLowerCase()}`}
+                    data-nav-trigger
+                  >
+                    {item.label}
+                    <svg
+                      class="nav__chevron"
+                      viewBox="0 0 12 12"
+                      width="12"
+                      height="12"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m2.5 4.5 3.5 3.5 3.5-3.5"
+                      />
+                    </svg>
+                  </button>
+                  <ul class="nav__sub" id={`submenu-${item.label.toLowerCase()}`}>
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          aria-current={currentPath === child.href ? "page" : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li class="nav__item">
+                  <a
+                    href={item.href}
+                    aria-current={currentPath === item.href ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ),
+            )}
+          </ul>
+        </nav>
+      )
+    }
 
     <a href={PHONE_HREF} class="header-call">
       <span class="header-call__prefix">Call 24/7&nbsp;&middot;&nbsp;</span>{PHONE_DISPLAY}
@@ -134,13 +140,13 @@ const nav = [
     z-index: 50;
     background: var(--ink);
     border-block-end: 1px solid color-mix(in srgb, var(--spark) 40%, transparent);
+    --header-h: 65px;
   }
 
   .site-header__inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-5);
+    gap: var(--space-4);
     min-height: 64px;
     padding-block: var(--space-3);
   }
@@ -151,39 +157,238 @@ const nav = [
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    margin-inline-end: auto;
   }
   .brand__logo {
     height: 34px;
     width: auto;
   }
 
-  /* Nav — desktop styling ready for when it un-hides. Light type on --ink;
-     --spark used only as a thin hover accent, never as a fill. */
-  .nav__list {
-    display: flex;
-    gap: var(--space-5);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .nav__group > a {
-    display: inline-block;
-    padding-block: var(--space-2);
-    font-weight: 600;
+  /* --- Shared link treatment ------------------------------------------- */
+
+  .nav a,
+  .nav__trigger {
+    display: block;
     color: var(--surface);
     text-decoration: none;
+    font-weight: 600;
+    font-size: var(--step-0);
+    font-family: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
   }
-  .nav__group > a:hover {
+  .nav a:hover,
+  .nav__trigger:hover {
     color: var(--spark);
   }
-  .nav__sub {
-    /* dropdown scaffolding — refined when nav goes live */
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* Current page marked with a --spark hairline — thin accent use only. */
+  .nav a[aria-current="page"] {
+    color: var(--spark);
+    box-shadow: inset 0 -2px 0 var(--spark);
   }
 
-  /* Phone CTA — filled seal button (NOT amber; amber is emergency-only).
+  .nav__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .nav__chevron {
+    transition: transform 0.15s ease;
+  }
+  [data-nav-trigger][aria-expanded="true"] .nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* --- Hamburger -------------------------------------------------------- */
+
+  .nav-toggle {
+    display: none; /* shown in the mobile block below */
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px; /* tap target floor (§13) */
+    padding: 0;
+    background: none;
+    border: 1px solid color-mix(in srgb, var(--rule) 30%, transparent);
+    border-radius: var(--radius);
+    color: var(--surface);
+    cursor: pointer;
+  }
+  .nav-toggle__bars {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 14px;
+  }
+  .nav-toggle__bars span {
+    position: absolute;
+    inset-inline: 0;
+    height: 2px;
+    background: currentColor;
+    transition:
+      transform 0.18s ease,
+      opacity 0.18s ease;
+  }
+  .nav-toggle__bars span:nth-child(1) {
+    top: 0;
+  }
+  .nav-toggle__bars span:nth-child(2) {
+    top: 6px;
+  }
+  .nav-toggle__bars span:nth-child(3) {
+    top: 12px;
+  }
+  /* Bars morph into an X when open. */
+  [aria-expanded="true"] .nav-toggle__bars span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  [aria-expanded="true"] .nav-toggle__bars span:nth-child(2) {
+    opacity: 0;
+  }
+  [aria-expanded="true"] .nav-toggle__bars span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* --- Desktop ---------------------------------------------------------- */
+
+  @media (min-width: 900px) {
+    .nav__list {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav__item {
+      position: relative;
+    }
+
+    /* Dropdown. Opens from the trigger's own state, and also on hover and
+       focus-within so it still works if the script fails to load. */
+    .nav__sub {
+      position: absolute;
+      inset-block-start: calc(100% + var(--space-3));
+      inset-inline-start: 0;
+      z-index: 10;
+      min-width: 16rem;
+      margin: 0;
+      padding: var(--space-2);
+      list-style: none;
+      background: var(--ink);
+      border: 1px solid color-mix(in srgb, var(--rule) 25%, transparent);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition:
+        opacity 0.15s ease,
+        transform 0.15s ease,
+        visibility 0.15s;
+    }
+    .nav__item--group:hover .nav__sub,
+    .nav__item--group:focus-within .nav__sub,
+    [data-nav-trigger][aria-expanded="true"] + .nav__sub {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    /* Bridges the gap between trigger and panel so the pointer can cross. */
+    .nav__item--group::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: 100%;
+      height: var(--space-3);
+    }
+    .nav__sub a {
+      padding: var(--space-3);
+      border-radius: var(--radius);
+      font-weight: 400;
+    }
+    .nav__sub a:hover {
+      background: color-mix(in srgb, var(--surface) 8%, transparent);
+    }
+  }
+
+  /* --- Mobile ----------------------------------------------------------- */
+
+  @media (max-width: 899px) {
+    .nav-toggle {
+      display: inline-flex;
+      order: 2;
+    }
+    .header-call {
+      order: 1;
+    }
+
+    /* Full-height panel below the header band. */
+    .nav {
+      position: fixed;
+      inset-block-start: var(--header-h);
+      inset-block-end: 0;
+      inset-inline: 0;
+      z-index: 40;
+      overflow-y: auto;
+      padding: var(--space-5) var(--gutter) var(--space-9);
+      background: var(--ink);
+      border-block-start: 1px solid color-mix(in srgb, var(--rule) 20%, transparent);
+      transform: translateX(-100%);
+      visibility: hidden;
+      transition:
+        transform 0.2s ease,
+        visibility 0.2s;
+    }
+    .nav[data-open="true"] {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    .nav__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav__item {
+      border-block-end: 1px solid color-mix(in srgb, var(--rule) 15%, transparent);
+    }
+    .nav a,
+    .nav__trigger {
+      width: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      font-size: var(--step-1);
+      text-align: start;
+    }
+    .nav__trigger {
+      justify-content: space-between;
+    }
+
+    /* Accordion rather than a dropdown at this width. */
+    .nav__sub {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 var(--space-3) var(--space-4);
+      display: none;
+    }
+    [data-nav-trigger][aria-expanded="true"] + .nav__sub {
+      display: block;
+    }
+    .nav__sub a {
+      min-height: 44px;
+      font-size: var(--step-0);
+      font-weight: 400;
+      border-inline-start: 1px solid color-mix(in srgb, var(--rule) 20%, transparent);
+      padding-inline-start: var(--space-4);
+    }
+  }
+
+  /* --- Phone CTA -------------------------------------------------------- */
+
+  /* Filled seal button (NOT amber; amber is emergency-only).
      One continuous string: "Call 24/7 · (208) 409-4505". The prefix is a
      span only so it can drop on narrow screens — it carries no typography of
      its own, so the label and the number are a single uniform run of text. */
@@ -217,3 +422,88 @@ const nav = [
     }
   }
 </style>
+
+<script>
+  /**
+   * Nav behaviour — the mobile panel and the Services dropdown.
+   *
+   * One of only two scripts on the site (§14). CSS already opens the desktop
+   * dropdown on hover and focus-within, so a failure here degrades to a menu
+   * that still works with a mouse and with Tab; this adds click-to-open,
+   * Escape, click-outside, and the aria state.
+   */
+  const DESKTOP = window.matchMedia("(min-width: 900px)");
+
+  const toggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+  const panel = document.querySelector<HTMLElement>("[data-nav]");
+  const triggers = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-nav-trigger]"),
+  );
+
+  const closeDropdowns = (except?: Element) => {
+    for (const trigger of triggers) {
+      if (trigger !== except) trigger.setAttribute("aria-expanded", "false");
+    }
+  };
+
+  const setPanel = (open: boolean) => {
+    if (!toggle || !panel) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    panel.dataset.open = String(open);
+    // Lock the page behind the panel so it does not scroll underneath.
+    document.body.classList.toggle("nav-open", open);
+    if (!open) closeDropdowns();
+  };
+
+  toggle?.addEventListener("click", () => {
+    setPanel(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  for (const trigger of triggers) {
+    trigger.addEventListener("click", () => {
+      const open = trigger.getAttribute("aria-expanded") === "true";
+      closeDropdowns(trigger);
+      trigger.setAttribute("aria-expanded", String(!open));
+    });
+  }
+
+  // Selecting a destination closes the panel. Dropdown triggers are buttons,
+  // so this only fires for real links.
+  panel?.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("a") && !DESKTOP.matches) {
+      setPanel(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    const openTrigger = triggers.find(
+      (t) => t.getAttribute("aria-expanded") === "true",
+    );
+    if (openTrigger) {
+      openTrigger.setAttribute("aria-expanded", "false");
+      openTrigger.focus();
+      return;
+    }
+    if (toggle?.getAttribute("aria-expanded") === "true") {
+      setPanel(false);
+      toggle.focus();
+    }
+  });
+
+  // Clicking away closes an open dropdown on desktop.
+  document.addEventListener("click", (event) => {
+    if (!(event.target as HTMLElement).closest("[data-nav-group]")) {
+      closeDropdowns();
+    }
+  });
+
+  // Crossing the breakpoint resets state so the panel cannot be left open and
+  // hidden, or the body left scroll-locked, after a resize or rotation.
+  DESKTOP.addEventListener("change", () => {
+    setPanel(false);
+    closeDropdowns();
+  });
+</script>
