@@ -21,6 +21,12 @@ interface Props {
   name: string;
   /** CSS aspect ratio, e.g. "4/3". Reserved whether or not an image exists. */
   ratio?: string;
+  /**
+   * Ratio below 900px. A portrait slot that works beside a column of text on
+   * desktop becomes a very tall block at full width on a phone, so a slot can
+   * change shape rather than change size. Defaults to `ratio`.
+   */
+  ratioMobile?: string;
   caption?: string;
   /** Imported image. Absent until real photography is supplied. */
   src?: ImageMetadata;
@@ -51,6 +57,7 @@ interface Props {
 const {
   name,
   ratio = "4/3",
+  ratioMobile,
   caption,
   src,
   alt,
@@ -73,7 +80,7 @@ const {
     className,
   ]}
   data-photo={name}
-  style={`--photo-ratio: ${ratio}; --photo-max: ${maxWidth ?? "100%"};`}
+  style={`--photo-ratio: ${ratio}; --photo-ratio-mobile: ${ratioMobile ?? ratio}; --photo-max: ${maxWidth ?? "100%"};`}
 >
   {
     src ? (
@@ -177,6 +184,18 @@ const {
     }
     .photo--dark .photo__skeleton {
       background-color: color-mix(in srgb, var(--surface) 9%, transparent);
+    }
+  }
+
+  /* Phones get the mobile ratio, and a tighter caption — at full width the
+     desktop gap reads as the caption drifting away from its image. */
+  @media (max-width: 899px) {
+    .photo__img,
+    .photo__skeleton {
+      aspect-ratio: var(--photo-ratio-mobile, var(--photo-ratio));
+    }
+    .photo__caption {
+      margin-block-start: var(--space-2);
     }
   }
 

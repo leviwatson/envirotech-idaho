@@ -282,3 +282,18 @@ a:hover {
 body.nav-open {
   overflow: hidden;
 }
+
+/* The call bar sits at z-index 60, above the nav panel's 40, so it would
+   otherwise float over an open menu. It is not needed while the menu is up. */
+body.nav-open .callbar {
+  display: none;
+}
+
+/* Reserve the call bar's height at the end of the document so the last of the
+   content can always scroll clear of it. Below 768px only — the bar does not
+   exist above that. */
+@media (max-width: 767px) {
+  body {
+    padding-block-end: calc(var(--callbar-h) + env(safe-area-inset-bottom));
+  }
+}

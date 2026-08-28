@@ -190,6 +190,7 @@ const schema = [
             alt={photos.intro.alt}
             src={photos.intro.src}
             tone={photos.intro.tone}
+            ratioMobile="4/3"
             maxWidth="380px"
             sticky
             sizes="(min-width: 900px) 380px, 100vw"
@@ -416,10 +417,10 @@ const schema = [
   .hero {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: var(--space-5);
     /* Each column sizes to its own content; they never match heights. */
     align-items: start;
-    padding-block: var(--space-7) var(--space-2);
+    padding-block: var(--space-6) var(--space-2);
   }
   @media (min-width: 900px) {
     .hero {
@@ -608,6 +609,13 @@ const schema = [
     }
     .hero__side :global(.hero__intro-photo) {
       order: 4;
+    }
+    /* Stacked at full width, the desktop gaps read as dead space. */
+    .hero__intro {
+      padding-block: var(--space-3) var(--space-4);
+    }
+    .hero__copy :global(.hero__photo) {
+      margin-block-end: 0;
     }
   }
 

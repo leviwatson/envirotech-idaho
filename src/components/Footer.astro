@@ -241,13 +241,8 @@ const credentials = [
   /* Bottom bar */
   .site-footer__bar {
     border-block-start: 1px solid color-mix(in srgb, var(--rule) 20%, transparent);
-    /* keep clear of the fixed mobile call bar */
-    padding-block-end: calc(var(--callbar-h) + env(safe-area-inset-bottom));
-  }
-  @media (min-width: 768px) {
-    .site-footer__bar {
-      padding-block-end: 0;
-    }
+    /* Clearance for the fixed call bar is reserved on <body> in global.css,
+       so nothing is added here — doing both double-pads the page end. */
   }
   .site-footer__bar-inner {
     display: flex;
