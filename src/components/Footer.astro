@@ -11,9 +11,8 @@
  *
  * Phone href is exactly tel:2084094505 — no dashes, no parens.
  */
-const PHONE_DISPLAY = "(208) 409-4505";
-const PHONE_HREF = "tel:2084094505";
-const EMAIL = "office@envirotechidaho.com";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES } from "../data/site";
+
 const YEAR = new Date().getFullYear();
 
 // Unfilled {{TOKENS}} must never render to the page (§5 build guard). A row
@@ -29,8 +28,6 @@ const credentials = [
   { label: "Liability Coverage", value: "{{LIABILITY_COVERAGE_AMOUNT}}", issuer: null },
   { label: "Workers' Comp", value: "{{WORKERS_COMP_STATUS}}", issuer: null },
 ].filter((c) => !isPlaceholder(c.value));
-
-const cities = ["Boise", "Meridian", "Nampa", "Caldwell", "Eagle"];
 ---
 
 <footer class="site-footer">
@@ -85,7 +82,7 @@ const cities = ["Boise", "Meridian", "Nampa", "Caldwell", "Eagle"];
       <h2 class="foot-head">Service Areas</h2>
       <ul class="area-list">
         {
-          cities.map((city) => (
+          CITIES.map((city) => (
             <li>
               <a href={`/mold-remediation-${city.toLowerCase()}/`}>{city}, ID</a>
             </li>

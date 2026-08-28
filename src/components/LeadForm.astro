@@ -1,0 +1,426 @@
+---
+/**
+ * Lead form (§10 — above the fold on desktop, every money page).
+ *
+ * Six fields, two of them required. Anxious homeowners and realtors working a
+ * closing deadline abandon long forms, so the field list stays short and the
+ * phone number stays visible as the faster path.
+ *
+ * Copy rules that must not drift (§6):
+ *  - The INSPECTION is free. TESTING is paid. Never "free testing", never
+ *    "free mold test", never "free air quality test".
+ *  - No promises about health outcomes, no scare language.
+ *
+ * Progressive enhancement: this is a real <form> with a real action and real
+ * `required` attributes. Without JS it does a native POST. With JS the submit
+ * is intercepted and the result is swapped in place. One of only two scripts
+ * on the site (§14).
+ *
+ * Amber (--caution) appears once, on the 24/7 emergency callout, which is
+ * exactly what §13 reserves it for. Nothing else in this component uses it.
+ */
+import {
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  CITIES,
+  LEAD_SERVICES,
+  LEAD_ENDPOINT,
+} from "../data/site";
+
+interface Props {
+  /** Section heading. Override per page so it matches the page's intent. */
+  heading?: string;
+  /** One line under the heading. Keep it to a single sentence. */
+  blurb?: string;
+  /** Anchor id — CTAs elsewhere on the page link to it. */
+  id?: string;
+  /** Renders the compact variant used in sidebars. */
+  compact?: boolean;
+  class?: string;
+}
+
+const {
+  heading = "Get a free inspection",
+  blurb = "Tell us what you are seeing. We come out, look at it, and write you an estimate. The inspection costs nothing.",
+  id = "lead-form",
+  compact = false,
+  class: className,
+} = Astro.props;
+
+// Attributes the submission back to the page it came from, so lead source is
+// known without a separate tracking parameter on every internal link.
+const sourcePath = Astro.url.pathname;
+
+// Unique per instance — a page can carry both a hero form and a footer form
+// without colliding label/`for` pairs.
+const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<section class:list={["lead", compact && "lead--compact", className]} id={id}>
+  <div class="lead__head">
+    <h2 class="lead__title">{heading}</h2>
+    <p class="lead__blurb">{blurb}</p>
+  </div>
+
+  <form
+    class="lead__form"
+    action={LEAD_ENDPOINT}
+    method="post"
+    data-lead-form
+  >
+    <input type="hidden" name="source" value={sourcePath} />
+
+    {/* Honeypot. Real people never see it; bots fill it and get dropped. */}
+    <div class="lead__trap" aria-hidden="true">
+      <label for={`${uid}-company`}>Company</label>
+      <input
+        type="text"
+        id={`${uid}-company`}
+        name="company"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="lead__grid">
+      <p class="field">
+        <label for={`${uid}-name`}>Name <span class="req">(required)</span></label>
+        <input
+          type="text"
+          id={`${uid}-name`}
+          name="name"
+          autocomplete="name"
+          required
+        />
+      </p>
+
+      <p class="field">
+        <label for={`${uid}-phone`}>Phone <span class="req">(required)</span></label>
+        <input
+          type="tel"
+          id={`${uid}-phone`}
+          name="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          required
+          aria-describedby={`${uid}-phone-hint`}
+        />
+        <span class="hint" id={`${uid}-phone-hint`}>
+          Fastest way to reach you. We call, we do not text blast.
+        </span>
+      </p>
+
+      <p class="field">
+        <label for={`${uid}-email`}>Email</label>
+        <input
+          type="email"
+          id={`${uid}-email`}
+          name="email"
+          autocomplete="email"
+        />
+      </p>
+
+      <p class="field">
+        <label for={`${uid}-city`}>Where is the property?</label>
+        <select id={`${uid}-city`} name="city">
+          <option value="">Select a city</option>
+          {CITIES.map((city) => <option value={city}>{city}</option>)}
+          <option value="other">Somewhere else in Idaho</option>
+        </select>
+      </p>
+
+      <p class="field field--full">
+        <label for={`${uid}-service`}>What is going on?</label>
+        <select id={`${uid}-service`} name="service">
+          <option value="">Select one</option>
+          {LEAD_SERVICES.map((s) => <option value={s.value}>{s.label}</option>)}
+        </select>
+      </p>
+
+      <p class="field field--full">
+        <label for={`${uid}-details`}>Details</label>
+        <textarea
+          id={`${uid}-details`}
+          name="details"
+          rows={compact ? 3 : 4}
+          aria-describedby={`${uid}-details-hint`}></textarea>
+        <span class="hint" id={`${uid}-details-hint`}>
+          What you found, where in the house, and how long it has been there.
+          If a home inspector flagged it, say that.
+        </span>
+      </p>
+    </div>
+
+    <button type="submit" class="lead__submit">Request a free inspection</button>
+
+    <p class="lead__terms">
+      No obligation. We are usually on site within one to two days for
+      non-emergency work. If samples need to go to an independent lab, that
+      testing is a separate paid service and we tell you the cost first.
+    </p>
+
+    {/* Status region. Replaced in place on submit; announced to screen
+        readers without moving focus away from the form. */}
+    <p class="lead__status" data-lead-status role="status" aria-live="polite"></p>
+  </form>
+
+  {/* The only amber on this component — 24/7 emergency, per §13. */}
+  <p class="lead__urgent">
+    <span class="lead__urgent-badge mono">24/7</span>
+    <span>
+      Water coming in right now? Do not wait on a form. Call
+      <a href={PHONE_HREF} class="mono">{PHONE_DISPLAY}</a> — someone answers.
+    </span>
+  </p>
+</section>
+
+<style>
+  .lead {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+  }
+  .lead--compact {
+    padding: var(--space-5);
+  }
+
+  .lead__head {
+    margin-block-end: var(--space-5);
+  }
+  .lead__title {
+    font-size: var(--step-2);
+  }
+  .lead__blurb {
+    margin-block-start: var(--space-2);
+    color: color-mix(in srgb, var(--ink) 80%, var(--surface));
+    font-size: var(--step-0);
+  }
+
+  /* --- Fields ---------------------------------------------------------- */
+
+  .lead__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  @media (min-width: 560px) {
+    .lead__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .field--full {
+      grid-column: 1 / -1;
+    }
+  }
+  /* Sidebar variant stays single-column regardless of viewport. */
+  .lead--compact .lead__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    max-width: none; /* overrides the global measure cap on <p> */
+  }
+
+  label {
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  .req {
+    font-weight: 400;
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 44px; /* tap target floor (§13) */
+    padding: var(--space-3);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  textarea {
+    min-height: auto;
+    resize: vertical;
+    line-height: var(--leading-normal);
+  }
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: color-mix(in srgb, var(--seal) 45%, var(--rule));
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--seal);
+  }
+
+  /* Native constraint validation styling. :user-invalid only fires after the
+     field has actually been interacted with, so an untouched form is never
+     shown as errored. */
+  input:user-invalid,
+  select:user-invalid,
+  textarea:user-invalid {
+    border-color: #a12b1e;
+  }
+
+  .hint {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+    line-height: var(--leading-snug);
+  }
+
+  /* --- Submit ---------------------------------------------------------- */
+
+  .lead__submit {
+    margin-block-start: var(--space-5);
+    width: 100%;
+    min-height: 52px;
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--track-display);
+    font-size: var(--step-1);
+    color: var(--paper);
+    background: var(--seal);
+    border: 0;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .lead__submit:hover {
+    background: color-mix(in srgb, var(--seal) 88%, black);
+  }
+  .lead__submit[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .lead__terms {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+    max-width: none;
+  }
+
+  .lead__status {
+    max-width: none;
+  }
+  .lead__status:empty {
+    display: none;
+  }
+  .lead__status {
+    margin-block-start: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    font-size: var(--step-0);
+  }
+  .lead__status[data-state="ok"] {
+    background: color-mix(in srgb, var(--seal) 10%, var(--paper));
+    border-inline-start: 3px solid var(--seal);
+  }
+  .lead__status[data-state="error"] {
+    background: color-mix(in srgb, #a12b1e 8%, var(--paper));
+    border-inline-start: 3px solid #a12b1e;
+  }
+
+  /* --- Emergency callout ----------------------------------------------- */
+
+  .lead__urgent {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--rule);
+    font-size: var(--step--1);
+    max-width: none;
+  }
+  .lead__urgent-badge {
+    flex: none;
+    padding: 2px 6px;
+    border-radius: var(--radius);
+    background: var(--caution);
+    color: var(--ink);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+  }
+
+  /* --- Honeypot -------------------------------------------------------- */
+
+  .lead__trap {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  /**
+   * Lead form submit handler.
+   *
+   * The form works without this: `action` + `method="post"` do a native
+   * submit. This only upgrades the experience — no navigation, inline result.
+   * Every failure path ends with the phone number, because a lead that cannot
+   * submit a form is a lead that will still call.
+   */
+  const PHONE = "(208) 409-4505";
+  const PHONE_LINK = "tel:2084094505";
+
+  const callFallback = `Call us at <a class="mono" href="${PHONE_LINK}">${PHONE}</a> and we will take it over the phone.`;
+
+  document.querySelectorAll<HTMLFormElement>("[data-lead-form]").forEach((form) => {
+    const status = form.querySelector<HTMLElement>("[data-lead-status]");
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!status || !button) return;
+
+    const setStatus = (state: "ok" | "error", html: string) => {
+      status.dataset.state = state;
+      status.innerHTML = html;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      // Let the browser show its own messages for empty required fields.
+      if (!form.reportValidity()) return;
+
+      event.preventDefault();
+
+      const original = button.textContent ?? "";
+      button.disabled = true;
+      button.textContent = "Sending…";
+      status.removeAttribute("data-state");
+      status.textContent = "";
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        form.querySelector<HTMLElement>(".lead__grid")?.setAttribute("hidden", "");
+        button.hidden = true;
+        setStatus(
+          "ok",
+          `Got it. We will call you to set up the inspection — usually same day, and we are on site within one to two days for non-emergency work. If it is urgent, call <a class="mono" href="${PHONE_LINK}">${PHONE}</a>.`,
+        );
+      } catch {
+        button.disabled = false;
+        button.textContent = original;
+        setStatus("error", `That did not send. ${callFallback}`);
+      }
+    });
+  });
+</script>

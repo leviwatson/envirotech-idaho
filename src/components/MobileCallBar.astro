@@ -9,8 +9,7 @@
  * Phone href is exactly tel:2084094505 — no dashes, no parens.
  * body padding for this bar is reserved via --callbar-h in the footer.
  */
-const PHONE_DISPLAY = "(208) 409-4505";
-const PHONE_HREF = "tel:2084094505";
+import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
 ---
 
 <a href={PHONE_HREF} class="callbar" aria-label={`Call Enviro-Tech Idaho 24/7 at ${PHONE_DISPLAY}`}>
