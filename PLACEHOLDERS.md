@@ -88,13 +88,33 @@ All photography is client-supplied. No stock imagery of containments — the
 containment work is the differentiator and stock photos of someone else's job
 site undercut the entire positioning.
 
-| Token | Used on | Needed from client |
-|---|---|---|
-| `{{PHOTO_CONTAINMENT_1}}` … `{{PHOTO_CONTAINMENT_4}}` | `/our-containment-process/` (the signature page, §10) | Real job-site photos: poly sheeting with taped seams, the negative air machine and its ducting to an exterior opening, a manometer / pressure reading, a decon chamber |
-| `{{PHOTO_BEFORE_AFTER_1}}` … `{{PHOTO_BEFORE_AFTER_6}}` | Service pages, city pages | Matched before/after pairs, same angle, ideally with the city noted so alt text can be truthfully local |
+Slots are placed and reserved. Each renders a skeleton at its exact aspect
+ratio, so dropping real photography in causes no reflow. The slot name is
+carried as `data-photo` rather than a `{{TOKEN}}`, because these have to be
+able to ship to a live page while the photos are still outstanding — the build
+guard rejects `{{` in `dist/`.
 
-Also needed: a real photo of **Cody Mortensen** for `/about/` (§7 — the
-owner-operator is the wedge against franchise competitors).
+**Shot list for Cody — /mold-remediation/ (5 photos):**
+
+| Slot | Ratio | Where it appears | What to shoot |
+|---|---|---|---|
+| `PHOTO_HERO` | **4:3** | Hero, under the call button | The crew working, or a containment in place. This is the first image on the page — it should look like competence, not damage. |
+| `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band | The signature shot: poly sheeting with taped seams, negative air machine, ducting to an exterior opening. A visible manometer reading is a bonus. |
+| `PHOTO_PROCESS_1` | **3:2** | Inside the process list, after step 04 (Removal) | Affected material bagged inside the containment, before it crosses the barrier. |
+| `PHOTO_BEFORE_1` | **4:3** | "Before and after", left | Before. Must be the same angle and framing as the after shot. |
+| `PHOTO_AFTER_1` | **4:3** | "Before and after", right | After. Same camera position as the before shot — a mismatched pair reads as a different house. |
+
+Shoot wider than the crop. Landscape orientation throughout. Note the city for
+each job so alt text can be truthfully local (§11).
+
+Still needed beyond this page:
+
+- Three further containment shots for `/our-containment-process/`, the
+  signature page (§10): a decontamination chamber, a pressure/manometer
+  reading, and the filter stack.
+- Matched before/after pairs for the remaining service and city pages.
+- A real photo of **Cody Mortensen** for `/about/` (§7 — the owner-operator is
+  the wedge against franchise competitors).
 
 ## Scope
 

@@ -101,6 +101,32 @@ faqs:
   - question: What if the mold is in my crawl space?
     answer: "That is a large share of what we do here. Treasure Valley crawlspaces contend with a high water table, irrigation runoff, grading that sends water toward the house, and vapor barriers that have torn or gone missing. The remediation sequence is the same, but the durable fix usually includes [crawlspace drainage](/crawlspace-drainage/) or [encapsulation](/crawlspace-encapsulation/). Without one of those, you are scheduling the same job again after the next wet spring."
 
+photos:
+  hero:
+    name: PHOTO_HERO
+    ratio: 4/3
+    alt: ""
+  containment:
+    name: PHOTO_CONTAINMENT_1
+    ratio: 3/2
+    tone: dark
+    caption: "Negative-pressure containment on a Treasure Valley job: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening."
+  process:
+    name: PHOTO_PROCESS_1
+    ratio: 3/2
+    afterStep: 4
+    caption: "Affected material bagged inside the containment before it crosses the barrier."
+  beforeAfter:
+    heading: Before and after
+    before:
+      name: PHOTO_BEFORE_1
+      ratio: 4/3
+      caption: Before
+    after:
+      name: PHOTO_AFTER_1
+      ratio: 4/3
+      caption: After
+
 relatedProblems:
   - /black-mold-in-crawl-space/
   - /mold-found-during-home-inspection/

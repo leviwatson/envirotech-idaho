@@ -17,6 +17,7 @@ import type { CollectionEntry } from "astro:content";
 import Base from "./Base.astro";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
+import PhotoSlot from "../components/PhotoSlot.astro";
 import { renderProse } from "../lib/prose";
 import { resolveLinks } from "../lib/links";
 import {
@@ -41,6 +42,18 @@ const insurance = { ...INSURANCE, ...d.insurance };
 const areas = { ...SERVICE_AREAS, ...d.serviceAreas };
 
 const related = [...resolveLinks(d.relatedProblems), ...resolveLinks(d.relatedCities)];
+
+const photos = d.photos;
+// Containment falls back to the sitewide slot so a service that declares no
+// photos still reserves the space on the callout.
+const containmentPhoto = photos?.containment ?? {
+  name: CONTAINMENT.photo,
+  ratio: "3/2",
+  caption: CONTAINMENT.photoCaption,
+  alt: undefined,
+  src: undefined,
+  tone: "dark" as const,
+};
 const cityLinks = resolveLinks(CITIES.map((c) => `/mold-remediation-${c.toLowerCase()}/`));
 
 const origin = `https://${DOMAIN}`;
@@ -110,6 +123,21 @@ const schema = [
         Call {PHONE_DISPLAY}
       </a>
       <p class="hero__cta-note">Or request a free inspection using the form.</p>
+
+      {
+        photos?.hero && (
+          <PhotoSlot
+            name={photos.hero.name}
+            ratio={photos.hero.ratio}
+            caption={photos.hero.caption}
+            alt={photos.hero.alt}
+            src={photos.hero.src}
+            tone={photos.hero.tone}
+            loading="eager"
+            class="hero__photo"
+          />
+        )
+      }
     </div>
 
     <div class="hero__form">
@@ -148,6 +176,17 @@ const schema = [
               <div class="step__body">
                 <h3 class="step__title">{step.title}</h3>
                 <p set:html={renderProse(step.description)} />
+                {photos?.process?.afterStep === i + 1 && (
+                  <PhotoSlot
+                    name={photos.process.name}
+                    ratio={photos.process.ratio}
+                    caption={photos.process.caption}
+                    alt={photos.process.alt}
+                    src={photos.process.src}
+                    tone={photos.process.tone}
+                    class="step__photo"
+                  />
+                )}
               </div>
             </li>
           ))
@@ -163,15 +202,15 @@ const schema = [
         <h2>{containment.heading}</h2>
         {containment.paragraphs?.map((p) => <p set:html={renderProse(p)} />)}
       </div>
-      <figure class="containment__figure">
-        {/* Real photo pending. data-photo names the PLACEHOLDERS.md token
-            without emitting {{ }}, which the build guard rejects. */}
-        <div class="photo-pending" data-photo={containment.photo} role="img"
-          aria-label={containment.photoCaption}>
-          <span class="photo-pending__tag mono">photo pending</span>
-        </div>
-        <figcaption>{containment.photoCaption}</figcaption>
-      </figure>
+      <PhotoSlot
+        name={containmentPhoto.name}
+        ratio={containmentPhoto.ratio}
+        caption={containmentPhoto.caption}
+        alt={containmentPhoto.alt}
+        src={containmentPhoto.src}
+        tone="dark"
+        class="containment__figure"
+      />
     </div>
   </section>
 
@@ -194,6 +233,27 @@ const schema = [
         )
       }
     </section>
+
+    {/* --- Before / after ----------------------------------------------- */}
+    {
+      photos?.beforeAfter && (
+        <section class="band">
+          <h2>{photos.beforeAfter.heading}</h2>
+          <div class="ba">
+            {[photos.beforeAfter.before, photos.beforeAfter.after].map((shot) => (
+              <PhotoSlot
+                name={shot.name}
+                ratio={shot.ratio}
+                caption={shot.caption}
+                alt={shot.alt}
+                src={shot.src}
+                tone={shot.tone}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     {/* --- Timeline. Figures in mono (§13). ----------------------------- */}
     <section class="band">
@@ -465,27 +525,24 @@ const schema = [
   .containment p + p {
     margin-block-start: var(--space-4);
   }
-  .containment__figure {
-    margin: 0;
+  .hero__photo {
+    margin-block-start: var(--space-6);
   }
-  .photo-pending {
+
+  .step__photo {
+    margin-block-start: var(--space-4);
+  }
+
+  /* Before / after pair — side by side on desktop, stacked below. */
+  .ba {
     display: grid;
-    place-items: center;
-    aspect-ratio: 4 / 3;
-    border: 1px dashed color-mix(in srgb, var(--rule) 40%, transparent);
-    border-radius: var(--radius);
-    background: color-mix(in srgb, var(--surface) 4%, transparent);
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
   }
-  .photo-pending__tag {
-    font-size: var(--step--1);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--surface) 55%, transparent);
-  }
-  .containment__figure figcaption {
-    margin-block-start: var(--space-3);
-    font-size: var(--step--1);
-    color: var(--rule);
+  @media (min-width: 700px) {
+    .ba {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   /* --- Scope -------------------------------------------------------------- */

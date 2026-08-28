@@ -1,0 +1,140 @@
+---
+/**
+ * PhotoSlot — a photo position that exists before the photo does.
+ *
+ * Empty, it renders a skeleton at the exact aspect ratio the real image will
+ * occupy, so nothing on the page moves when photography lands. It reads as a
+ * loading state rather than a build artifact: no text, no border, no dashed
+ * box. Filled, it renders an optimized <Image> with explicit dimensions.
+ *
+ * The slot name rides on data-photo. It is deliberately NOT a {{TOKEN}} — the
+ * build guard fails on {{ anywhere in dist/, and these slots have to be able
+ * to ship to a live page while the photography is still outstanding.
+ *
+ * tone="dark" is for slots sitting on the --ink containment band, where a
+ * light skeleton would read as a bright hole rather than a pending image.
+ */
+import { Image } from "astro:assets";
+
+interface Props {
+  /** Slot name, e.g. PHOTO_HERO. Tracked in PLACEHOLDERS.md. */
+  name: string;
+  /** CSS aspect ratio, e.g. "4/3". Reserved whether or not an image exists. */
+  ratio?: string;
+  caption?: string;
+  /** Imported image. Absent until real photography is supplied. */
+  src?: ImageMetadata;
+  alt?: string;
+  tone?: "light" | "dark";
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  name,
+  ratio = "4/3",
+  caption,
+  src,
+  alt,
+  tone = "light",
+  loading = "lazy",
+  class: className,
+} = Astro.props;
+---
+
+<figure
+  class:list={["photo", `photo--${tone}`, className]}
+  data-photo={name}
+  style={`--photo-ratio: ${ratio};`}
+>
+  {
+    src ? (
+      <Image
+        src={src}
+        alt={alt ?? ""}
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 900px) 40vw, 100vw"
+        loading={loading}
+        class="photo__img"
+      />
+    ) : (
+      /* Decorative while empty — there is nothing here to describe yet. */
+      <div class="photo__skeleton" aria-hidden="true" />
+    )
+  }
+  {caption && <figcaption class="photo__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .photo {
+    margin: 0;
+  }
+
+  .photo__img,
+  .photo__skeleton {
+    width: 100%;
+    aspect-ratio: var(--photo-ratio);
+    border-radius: var(--radius);
+    display: block;
+  }
+  .photo__img {
+    object-fit: cover;
+    height: auto;
+  }
+
+  /* Skeleton: a slow pass of slightly warmer --rule across --surface. Soft
+     enough to read as "loading", never as a placeholder graphic. */
+  .photo__skeleton {
+    background-image: linear-gradient(
+      100deg,
+      var(--surface) 28%,
+      color-mix(in srgb, var(--rule) 62%, var(--surface)) 48%,
+      var(--surface) 68%
+    );
+    background-size: 300% 100%;
+    background-repeat: no-repeat;
+    animation: photo-shimmer 2.6s ease-in-out infinite;
+  }
+
+  /* On the dark containment band the same idea, inverted. */
+  .photo--dark .photo__skeleton {
+    background-image: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--surface) 5%, transparent) 28%,
+      color-mix(in srgb, var(--surface) 14%, transparent) 48%,
+      color-mix(in srgb, var(--surface) 5%, transparent) 68%
+    );
+  }
+
+  @keyframes photo-shimmer {
+    from {
+      background-position: 160% 0;
+    }
+    to {
+      background-position: -60% 0;
+    }
+  }
+
+  /* Reduced motion: hold a flat tone. Setting animation-name to none matters
+     here — the global reduced-motion rule only clamps duration, which would
+     otherwise freeze the shimmer mid-sweep at an arbitrary position. */
+  @media (prefers-reduced-motion: reduce) {
+    .photo__skeleton {
+      animation: none;
+      background-image: none;
+      background-color: color-mix(in srgb, var(--rule) 40%, var(--surface));
+    }
+    .photo--dark .photo__skeleton {
+      background-color: color-mix(in srgb, var(--surface) 9%, transparent);
+    }
+  }
+
+  .photo__caption {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+  .photo--dark .photo__caption {
+    color: var(--rule);
+  }
+</style>
