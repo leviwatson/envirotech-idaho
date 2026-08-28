@@ -104,6 +104,7 @@ const schema = [
 <Base title={d.title} description={d.metaDescription} schema={schema}>
   {/* --- Hero ---------------------------------------------------------- */}
   <section class="container hero">
+    <div class="hero__main">
     <div class="hero__copy">
       <h1>{d.h1}</h1>
       <p class="hero__subhead">{d.subhead}</p>
@@ -141,6 +142,15 @@ const schema = [
       }
     </div>
 
+    {/* Intro lives in column one, directly under the hero copy. Both columns
+        are independent block flows — nothing spans rows, so neither column's
+        height can push the other's content down. */}
+    <section class="band hero__intro">
+      <h2>{d.intro.heading}</h2>
+      {d.intro.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+    </section>
+    </div>
+
     <div class="hero__side">
       <div class="hero__form">
         <LeadForm id="inspection" heading="Get a free inspection" />
@@ -161,14 +171,6 @@ const schema = [
         )
       }
     </div>
-
-    {/* Intro sits in the hero grid, under the copy and beside the form. The
-        form is taller than the hero copy alone, and grid leaves that space
-        empty rather than closing it — so real content fills it instead. */}
-    <section class="band hero__intro">
-      <h2>{d.intro.heading}</h2>
-      {d.intro.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
-    </section>
   </section>
 
   <div class="container">
@@ -389,29 +391,21 @@ const schema = [
   @media (min-width: 900px) {
     .hero {
       /* Roughly 55/45 in favour of the copy, so the H1 holds two lines
-         instead of three. The form keeps a usable floor. */
+         instead of three. The form keeps a usable floor.
+         ONE row, two columns. An earlier version had the side column span two
+         rows, which made grid distribute its surplus height across both
+         tracks — growing row one and opening a gap between the hero photo and
+         the intro heading. align-content cannot fix that, because it is the
+         tracks growing, not the container. Independent columns can. */
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
       gap: 0 var(--space-7);
-      /* Pack rows to the top. The side column spans both rows and is taller
-         than the copy, and without this the grid distributes that surplus
-         BETWEEN the rows — which is the dead space under the hero photo. */
-      align-content: start;
     }
-    /* Copy and intro stack in column 1; the form and the sticky intro photo
-       share column 2. Column 2 stretches across both rows so the photo has
-       travel to stick against. */
-    .hero__copy {
-      grid-column: 1;
-      grid-row: 1;
-    }
+    /* Column one: hero copy then intro, plain block flow. */
     .hero__intro {
-      grid-column: 1;
-      grid-row: 2;
-      padding-block-start: 0;
+      padding-block-start: var(--space-4);
     }
     .hero__side {
-      grid-column: 2;
-      grid-row: 1 / span 2;
+      /* Stretches to the taller column so the photo has travel to stick. */
       align-self: stretch;
       display: flex;
       flex-direction: column;
@@ -571,9 +565,10 @@ const schema = [
   }
 
   @media (max-width: 899px) {
-    /* display:contents promotes the form and photo to grid items so they can
-       be ordered independently: copy, form, intro, then the photo below the
-       text it belongs to. Not sticky at this width. */
+    /* display:contents promotes all four blocks to grid items so they can be
+       ordered independently: copy, form, intro, then the photo below the text
+       it belongs to. Not sticky at this width. */
+    .hero__main,
     .hero__side {
       display: contents;
     }
