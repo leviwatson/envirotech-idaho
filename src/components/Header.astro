@@ -121,8 +121,7 @@ const nav = [
     </nav>
 
     <a href={PHONE_HREF} class="header-call">
-      <span class="header-call__label">Call 24/7</span>
-      <span class="header-call__num mono">{PHONE_DISPLAY}</span>
+      <span class="header-call__prefix">Call 24/7&nbsp;&middot;&nbsp;</span>{PHONE_DISPLAY}
     </a>
   </div>
 </header>
@@ -184,37 +183,33 @@ const nav = [
     padding: 0;
   }
 
-  /* Phone CTA — filled seal button (NOT amber; amber is emergency-only). */
+  /* Phone CTA — filled seal button (NOT amber; amber is emergency-only).
+     One continuous string: "Call 24/7 · (208) 409-4505". The prefix is a
+     span only so it can drop on narrow screens — it carries no typography of
+     its own, so the label and the number are a single uniform run of text. */
   .header-call {
     display: inline-flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
+    align-items: center;
     padding: var(--space-2) var(--space-4);
-    min-height: 44px;
-    justify-content: center;
+    min-height: 44px; /* governs the height; tap target floor (§13) */
     background: var(--seal);
     color: var(--paper);
     border-radius: var(--radius);
     text-decoration: none;
     white-space: nowrap;
+    font-size: var(--step-0);
+    font-weight: 600;
+    line-height: 1;
   }
   .header-call:hover {
     background: color-mix(in srgb, var(--seal) 88%, black);
   }
-  .header-call__label {
-    font-size: var(--step--1);
-    line-height: 1;
-    opacity: 0.9;
-  }
-  .header-call__num {
-    font-size: var(--step-0);
-    line-height: 1;
-    font-weight: 400;
-  }
 
   @media (max-width: 560px) {
-    .header-call__label {
+    /* "Call 24/7 · " plus the number overruns the logo below ~560px. The
+       number is the part that matters; the sticky call bar carries the 24/7
+       framing on mobile. */
+    .header-call__prefix {
       display: none;
     }
     .brand__logo {
