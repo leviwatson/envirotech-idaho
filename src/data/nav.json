@@ -17,6 +17,17 @@
     "fails the build."
   ],
 
+  "previewUnbuilt": true,
+  "_previewUnbuilt_comment": [
+    "BUILD-PHASE ONLY. While true, unbuilt entries render in the header as",
+    "non-interactive labels with a 'soon' marker instead of being hidden, so",
+    "the real nav structure is visible and reviewable before the pages exist.",
+    "They are NOT links, so there are still no dead links in the nav.",
+    "",
+    "Set to false before DNS cutover — a public site with greyed-out nav items",
+    "reads as unfinished. Tracked in PLACEHOLDERS.md."
+  ],
+
   "primary": [
     {
       "label": "Services",

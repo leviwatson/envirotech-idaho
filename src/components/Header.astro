@@ -22,15 +22,20 @@ type Item = Link | Group;
 const isGroup = (item: Item): item is Group =>
   "kind" in item && item.kind === "group";
 
-// Filter to what actually exists. Groups keep only built children, then drop
-// out entirely if that leaves them empty.
+// While previewUnbuilt is on, unbuilt entries still render — as plain labels,
+// never as links — so the nav structure is visible during the build. With it
+// off, they are dropped entirely and a group with no built children goes with
+// them. Either way the nav contains no link to a page that does not exist.
+const preview = navData.previewUnbuilt === true;
+const shows = (entry: Link) => entry.built || preview;
+
 const nav = (navData.primary as Item[])
   .map((item) =>
     isGroup(item)
-      ? { ...item, children: item.children.filter((c) => c.built) }
+      ? { ...item, children: item.children.filter(shows) }
       : item,
   )
-  .filter((item) => (isGroup(item) ? item.children.length > 0 : item.built));
+  .filter((item) => (isGroup(item) ? item.children.length > 0 : shows(item)));
 
 const currentPath = Astro.url.pathname;
 ---
@@ -100,24 +105,38 @@ const currentPath = Astro.url.pathname;
                   <ul class="nav__sub" id={`submenu-${item.label.toLowerCase()}`}>
                     {item.children.map((child) => (
                       <li>
-                        <a
-                          href={child.href}
-                          aria-current={currentPath === child.href ? "page" : undefined}
-                        >
-                          {child.label}
-                        </a>
+                        {child.built ? (
+                          <a
+                            href={child.href}
+                            aria-current={currentPath === child.href ? "page" : undefined}
+                          >
+                            {child.label}
+                          </a>
+                        ) : (
+                          <span class="nav__soon" aria-disabled="true">
+                            {child.label}
+                            <span class="nav__tag mono">soon</span>
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>
                 </li>
               ) : (
                 <li class="nav__item">
-                  <a
-                    href={item.href}
-                    aria-current={currentPath === item.href ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
+                  {item.built ? (
+                    <a
+                      href={item.href}
+                      aria-current={currentPath === item.href ? "page" : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span class="nav__soon" aria-disabled="true">
+                      {item.label}
+                      <span class="nav__tag mono">soon</span>
+                    </span>
+                  )}
                 </li>
               ),
             )}
@@ -167,7 +186,8 @@ const currentPath = Astro.url.pathname;
   /* --- Shared link treatment ------------------------------------------- */
 
   .nav a,
-  .nav__trigger {
+  .nav__trigger,
+  .nav__soon {
     display: block;
     color: var(--surface);
     text-decoration: none;
@@ -182,6 +202,27 @@ const currentPath = Astro.url.pathname;
   .nav__trigger:hover {
     color: var(--spark);
   }
+  /* Unbuilt entries — visible structure, deliberately not links. Muted and
+     non-interactive so they read as pending rather than broken. Disappears
+     entirely once previewUnbuilt is off. */
+  .nav__soon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: color-mix(in srgb, var(--surface) 45%, transparent);
+    font-weight: 600;
+    cursor: default;
+  }
+  .nav__tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 2px;
+    border: 1px solid color-mix(in srgb, var(--surface) 22%, transparent);
+    color: color-mix(in srgb, var(--surface) 55%, transparent);
+  }
+
   /* Current page marked with a --spark hairline — thin accent use only. */
   .nav a[aria-current="page"] {
     color: var(--spark);
@@ -303,10 +344,13 @@ const currentPath = Astro.url.pathname;
       inset-block-start: 100%;
       height: var(--space-3);
     }
-    .nav__sub a {
+    .nav__sub a,
+    .nav__sub .nav__soon {
       padding: var(--space-3);
       border-radius: var(--radius);
       font-weight: 400;
+      width: 100%;
+      justify-content: space-between;
     }
     .nav__sub a:hover {
       background: color-mix(in srgb, var(--surface) 8%, transparent);
@@ -355,11 +399,13 @@ const currentPath = Astro.url.pathname;
       border-block-end: 1px solid color-mix(in srgb, var(--rule) 15%, transparent);
     }
     .nav a,
-    .nav__trigger {
+    .nav__trigger,
+    .nav__soon {
       width: 100%;
       min-height: 52px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-size: var(--step-1);
       text-align: start;
     }
@@ -377,7 +423,8 @@ const currentPath = Astro.url.pathname;
     [data-nav-trigger][aria-expanded="true"] + .nav__sub {
       display: block;
     }
-    .nav__sub a {
+    .nav__sub a,
+    .nav__sub .nav__soon {
       min-height: 44px;
       font-size: var(--step-0);
       font-weight: 400;
