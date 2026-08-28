@@ -109,23 +109,23 @@ const schema = [
       <a href={PHONE_HREF} class="hero__cta">
         Call {PHONE_DISPLAY}
       </a>
-      <p class="hero__cta-note">
-        Or request a free inspection using the form. Two required fields.
-      </p>
+      <p class="hero__cta-note">Or request a free inspection using the form.</p>
     </div>
 
     <div class="hero__form">
       <LeadForm id="inspection" heading="Get a free inspection" />
     </div>
-  </section>
 
-  <div class="container">
-    {/* --- Intro ------------------------------------------------------- */}
-    <section class="band">
+    {/* Intro sits in the hero grid, under the copy and beside the form. The
+        form is taller than the hero copy alone, and grid leaves that space
+        empty rather than closing it — so real content fills it instead. */}
+    <section class="band hero__intro">
       <h2>{d.intro.heading}</h2>
       {d.intro.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
     </section>
+  </section>
 
+  <div class="container">
     {/* --- The problem -------------------------------------------------- */}
     <section class="band">
       <h2>{d.problem.heading}</h2>
@@ -304,17 +304,30 @@ const schema = [
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-6);
-    /* Columns are independent heights. The copy column ends where its content
-       ends rather than stretching to match the form beside it. */
+    /* Each column sizes to its own content; they never match heights. */
     align-items: start;
-    padding-block: var(--space-7) var(--space-4);
+    padding-block: var(--space-7) var(--space-2);
   }
   @media (min-width: 900px) {
     .hero {
       /* Roughly 55/45 in favour of the copy, so the H1 holds two lines
          instead of three. The form keeps a usable floor. */
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
-      gap: var(--space-7);
+      gap: 0 var(--space-7);
+    }
+    /* Copy and intro stack in column 1; the form spans both rows in column 2.
+       This is what removes the void — not an alignment property. */
+    .hero__copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .hero__form {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .hero__intro {
+      grid-column: 1;
+      grid-row: 2;
     }
   }
   .hero__subhead {
