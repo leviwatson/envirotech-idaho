@@ -18,6 +18,7 @@ import Base from "./Base.astro";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
 import PhotoSlot from "../components/PhotoSlot.astro";
+import DesktopCtaBar from "../components/DesktopCtaBar.astro";
 import { renderProse } from "../lib/prose";
 import { resolveLinks } from "../lib/links";
 import {
@@ -405,6 +406,8 @@ const schema = [
       />
     </section>
   </div>
+
+  <DesktopCtaBar watchTop="#inspection" watchBottom="#request-inspection" />
 </Base>
 
 <style>

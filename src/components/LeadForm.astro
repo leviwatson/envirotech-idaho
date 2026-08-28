@@ -178,6 +178,8 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 <style>
   .lead {
     position: relative; /* scopes the off-screen honeypot */
+    /* Clears the sticky header when this card is an anchor target. */
+    scroll-margin-block-start: calc(var(--header-h) + var(--space-5));
     background: var(--paper);
     border: 1px solid var(--rule);
     border-radius: var(--radius);

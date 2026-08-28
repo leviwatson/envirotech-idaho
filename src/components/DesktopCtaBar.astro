@@ -1,0 +1,181 @@
+---
+/**
+ * Desktop sticky CTA bar.
+ *
+ * Appears once the hero form has scrolled out of view and disappears again as
+ * the closing form arrives — so it only exists in the stretch of the page
+ * where there is no form on screen to act on.
+ *
+ * Desktop only. It is display:none below 768px and MobileCallBar is
+ * display:none from 768px up, so the two can never both be on screen.
+ *
+ * Amber is not used here. This is a general CTA, not an emergency element,
+ * and §13 keeps --caution for emergency and 24/7 elements only — the mobile
+ * call bar is the one that earns it.
+ */
+import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
+
+interface Props {
+  /** Selector for the form that must scroll PAST before the bar appears. */
+  watchTop: string;
+  /** Selector for the closing form. The bar hides once this is on screen. */
+  watchBottom: string;
+}
+const { watchTop, watchBottom } = Astro.props;
+---
+
+<div
+  class="cta-bar"
+  data-cta-bar
+  data-watch-top={watchTop}
+  data-watch-bottom={watchBottom}
+>
+  <div class="container cta-bar__inner">
+    <p class="cta-bar__copy">Free inspection. Someone answers 24/7.</p>
+
+    <div class="cta-bar__actions">
+      <a href={PHONE_HREF} class="cta-bar__btn cta-bar__btn--call">
+        Call {PHONE_DISPLAY}
+      </a>
+      <a href={watchBottom} class="cta-bar__btn cta-bar__btn--ghost">
+        Request an inspection
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cta-bar {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 45; /* under the header (50), over content */
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    background: var(--ink);
+    border-block-start: 1px solid color-mix(in srgb, var(--spark) 35%, transparent);
+    box-shadow: 0 -6px 24px rgb(0 0 0 / 22%);
+
+    /* visibility (not display) so the transition runs, and so the bar leaves
+       the tab order and the accessibility tree while it is hidden. */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(100%);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s;
+  }
+  .cta-bar[data-show] {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-3);
+  }
+
+  .cta-bar__copy {
+    margin: 0;
+    max-width: none;
+    color: var(--surface);
+    font-weight: 600;
+    font-size: var(--step-0);
+  }
+
+  .cta-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .cta-bar__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px; /* tap target floor (§13) */
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: var(--step-0);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* --seal on --ink is 3.02:1, clear of the 3:1 floor for a UI boundary;
+     the label itself is --paper on --seal at 4.97:1. */
+  .cta-bar__btn--call {
+    background: var(--seal);
+    color: var(--paper);
+  }
+  .cta-bar__btn--call:hover {
+    background: color-mix(in srgb, var(--seal) 88%, black);
+  }
+
+  .cta-bar__btn--ghost {
+    color: var(--surface);
+    border: 1px solid color-mix(in srgb, var(--rule) 40%, transparent);
+  }
+  .cta-bar__btn--ghost:hover {
+    border-color: var(--spark);
+    color: var(--spark);
+  }
+
+  /* Desktop only. Below this the mobile call bar takes over, and the two are
+     mutually exclusive by breakpoint so they cannot overlap. */
+  @media (max-width: 767px) {
+    .cta-bar {
+      display: none;
+    }
+  }
+
+  /* No slide, no fade — it is simply there or not. */
+  @media (prefers-reduced-motion: reduce) {
+    .cta-bar,
+    .cta-bar[data-show] {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Show the bar only in the gap between the two forms.
+   *
+   * Two observers rather than a scroll handler: no listener running on every
+   * frame, and the state is exactly "is that form on screen" rather than a
+   * guess from scroll offsets.
+   */
+  const bar = document.querySelector<HTMLElement>("[data-cta-bar]");
+  const top = bar && document.querySelector(bar.dataset.watchTop ?? "");
+  const bottom = bar && document.querySelector(bar.dataset.watchBottom ?? "");
+
+  if (bar && top && bottom) {
+    let topOnScreen = true;
+    let bottomOnScreen = false;
+
+    const update = () => {
+      // Visible only when neither form is available to act on.
+      bar.toggleAttribute("data-show", !topOnScreen && !bottomOnScreen);
+    };
+
+    const watch = (el: Element, set: (v: boolean) => void) =>
+      new IntersectionObserver(
+        ([entry]) => {
+          set(entry.isIntersecting);
+          update();
+        },
+        { threshold: 0 },
+      ).observe(el);
+
+    watch(top, (v) => (topOnScreen = v));
+    watch(bottom, (v) => (bottomOnScreen = v));
+  }
+</script>
