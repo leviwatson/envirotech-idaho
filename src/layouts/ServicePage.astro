@@ -43,6 +43,29 @@ const areas = { ...SERVICE_AREAS, ...d.serviceAreas };
 
 const related = [...resolveLinks(d.relatedProblems), ...resolveLinks(d.relatedCities)];
 
+/**
+ * Seam divider placement (§13). Four thematic shifts, fixed here rather than
+ * per entry, so every service page breaks in the same places:
+ *
+ *   1. before the process   — explanation gives way to procedure
+ *   2. before the scope     — procedure gives way to scope and terms
+ *   3. before the terms     — scope gives way to commercial terms
+ *   4. before the FAQ       — terms give way to Q&A
+ *
+ * A divider is suppressed where a full-bleed band already marks the shift.
+ * The band's own edge is the break; a rule stacked against it reads as a
+ * doubled line. The containment band sits immediately before the scope, so
+ * position 2 is off on every page that renders it — which is every page,
+ * today. If a service ever drops the band, its divider returns on its own.
+ */
+const rendersContainmentBand = Boolean(containment.paragraphs?.length);
+const seam = {
+  beforeProcess: true,
+  beforeScope: !rendersContainmentBand,
+  beforeTerms: true,
+  beforeFaq: true,
+};
+
 const photos = d.photos;
 // Containment falls back to the sitewide slot so a service that declares no
 // photos still reserves the space on the callout.
@@ -183,7 +206,7 @@ const schema = [
       {d.problem.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
     </section>
 
-    <SeamDivider />
+    {seam.beforeProcess && <SeamDivider />}
 
     {/* --- Process. Numbered markers are used here and nowhere else (§13). */}
     <section class="band">
@@ -240,7 +263,8 @@ const schema = [
   </section>
 
   <div class="container">
-    {/* --- Scope -------------------------------------------------------- */}
+    {/* --- Scope. No divider here while the containment band precedes it. */}
+    {seam.beforeScope && <SeamDivider />}
     <section class="band">
       <h2>{d.scope.heading}</h2>
       {d.scope.intro && <p class="band__intro" set:html={renderProse(d.scope.intro)} />}
@@ -298,7 +322,7 @@ const schema = [
       {d.timeline.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
     </section>
 
-    <SeamDivider />
+    {seam.beforeTerms && <SeamDivider />}
 
     {/* --- Inspection vs testing (§6) ----------------------------------- */}
     <section class="band">
@@ -341,6 +365,7 @@ const schema = [
     </section>
 
     {/* --- FAQ ---------------------------------------------------------- */}
+    {seam.beforeFaq && <SeamDivider />}
     <section class="band">
       <h2>Common questions</h2>
       <div class="faq">
@@ -370,8 +395,6 @@ const schema = [
         </section>
       )
     }
-
-    <SeamDivider />
 
     {/* --- Final CTA ---------------------------------------------------- */}
     <section class="band final">

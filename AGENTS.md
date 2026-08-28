@@ -340,6 +340,23 @@ Self-host all three via Fontsource. Copy only the weights in use into `/public/f
 
 **Signature element: the containment seam.** Section dividers render as a double hairline with a small notched corner, echoing taped poly seams. It's the one memorable device — everything else stays quiet. Do not add a second decorative motif.
 
+The notch sits at the **right end of the top hairline**, flush to the edge. Inset from the edge it stops reading as a corner and reads as a stray mark. The rule spans `--measure`, not the container: it separates body copy, so it aligns to the copy rather than overrunning it.
+
+**Divider placement is a rule, not a judgment call.** A service page gets exactly four, at the four thematic shifts:
+
+| Position | The shift it marks |
+|---|---|
+| Before the process section | Explanation gives way to procedure |
+| Before the scope section | Procedure gives way to scope and terms |
+| Before the inspection/testing section | Scope gives way to commercial terms |
+| Before the FAQ | Terms give way to Q&A |
+
+Nowhere else. Not before the final CTA, not between subsections, not to fill space.
+
+**Never place a divider immediately before or after a full-bleed band.** The band's own edge is already the break, and a rule stacked against it reads as a doubled line. The containment band sits directly before the scope section, so on any page that renders it the scope divider is suppressed and the page carries three. That suppression is automatic — see `seam` in `src/layouts/ServicePage.astro`. If a service ever drops the band, its fourth divider returns on its own.
+
+Placement lives in the layout, never in a collection entry. A page must not be able to choose its own divider positions.
+
 **Structure encodes meaning.** Numbered markers are used for the 7-step process sequences, because those genuinely are ordered sequences. They are not used anywhere else. Credential numbers set in mono, presented like a document rather than a badge graphic.
 
 **Motion:** minimal. A single scroll-triggered reveal on the containment process sequence. Nothing else. `prefers-reduced-motion` respected throughout.

@@ -21,8 +21,12 @@ const { class: className } = Astro.props;
   .seam {
     position: relative;
     width: 100%;
+    /* Aligned to the readable text column, not the container. The container
+       runs to 78rem while paragraphs cap at --measure, so a full-container
+       rule overruns the copy it is separating. */
+    max-width: var(--measure);
     height: 6px;
-    margin-block: var(--space-7);
+    margin-block: var(--space-6);
   }
 
   /* Top hairline */
@@ -45,13 +49,14 @@ const { class: className } = Astro.props;
     background: var(--rule);
   }
 
-  /* Notched corner — a filled triangle sitting on the top hairline, set in
-     from the right edge. This is the seam's single accent, so it carries
-     --spark (thin accent use only — never a fill elsewhere). */
+  /* Notched corner — a filled triangle sitting at the RIGHT END of the top
+     hairline, echoing the corner of a taped poly seam (§13). Set in from the
+     edge it reads as a stray mark rather than a corner. This is the seam's
+     single accent, so it carries --spark (thin accent use only). */
   .seam__notch {
     position: absolute;
     inset-block-start: 0;
-    inset-inline-end: 12%;
+    inset-inline-end: 0;
     width: 8px;
     height: 8px;
     background: var(--spark);
