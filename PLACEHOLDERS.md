@@ -113,20 +113,6 @@ owner-operator is the wedge against franchise competitors).
   in Resend so `website@envirotechidaho.com` can send. Resend will not send
   from an unverified domain, and its test sender only delivers to the Resend
   account owner, so there is no workaround that reaches `office@`.
-- **`previewUnbuilt` in `src/data/nav.json` is `true`.** Unbuilt header
-  entries render as non-interactive "soon" labels so the nav structure is
-  reviewable during the build. They are not links, so the nav still contains
-  no dead links. Set to `false` before DNS cutover — a public site with
-  greyed-out nav items reads as unfinished. If every §9 page is built by then,
-  the flag stops mattering and can be deleted with the branch that reads it.
-- **/mold-remediation/ has zero in-body internal links.** §17 requires 3–6
-  with descriptive anchors. Six are already written into the entry as
-  markdown links — two crawlspace services, the insurance question, the cost
-  page, and five city pages — but every target is unbuilt, so
-  `src/lib/prose.ts` renders them as plain text rather than dead links. Each
-  becomes a real link with no edit to the page the moment its target ships and
-  its `built` flag flips in nav.json. Re-audit this page once the problem and
-  city pages land.
 - **GTM container `GTM-N9GZF7W7`** exists on the current Wix site. Confirm
   whether it is still in use before carrying it over (§16).
 - **Full Wix URL list.** Required before decommissioning, for 301 mapping in

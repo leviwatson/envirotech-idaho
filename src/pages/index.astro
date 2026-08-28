@@ -40,15 +40,16 @@ import LeadForm from "../components/LeadForm.astro";
   .hero {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-7);
+    gap: var(--space-6);
     align-items: start;
-    padding-block: var(--space-7);
+    padding-block: var(--space-7) var(--space-4);
   }
-  /* Two-up from 900px so the form clears the fold on desktop. */
+  /* Two-up from 900px so the form clears the fold on desktop. Same 55/45
+     split as the service pages. */
   @media (min-width: 900px) {
     .hero {
-      grid-template-columns: 1fr minmax(24rem, 30rem);
-      gap: var(--space-8);
+      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
+      gap: var(--space-7);
     }
   }
 

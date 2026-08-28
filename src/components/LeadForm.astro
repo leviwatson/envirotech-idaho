@@ -220,6 +220,10 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   .field {
     display: grid;
     gap: var(--space-2);
+    /* Pack rows to the top. Without this, a field sharing a grid row with a
+       taller neighbour (Phone carries a hint line, Name does not) stretches
+       its rows to fill, and the input grows into a multi-line box. */
+    align-content: start;
     margin: 0;
     max-width: none; /* overrides the global measure cap on <p> */
   }
@@ -237,7 +241,8 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   select,
   textarea {
     width: 100%;
-    min-height: 44px; /* tap target floor (§13) */
+    align-self: start;
+    height: 44px; /* tap target floor (§13); fixed so it cannot stretch */
     padding: var(--space-3);
     background: var(--paper);
     color: var(--ink);
@@ -245,7 +250,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
     border-radius: var(--radius);
   }
   textarea {
-    min-height: auto;
+    height: auto; /* the one control that should size to its rows */
     resize: vertical;
     line-height: var(--leading-normal);
   }

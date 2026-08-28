@@ -303,14 +303,18 @@ const schema = [
   .hero {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-7);
+    gap: var(--space-6);
+    /* Columns are independent heights. The copy column ends where its content
+       ends rather than stretching to match the form beside it. */
     align-items: start;
-    padding-block: var(--space-7);
+    padding-block: var(--space-7) var(--space-4);
   }
   @media (min-width: 900px) {
     .hero {
-      grid-template-columns: 1fr minmax(24rem, 28rem);
-      gap: var(--space-8);
+      /* Roughly 55/45 in favour of the copy, so the H1 holds two lines
+         instead of three. The form keeps a usable floor. */
+      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
+      gap: var(--space-7);
     }
   }
   .hero__subhead {

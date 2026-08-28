@@ -66,13 +66,3 @@ if (problems.length) {
 const live = entries.filter((e) => e.built).length;
 console.log(`Nav check passed — ${live} of ${entries.length} §9 URLs built and linked.`);
 
-if (nav.previewUnbuilt === true) {
-  // Only `primary` reaches the header, so count that — not the whole file.
-  const shown = collect(nav.primary).filter((e) => !e.built).length;
-  console.warn(
-    `  note: previewUnbuilt is ON — ${shown} unbuilt header entries render as`,
-  );
-  console.warn(
-    "  non-interactive 'soon' labels. Build-phase only; set false before DNS cutover.",
-  );
-}
