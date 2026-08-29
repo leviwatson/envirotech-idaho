@@ -100,10 +100,50 @@ export default {
 
     const redirect = () => Response.redirect(new URL("/thank-you/", url).href, 303);
 
-    // Honeypot. Bots fill the hidden field; humans never see it. Answer with a
-    // plausible success so the bot learns nothing, and drop it on the floor.
-    if (clean(form.get("company"), 200) !== "") {
+    /**
+     * Bot detection: two independent signals, and BOTH must fire to drop a
+     * submission.
+     *
+     * A single signal used to be enough, and it cost real leads — browser
+     * autofill was filling the honeypot from a saved address profile, so
+     * genuine people were silently discarded. At a ~$7,500 average job a false
+     * positive is far more expensive than a false negative, so the threshold
+     * is two. One signal is logged and delivered anyway.
+     *
+     * Signal 1 — honeypot. A field no person can see or tab to. It is named
+     * verify_ref rather than anything resembling a real field, because that
+     * is what made autofill ignore it.
+     *
+     * Signal 2 — timing. A form completed in under two seconds was not typed.
+     * Absent without JS (native POST), and absence is not a signal.
+     */
+    const signals: string[] = [];
+
+    if (clean(form.get("verify_ref"), 200) !== "") signals.push("honeypot");
+
+    const elapsedRaw = clean(form.get("elapsed_ms"), 20);
+    const elapsed = elapsedRaw === "" ? null : Number(elapsedRaw);
+    if (elapsed !== null && Number.isFinite(elapsed) && elapsed < 2000) {
+      signals.push("too_fast");
+    }
+
+    const sourceForLog = clean(form.get("source"), LIMITS.source) || "/";
+
+    if (signals.length >= 2) {
+      // Answer with a plausible success so the bot learns nothing, and drop
+      // it. Logged so the decision is visible in `wrangler tail`.
+      console.warn(
+        `[${requestId}] dropped as bot: ${signals.join(" + ")}, from ${sourceForLog}`,
+      );
       return wantsJson(request) ? json({ ok: true }, 200) : redirect();
+    }
+
+    if (signals.length === 1) {
+      // Suspicious but delivered. If this line starts appearing alongside
+      // real leads, that signal is misfiring and should be re-tuned.
+      console.warn(
+        `[${requestId}] suspicious but delivered: ${signals[0]}, from ${sourceForLog}`,
+      );
     }
 
     // Rate limit on a hash of the client IP. The raw address is never stored,

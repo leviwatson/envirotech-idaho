@@ -70,18 +70,31 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   >
     <input type="hidden" name="source" value={sourcePath} />
 
-    {/* Honeypot. No label — nothing here is meant to be read. Bots fill it
-        and get dropped; the field is off-screen, untabbable, and hidden from
-        assistive tech. */}
+    {/* Bot signals. Two of them, and BOTH must fire before a submission is
+        dropped — see the Worker. A single signal is logged and delivered.
+
+        The field is named verify_ref precisely because it maps to nothing in
+        any browser's autofill heuristics. It was previously "company", which
+        Chrome and Safari happily filled from a saved address profile, and
+        autocomplete="off" is widely ignored for organisation fields — so real
+        people were tripping it. */}
     <div class="lead__trap" aria-hidden="true">
       <input
         type="text"
-        id={`${uid}-company`}
-        name="company"
+        id={`${uid}-verify-ref`}
+        name="verify_ref"
         tabindex="-1"
         autocomplete="off"
+        aria-hidden="true"
       />
     </div>
+
+    {/* Milliseconds between page load and submit, filled in by the script
+        below. Elapsed time rather than a timestamp: the pages are statically
+        cached, so a server-rendered clock would be stale, and comparing two
+        readings from the same client clock avoids skew entirely. Empty
+        without JS, which the Worker treats as unknown, not as a signal. */}
+    <input type="hidden" name="elapsed_ms" value="" data-elapsed />
 
     <div class="lead__grid">
       <p class="field">
@@ -388,9 +401,13 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 
   const callFallback = `Call us at <a class="mono" href="${PHONE_LINK}">${PHONE}</a> and we will take it over the phone.`;
 
+  // Read once, at parse time, so the measurement starts when the page does.
+  const loadedAt = Date.now();
+
   document.querySelectorAll<HTMLFormElement>("[data-lead-form]").forEach((form) => {
     const status = form.querySelector<HTMLElement>("[data-lead-status]");
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const elapsed = form.querySelector<HTMLInputElement>("[data-elapsed]");
     if (!status || !button) return;
 
     const setStatus = (state: "ok" | "error", html: string) => {
@@ -403,6 +420,9 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
       if (!form.reportValidity()) return;
 
       event.preventDefault();
+
+      // Both readings come from the same clock, so skew cannot affect it.
+      if (elapsed) elapsed.value = String(Date.now() - loadedAt);
 
       const original = button.textContent ?? "";
       button.disabled = true;
