@@ -111,7 +111,7 @@ timeline:
     - "If a remodel is scheduled behind this, tell us the date at the inspection. Sequencing abatement so it does not hold up a contractor who is already booked is usually the difficult part of the timeline, not the removal itself. When a closing date is driving it instead, [how we work with realtors](/for-realtors/) covers what the other side will want to see."
 
 inspectionTesting:
-  heading: The inspection is free. Testing is not.
+  heading: The inspection is free. Testing is not
   paragraphs:
     - "Someone comes out, looks at what you have, and writes an estimate. That visit costs nothing and carries no obligation."
     - "Testing is separate and it is paid. Bulk samples of the suspect material go to an accredited laboratory to confirm whether asbestos is present. Air sampling, where a job calls for it, is its own service again. You hear what each one costs before anything is collected."

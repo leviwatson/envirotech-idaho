@@ -89,7 +89,7 @@ timeline:
     - "If a general contractor is working behind us, tell us the handover date at the walkthrough. Sequencing so a trade is not left standing is usually the difficult part, and [how we work with builders and GCs](/for-builders/) covers how that gets planned."
 
 inspectionTesting:
-  heading: The walkthrough is free. The testing is not ours.
+  heading: The walkthrough is free. The testing is not ours
   paragraphs:
     - "Someone comes out, looks at what you are planning to take out, and writes an estimate. That visit costs nothing and carries no obligation, including the part where we tell you which materials are worth sampling."
     - "Laboratory testing is a different job done by a different company. You engage an independent testing company and pay them directly, and the result belongs to you regardless of who ends up doing the demolition."

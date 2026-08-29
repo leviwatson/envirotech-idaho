@@ -89,7 +89,7 @@ timeline:
     - "If a sale is driving this, say so at the diagnostic visit. Radon comes up in transactions regularly and the sequencing is the difficult part — [how we work with realtors](/for-realtors/) covers what the other side generally wants to see."
 
 inspectionTesting:
-  heading: The diagnostic is free. The testing is not ours.
+  heading: The diagnostic is free. The testing is not ours
   paragraphs:
     - "Someone comes out, looks at how the building meets the ground, and writes an estimate. That visit costs nothing and carries no obligation."
     - "Radon testing, both the initial measurement and the verification afterward, is done by an independent company you engage and pay directly. We do not perform it, sell it, or take a percentage of it."

@@ -409,6 +409,16 @@ Turning the band off restores the scope divider automatically, so a page without
 
 Problem and audience pages need no equivalent: their band is already a per-section `band: true`, so it is opt-in by construction.
 
+**Heading punctuation.** A heading that asks a question takes a question mark. A heading that makes a statement takes no terminal period. That applies to `h2` section headings, `h3` FAQ questions, and process step titles alike.
+
+- `Do I need to test before a remodel?` — question, keeps the mark
+- `How a mold remediation job runs` — statement, no period, even though it opens with *How*
+- `The inspection is free. Testing is not` — the internal period stays because there are two sentences; the terminal one goes
+
+Most headings on this site open with *What*, *Why*, *How*, *Where*, or *If* as noun clauses rather than as questions, so the opening word is not the test — whether the heading actually asks something is. An FAQ entry is always a question and must be phrased as one; a reader's situation stated as a fact ("I converted an outbuilding and now it smells") is a symptom, not an FAQ.
+
+`check-structure.mjs` enforces both halves: no `h2` or `h3` may end in a period, and every FAQ question must end in a question mark.
+
 **Structure encodes meaning.** Numbered markers are used for the 7-step process sequences, because those genuinely are ordered sequences. They are not used anywhere else. Credential numbers set in mono, presented like a document rather than a badge graphic.
 
 **Motion:** minimal. A single scroll-triggered reveal on the containment process sequence. Nothing else. `prefers-reduced-motion` respected throughout.

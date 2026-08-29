@@ -42,7 +42,7 @@ export const CONTAINMENT = {
  * not ours.
  */
 export const INSPECTION_TESTING = {
-  heading: "The inspection is free. The testing is not ours.",
+  heading: "The inspection is free. The testing is not ours",
   paragraphs: [
     "Someone comes out, looks at the problem, takes moisture readings, and writes you an estimate. That visit costs nothing and there is no obligation attached to it.",
     "Laboratory testing is a different job done by a different company. We do not perform it, we do not sell it, and we take no percentage of it. If you want material or air analyzed, you engage an independent testing company and pay them directly, and their result belongs to you regardless of who ends up doing the work.",

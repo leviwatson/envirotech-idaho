@@ -69,7 +69,7 @@ faqs:
     answer: "Yes, and we would ask to. On Eagle acreage the outbuildings are frequently older than the home and have completely different problems, and the structure that prompted the call is not always the one in worse condition. There is no charge for looking — the inspection is free either way."
   - question: My barn is older than the house. Does that change anything?
     answer: "It can change the order of the work. A structure built decades before the house may contain asbestos-containing material where the house does not, and if so that has to be established by an independent testing company before anything is opened. On the house alone that step is often unnecessary."
-  - question: I converted an outbuilding into a heated workspace and now it smells.
+  - question: Why does my outbuilding smell now that I have heated it?
     answer: "That is a common Eagle sequence. A cold, ventilated structure over bare ground behaves very differently once it is heated and occupied — warm moist air meets cold surfaces and condenses, and bare soil evaporates upward into a space that now holds that moisture. The fix usually involves a ground barrier as well as the removal."
   - question: Why did water from an upstairs bathroom show up in the basement?
     answer: "Larger homes give water more places to travel. It runs along joists and down wall cavities and emerges wherever it first meets something it cannot pass, which is often well away from the failure. That is why the inspection maps moisture rather than treating the stain as the boundary."

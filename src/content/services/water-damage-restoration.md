@@ -88,7 +88,7 @@ timeline:
     - "If reconstruction follows, it gets scheduled once the structure reads dry rather than run alongside the drying. You get the number at the estimate, and you hear from us when it changes."
 
 inspectionTesting:
-  heading: The inspection is free. Testing is not.
+  heading: The inspection is free. Testing is not
   paragraphs:
     - "For water that has already stopped, someone comes out, reads the structure, and writes you an estimate. That visit costs nothing and there is no obligation attached to it."
     - "Laboratory testing is a different job done by a different company. On a water loss that usually means air or surface sampling for mold after the fact, where water sat long enough that growth is a real question and you want an answer that is not our opinion. You engage an independent testing company and pay them directly. We do not perform that work, sell it, or take a percentage of it."

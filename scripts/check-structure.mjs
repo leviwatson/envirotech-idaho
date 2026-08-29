@@ -468,6 +468,45 @@ checkSimilarity("audience pages", audienceBodies);
   }
 }
 
+// --- Heading punctuation (§13) ---------------------------------------------
+
+/**
+ * Questions take a question mark; statements take no terminal period. The
+ * opening word is not the test — most headings here begin with What/Why/How
+ * as noun clauses rather than as questions — so this checks only the two
+ * mechanical halves of the rule.
+ */
+{
+  const strip = (raw) =>
+    raw
+      .replace(/<[^>]+>/g, "")
+      .replace(/&#39;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/&quot;/g, '"')
+      .trim();
+
+  for (const dir of await readdir("dist")) {
+    const h = await html(dir === "index.html" ? "" : dir);
+    if (!h) continue;
+    const page = dir === "index.html" ? "/" : `/${dir}/`;
+    const main = h.match(/<main[\s\S]*?<\/main>/);
+    if (!main) continue;
+
+    for (const [, , raw] of main[0].matchAll(/<(h2|h3)[^>]*>([\s\S]*?)<\/\1>/g)) {
+      const text = strip(raw);
+      if (text.endsWith(".")) {
+        fail(page, `heading ends in a period: "${text.slice(0, 60)}" (§13)`);
+      }
+    }
+    for (const [, raw] of h.matchAll(/<h3 class="faq__q"[^>]*>([\s\S]*?)<\/h3>/g)) {
+      const text = strip(raw);
+      if (!text.endsWith("?")) {
+        fail(page, `FAQ entry is not a question: "${text.slice(0, 60)}" (§13)`);
+      }
+    }
+  }
+}
+
 // --- Sitewide chrome -------------------------------------------------------
 
 const home = await html("");
