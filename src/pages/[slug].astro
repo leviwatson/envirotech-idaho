@@ -9,12 +9,13 @@
  */
 import { getCollection } from "astro:content";
 import ServicePage from "../layouts/ServicePage.astro";
-import ProblemPage from "../layouts/ProblemPage.astro";
+import SectionsPage from "../layouts/SectionsPage.astro";
 
 export async function getStaticPaths() {
-  const [services, problems] = await Promise.all([
+  const [services, problems, audiences] = await Promise.all([
     getCollection("services"),
     getCollection("problems"),
+    getCollection("audiences"),
   ]);
 
   return [
@@ -24,7 +25,11 @@ export async function getStaticPaths() {
     })),
     ...problems.map((entry) => ({
       params: { slug: entry.data.slug },
-      props: { kind: "problem" as const, entry },
+      props: { kind: "sections" as const, entry },
+    })),
+    ...audiences.map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { kind: "sections" as const, entry },
     })),
   ];
 }
@@ -33,5 +38,5 @@ const { kind, entry } = Astro.props;
 ---
 
 {
-  kind === "service" ? <ServicePage entry={entry} /> : <ProblemPage entry={entry} />
+  kind === "service" ? <ServicePage entry={entry} /> : <SectionsPage entry={entry} />
 }

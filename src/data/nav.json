@@ -48,6 +48,16 @@
       { "label": "Is Black Mold Dangerous?", "href": "/is-black-mold-dangerous/", "built": false }
       ]
     },
+    {
+      "label": "Who We Help",
+      "kind": "group",
+      "children": [
+      { "label": "For Realtors", "href": "/for-realtors/", "built": true },
+      { "label": "For Builders", "href": "/for-builders/", "built": false },
+      { "label": "For Property Managers", "href": "/for-property-managers/", "built": false },
+      { "label": "Commercial", "href": "/commercial/", "built": false }
+      ]
+    },
     { "label": "Our Process", "href": "/our-containment-process/", "built": false },
     { "label": "Certifications", "href": "/certifications/", "built": false },
     { "label": "Contact", "href": "/contact/", "built": true }
@@ -76,12 +86,6 @@
     ],
 
 
-    "audiences": [
-      { "label": "For Realtors", "href": "/for-realtors/", "built": false },
-      { "label": "For Builders", "href": "/for-builders/", "built": false },
-      { "label": "For Property Managers", "href": "/for-property-managers/", "built": false },
-      { "label": "Commercial", "href": "/commercial/", "built": false }
-    ],
 
     "trust": [
       { "label": "About", "href": "/about/", "built": false },

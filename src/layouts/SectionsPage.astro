@@ -1,6 +1,7 @@
 ---
 /**
- * Problem / intent page shell (§9, §14).
+ * Shell for pages built from an ordered list of sections (§9, §14):
+ * problem / intent pages and audience pages.
  *
  * STRUCTURE ONLY — every word comes from the collection entry or from
  * src/data/service-defaults.ts.
@@ -25,7 +26,7 @@ import { TRUST_STRIP } from "../data/service-defaults";
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, CITIES, DOMAIN } from "../data/site";
 
 interface Props {
-  entry: CollectionEntry<"problems">;
+  entry: CollectionEntry<"problems"> | CollectionEntry<"audiences">;
 }
 const { entry } = Astro.props;
 const d = entry.data;

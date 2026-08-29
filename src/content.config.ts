@@ -132,54 +132,67 @@ const services = defineCollection({
  * an ordered array rather than named fields. The layout still owns rendering
  * and holds no copy.
  */
+/**
+ * Shared shape for pages built from an ordered list of sections: problem /
+ * intent pages and audience pages. Both argue a case in their own order
+ * rather than filling fixed fields, and both render through SectionsPage.
+ */
+const sectionsPage = (image: ImageFn) =>
+  z.object({
+    slug: z.string(),
+    title: z.string().max(60),
+    h1: z.string(),
+    metaDescription: z.string().min(140).max(158),
+    /** The question the page answers. Problem pages always have one. */
+    question: z.string().optional(),
+    subhead: z.string(),
+
+    sections: z
+      .array(
+        z.object({
+          heading: z.string(),
+          paragraphs: z.array(z.string()).min(1),
+          /** Optional bullets after the paragraphs. */
+          items: z.array(z.string()).optional(),
+          /** Prose after the list, where the list needs closing out. */
+          outro: z.array(z.string()).optional(),
+          /** Optional figures, set in mono (§13). */
+          stages: z.array(z.object({ figure: z.string(), label: z.string() })).optional(),
+          /**
+           * Renders on the full-bleed dark band instead of the light field.
+           * At most one per page — it is the containment callout.
+           */
+          band: z.boolean().default(false),
+          /**
+           * Marks a thematic shift, so the layout puts a seam divider above
+           * it. §13 fixes four positions on a service page; these pages vary,
+           * so the shift is declared here and the layout still enforces that
+           * no divider may sit against a full-bleed band.
+           */
+          shift: z.boolean().default(false),
+          /** Optional CTA. Omitted until the asset it points at exists. */
+          cta: z.object({ label: z.string(), href: z.string() }).optional(),
+          photo: slot(image).optional(),
+        }),
+      )
+      .min(1),
+
+    faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+    photos: z.object({ hero: slot(image).optional() }).optional(),
+    relatedServices: z.array(z.string()).default([]),
+    relatedCities: z.array(z.string()).default([]),
+  });
+
+/** Problem / intent pages (§9). */
 const problems = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/problems" }),
-  schema: ({ image }) =>
-    z.object({
-      slug: z.string(),
-      title: z.string().max(60),
-      h1: z.string(),
-      metaDescription: z.string().min(140).max(158),
-      /** The question this page answers, for schema and internal reference. */
-      question: z.string(),
-      subhead: z.string(),
-
-      sections: z
-        .array(
-          z.object({
-            heading: z.string(),
-            paragraphs: z.array(z.string()).min(1),
-            /** Optional bullets after the paragraphs. */
-            items: z.array(z.string()).optional(),
-            /** Prose after the list, where the list needs closing out. */
-            outro: z.array(z.string()).optional(),
-            /** Optional figures, set in mono (§13). */
-            stages: z.array(z.object({ figure: z.string(), label: z.string() })).optional(),
-            /**
-             * Renders on the full-bleed dark band instead of the light field.
-             * At most one per page — it is the containment callout.
-             */
-            band: z.boolean().default(false),
-            /**
-             * Marks a thematic shift, so the layout puts a seam divider above
-             * it. §13 fixes the four positions on a service page, but a
-             * problem page's sections vary, so the shift is declared here and
-             * the layout still enforces the rule that no divider may sit
-             * against a full-bleed band.
-             */
-            shift: z.boolean().default(false),
-            /** Optional CTA. Omitted until the asset it points at exists. */
-            cta: z.object({ label: z.string(), href: z.string() }).optional(),
-            photo: slot(image).optional(),
-          }),
-        )
-        .min(1),
-
-      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
-      photos: z.object({ hero: slot(image).optional() }).optional(),
-      relatedServices: z.array(z.string()).default([]),
-      relatedCities: z.array(z.string()).default([]),
-    }),
+  schema: ({ image }) => sectionsPage(image),
 });
 
-export const collections = { services, problems };
+/** Audience pages (§9) — realtors, builders, property managers, commercial. */
+const audiences = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/audiences" }),
+  schema: ({ image }) => sectionsPage(image),
+});
+
+export const collections = { services, problems, audiences };
