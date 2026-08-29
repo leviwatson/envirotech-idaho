@@ -59,7 +59,9 @@ const related = [...resolveLinks(d.relatedProblems), ...resolveLinks(d.relatedCi
  * position 2 is off on every page that renders it — which is every page,
  * today. If a service ever drops the band, its divider returns on its own.
  */
-const rendersContainmentBand = Boolean(containment.paragraphs?.length);
+// An entry may opt out; otherwise the band renders. Its presence is what
+// suppresses the scope divider, so the two stay in sync automatically.
+const rendersContainmentBand = d.showContainment && Boolean(containment.paragraphs?.length);
 const seam = {
   beforeProcess: true,
   beforeScope: !rendersContainmentBand,
@@ -245,7 +247,9 @@ const schema = [
     </section>
   </div>
 
-  {/* --- Containment callout. Visually distinct: dark band, full bleed. -- */}
+  {/* --- Containment callout. Visually distinct: dark band, full bleed.
+         Renders unless the entry opts out with showContainment: false. --- */}
+  {rendersContainmentBand && (
   <section class="containment">
     <div class="container containment__inner">
       <div class="containment__copy">
@@ -263,6 +267,7 @@ const schema = [
       />
     </div>
   </section>
+  )}
 
   <div class="container">
     {/* --- Scope. No divider here while the containment band precedes it. */}

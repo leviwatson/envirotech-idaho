@@ -67,6 +67,16 @@ const services = defineCollection({
           .min(1),
       }),
 
+      /**
+       * The containment callout renders by default, because containment-first
+       * is the §6 positioning and it belongs on almost every service page.
+       *
+       * Set false only where containment is genuinely not part of the work.
+       * The alternative is contorting a section's copy to justify its
+       * presence, which is worse than omitting it. Dropping the band also
+       * restores the seam divider before the scope section (§13).
+       */
+      showContainment: z.boolean().default(true),
       /** Overrides the sitewide containment copy when a service needs its own. */
       containment: section.partial().optional(),
 

@@ -380,6 +380,19 @@ The layout renders a seam above any section marked `shift: true`, plus one befor
 
 The rule to carry into any new page type: a layout owns whether a divider renders, an entry may at most describe its own structure.
 
+**The containment band is opt-out, not opt-in.** It renders on every service page by default, because containment-first is the §6 positioning and it belongs on nearly all of them. A service that genuinely does not involve containment sets `showContainment: false` in its entry:
+
+```yaml
+slug: some-service
+showContainment: false
+```
+
+Use the flag rather than bending a section's copy to justify its presence. Where containment is adjacent to the work but not part of it — testing, crawlspace drainage, reconstruction — override the `containment` copy instead, framing it as the work that follows or precedes. That is a real editorial connection. Writing filler to excuse a section that does not belong is not, and the flag exists so nobody has to.
+
+Turning the band off restores the scope divider automatically, so a page without the band carries four dividers and one with it carries three. That is computed from whether the band actually rendered, not declared separately, so the two cannot drift apart.
+
+Problem and audience pages need no equivalent: their band is already a per-section `band: true`, so it is opt-in by construction.
+
 **Structure encodes meaning.** Numbered markers are used for the 7-step process sequences, because those genuinely are ordered sequences. They are not used anywhere else. Credential numbers set in mono, presented like a document rather than a badge graphic.
 
 **Motion:** minimal. A single scroll-triggered reveal on the containment process sequence. Nothing else. `prefers-reduced-motion` respected throughout.
