@@ -1,0 +1,235 @@
+---
+/**
+ * /privacy-policy/ — linked from the footer on every page, so it must exist
+ * and must resolve without an interstitial (Meta's lead ad review fetches it).
+ *
+ * Indexed: it takes no noindex prop, so it inherits only the sitewide staging
+ * flag and becomes indexable at cutover. It is included in the sitemap, since
+ * the sitemap filter excludes /thank-you/ and nothing else.
+ *
+ * Written to describe what this site actually does. Anything not known — data
+ * retention, the Conversions API, the analytics stack that is not installed
+ * yet — is tracked in PLACEHOLDERS.md rather than invented. There is no
+ * postal address here, no DPO, and no claim to any compliance framework the
+ * business has not adopted (§2.1 applies to legal text as much as to copy).
+ */
+import Base from "../layouts/Base.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, BUSINESS_NAME } from "../data/site";
+
+const EFFECTIVE = "August 29, 2026";
+---
+
+<Base
+  title="Privacy Policy | Enviro-Tech Idaho"
+  description="What Enviro-Tech Idaho collects when you request an inspection, why we collect it, who it goes to, and how to have it deleted. Plain language."
+>
+  <section class="container legal">
+    <h1>Privacy Policy</h1>
+    <p class="legal__effective mono">Effective date: {EFFECTIVE}</p>
+
+    <p class="legal__lead">
+      This describes what {BUSINESS_NAME} collects through this website, why,
+      who it goes to, and how to have it deleted. It is written to be read
+      rather than to be impressive. If something here is unclear, call
+      <a href={PHONE_HREF}>{PHONE_DISPLAY}</a> and ask.
+    </p>
+
+    <SeamDivider />
+
+    <h2>What we collect</h2>
+    <p>
+      When you submit one of the inspection request forms on this site, you
+      give us your name and phone number, which are required, and optionally
+      your email address, the city the property is in, the type of problem, and
+      whatever you write in the details box. We also record which page the form
+      was submitted from, so we know what you were reading when you decided to
+      get in touch.
+    </p>
+    <p>
+      Our form handler receives your IP address as part of the request, as any
+      web server does. It is used only to limit how many submissions can come
+      from one place in a short window, and it is converted to a one-way hash
+      before that check runs. We do not store your IP address and we do not
+      send it anywhere.
+    </p>
+    <p>
+      Separately, analytics and advertising tools collect information
+      automatically as you browse: IP address, device and browser type, and
+      which pages you viewed. Those are described below.
+    </p>
+
+    <h2>Why we collect it</h2>
+    <p>
+      To call you back, schedule an inspection, and write you an estimate. That
+      is the whole purpose. We use what you tell us about the property to send
+      someone who knows what they are walking into, and we use the page you
+      submitted from for the same reason.
+    </p>
+    <p>
+      We do not add you to a mailing list you did not ask for, and we do not
+      text-blast the number you gave us.
+    </p>
+
+    <h2>Who it goes to</h2>
+    <p>These are the services involved in running this site and handling what you send:</p>
+    <ul>
+      <li>
+        <strong>Cloudflare</strong> hosts this website and processes form
+        submissions. Your request passes through their network.
+      </li>
+      <li>
+        <strong>Make</strong> receives the form submission from our handler and
+        routes it to us.
+      </li>
+      <li>
+        <strong>Google Analytics and Google Tag Manager</strong> collect
+        analytics about how the site is used.
+      </li>
+      <li>
+        <strong>Meta Pixel and the Meta Conversions API</strong> measure
+        advertising performance, including whether an ad led to an inspection
+        request.
+      </li>
+    </ul>
+    <p>
+      Each of those handles data under its own terms. We share what the service
+      needs to do its job and nothing beyond that.
+    </p>
+
+    <h2>Independent testing companies</h2>
+    <p>
+      This matters more here than on most sites, because of how the work is
+      structured. We do not perform laboratory testing. It is done by
+      independent testing companies, and that separation is deliberate — the
+      company paid to remove a problem should not be the company deciding
+      whether you have one.
+    </p>
+    <p>
+      For diagnostic testing, you engage and pay the testing company directly.
+      We are not part of that transaction, and we do not pass your information
+      to them to set it up. If we give you a name, you contact them yourself.
+    </p>
+    <p>
+      For clearance testing at the end of a job, we engage the testing company
+      on your behalf as part of the work. In that case we do share what they
+      need to attend and to issue a result: the property address, and a contact
+      name and phone number for site access. If you would rather engage the
+      clearance testing company yourself, say so and we will arrange it that
+      way.
+    </p>
+
+    <h2>We do not sell your information</h2>
+    <p>
+      We do not sell personal information, and we do not trade or rent it. We
+      also take no referral fee from the testing companies we may point you
+      toward, which is the only reason that recommendation is worth anything.
+    </p>
+
+    <h2>Deleting your information</h2>
+    <p>
+      Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a> and ask us to delete what
+      you submitted, and we will. You do not need to give a reason or use
+      particular wording. If you would rather do it by phone, call
+      <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>.
+    </p>
+    <p>
+      One limit worth stating plainly: if we have already done work for you,
+      records tied to that job — the scope, photographs, invoices, and any
+      laboratory results — are part of the job file and we keep those. That is
+      the documentation a future buyer, an insurer, or you may need later.
+    </p>
+
+    <h2>Cookies and tracking</h2>
+    <p>
+      The analytics and advertising tools listed above set cookies and use
+      similar technologies to recognize a browser across pages and visits. The
+      site itself does not set cookies to run the forms.
+    </p>
+    <p>
+      You can block or delete cookies in your browser settings, and every major
+      browser allows it. Doing so does not stop you using this site or
+      submitting a form. You can also opt out of Google Analytics through
+      Google's browser add-on, and adjust advertising preferences in your
+      Meta account settings.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      This site is not directed at children under 13 and we do not knowingly
+      collect information from them. If you believe a child has submitted
+      information through this site, email
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a> and we will delete it.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      If this policy changes, the effective date at the top changes with it and
+      the current version is always the one published here. Where a change
+      materially affects what we collect or who it goes to, we will say so on
+      this page rather than quietly revising it.
+    </p>
+
+    <SeamDivider />
+
+    <h2>Contact</h2>
+    <p>
+      {BUSINESS_NAME}<br />
+      <a href={PHONE_HREF}>{PHONE_DISPLAY}</a><br />
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    </p>
+    <p class="legal__note">
+      We are a service-area business and work from your property rather than a
+      storefront, so there is no public address to write to. Email or phone
+      reaches us directly.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    padding-block: var(--space-8) var(--space-9);
+    max-width: min(var(--container), 52rem);
+  }
+  .legal__effective {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+  }
+  .legal__lead {
+    margin-block-start: var(--space-5);
+    font-size: var(--step-1);
+  }
+  .legal h2 {
+    margin-block: var(--space-7) var(--space-4);
+    font-size: var(--step-2);
+  }
+  .legal p + p {
+    margin-block-start: var(--space-4);
+  }
+  .legal ul {
+    margin-block-start: var(--space-4);
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .legal li {
+    padding-inline-start: var(--space-5);
+    position: relative;
+  }
+  .legal li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.62em;
+    width: 8px;
+    height: 1px;
+    background: var(--seal);
+  }
+  .legal__note {
+    margin-block-start: var(--space-4);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+</style>

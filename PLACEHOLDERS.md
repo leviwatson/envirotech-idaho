@@ -330,6 +330,33 @@ Still needed beyond this page:
   180×180 `apple-touch-icon.png`. Low effort, and currently every browser tab
   and bookmark shows another company's logo.
 
+- **⚠ The privacy policy discloses analytics and pixels that are not installed.**
+  `/privacy-policy/` names Google Analytics, Google Tag Manager, Meta Pixel,
+  and the Meta Conversions API. **None of them are on the site today** —
+  verified zero occurrences of `gtag`, `GTM-`, `fbq`, or `connect.facebook`
+  anywhere in `dist/`.
+
+  That ordering is deliberate and it is the correct one: you disclose before
+  you collect, and Meta's lead ad review expects the disclosure to exist before
+  the pixel runs. But the two must ship together. **At cutover, either install
+  those tags or strike those clauses** — a policy describing collection that
+  never happens is inaccurate in the other direction, and the Conversions API
+  in particular is server-side work that has not been scoped.
+
+  Same applies to the cookies section, which describes cookies set by those
+  tools. The site currently sets none of its own.
+
+- **Privacy policy: data retention period is unstated.** The policy says job
+  records are kept and that submitted information can be deleted on request,
+  but not for how long lead data is retained in Make or in the client's inbox.
+  Confirm the actual practice and add a sentence, rather than picking a number
+  that sounds reasonable.
+
+- **Privacy policy effective date is 29 August 2026.** If the analytics stack
+  or the form pipeline changes before cutover, update the date with the
+  content — it is in `src/pages/privacy-policy.astro` as a single `EFFECTIVE`
+  constant.
+
 - **GTM container `GTM-N9GZF7W7`** exists on the current Wix site. Confirm
   whether it is still in use before carrying it over (§16).
 - **Full Wix URL list.** Required before decommissioning, for 301 mapping in

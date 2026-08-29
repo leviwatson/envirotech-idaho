@@ -94,7 +94,7 @@
       { "label": "About", "href": "/about/", "built": false },
       { "label": "FAQ", "href": "/faq/", "built": false },
       { "label": "Reviews", "href": "/reviews/", "built": false },
-      { "label": "Privacy Policy", "href": "/privacy-policy/", "built": false }
+      { "label": "Privacy Policy", "href": "/privacy-policy/", "built": true }
     ]
   }
 }

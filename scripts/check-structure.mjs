@@ -367,8 +367,16 @@ const SIMILARITY_CAP = 0.2;
 const SERVICE_SIMILARITY_CAP = 0.25;
 
 const shingle = (h) => {
+  /**
+   * <main> only. Comparing whole documents measures the chrome — the nav, the
+   * footer, and two lead forms are ~870 identical words on every page — which
+   * both inflates every score and makes it drift upward as the nav grows, so
+   * the threshold would eventually fail honest pages for shipping neighbors.
+   * What "is this page spun" actually asks about is the body copy.
+   */
+  const main = h.match(/<main[\s\S]*?<\/main>/)?.[0] ?? h;
   const words =
-    h
+    main
       .replace(/<script[\s\S]*?<\/script>/g, " ")
       .replace(/<[^>]+>/g, " ")
       .toLowerCase()
