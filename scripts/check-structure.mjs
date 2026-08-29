@@ -134,6 +134,8 @@ for (const { file, data } of await loadCollection("src/content/services")) {
 
 // --- Problem and audience pages -------------------------------------------
 
+const audienceBodies = new Map();
+
 for (const dir of ["src/content/problems", "src/content/audiences"]) {
   for (const { file, data } of await loadCollection(dir)) {
     const page = `/${data.slug}/`;
@@ -165,6 +167,8 @@ for (const dir of ["src/content/problems", "src/content/audiences"]) {
     if (headings < wantSections) {
       fail(page, `entry declares ${wantSections} sections but only ${headings} h2 headings rendered`);
     }
+
+    if (dir.endsWith("audiences")) audienceBodies.set(data.slug, h);
   }
 }
 
@@ -338,25 +342,32 @@ for (const { file, data } of await loadCollection("src/content/cities")) {
 }
 
 /**
- * §2.5 forbids spun city pages, and no other guard would notice one. This
- * compares every pair on 6-word shingles taken from the rendered body. The
- * chrome alone — nav, footer, two lead forms — puts genuine pages around 0.09,
- * so 0.20 leaves headroom while a page written by find-and-replace from its
- * neighbour would land far above it.
+ * §2.5 forbids spun pages, and no other guard would notice one. This compares
+ * every pair within a set on 6-word shingles taken from the rendered body.
+ *
+ * The chrome alone — nav, footer, two lead forms — plus shared sentences the
+ * site deliberately repeats verbatim (the §6 pricing framing, the containment
+ * explanation) puts genuine pages around 0.09-0.11. The cap is 0.20, so a page
+ * written by find-and-replace from its neighbour lands far above it while
+ * honest reuse of approved wording does not.
  */
-if (cityBodies.size > 1) {
-  const SIMILARITY_CAP = 0.2;
-  const shingle = (h) => {
-    const words = h
+const SIMILARITY_CAP = 0.2;
+
+const shingle = (h) => {
+  const words =
+    h
       .replace(/<script[\s\S]*?<\/script>/g, " ")
       .replace(/<[^>]+>/g, " ")
       .toLowerCase()
       .match(/[a-z]+/g) ?? [];
-    const out = new Set();
-    for (let i = 0; i + 6 <= words.length; i++) out.add(words.slice(i, i + 6).join(" "));
-    return out;
-  };
-  const sets = new Map([...cityBodies].map(([slug, h]) => [slug, shingle(h)]));
+  const out = new Set();
+  for (let i = 0; i + 6 <= words.length; i++) out.add(words.slice(i, i + 6).join(" "));
+  return out;
+};
+
+const checkSimilarity = (label, bodies) => {
+  if (bodies.size < 2) return;
+  const sets = new Map([...bodies].map(([slug, h]) => [slug, shingle(h)]));
   const slugs = [...sets.keys()];
   for (let i = 0; i < slugs.length; i++) {
     for (let j = i + 1; j < slugs.length; j++) {
@@ -368,12 +379,15 @@ if (cityBodies.size > 1) {
       if (jaccard > SIMILARITY_CAP) {
         fail(
           `/${slugs[i]}/`,
-          `${(jaccard * 100).toFixed(0)}% text overlap with /${slugs[j]}/ — city pages must not be spun variants (§2.5)`,
+          `${(jaccard * 100).toFixed(0)}% text overlap with /${slugs[j]}/ — ${label} must not be spun variants (§2.5)`,
         );
       }
     }
   }
-}
+};
+
+checkSimilarity("city pages", cityBodies);
+checkSimilarity("audience pages", audienceBodies);
 
 // --- Homepage --------------------------------------------------------------
 
