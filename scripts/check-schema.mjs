@@ -10,8 +10,10 @@
  * renders, rather than against a list of expectations kept by hand.
  */
 import { readdir, readFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+
+const ORIGIN = "https://envirotechidaho.com";
 
 const problems = [];
 const fail = (page, msg) => problems.push(`${page}: ${msg}`);
@@ -119,16 +121,56 @@ for (const file of pages.sort()) {
   if (!isHome && !crumbNode) fail(url, "no BreadcrumbList below the homepage");
   if (isHome && crumbNode) fail(url, "homepage should not emit a BreadcrumbList");
   if (crumbNode) {
-    const visibleCrumbs = h.match(/<nav class="crumbs"[\s\S]*?<\/nav>/);
-    if (!visibleCrumbs) {
+    /**
+     * Strip the JSON-LD before looking for UI. Searching the raw file matches
+     * the BreadcrumbList itself and reports a false pass on every page — the
+     * exact way this defect stayed invisible while 30 pages emitted breadcrumb
+     * markup and rendered none.
+     */
+    const withoutSchema = h.replace(
+      /<script type="application\/ld\+json">[\s\S]*?<\/script>/g,
+      "",
+    );
+    const nav = withoutSchema.match(/<nav class="crumbs"[\s\S]*?<\/nav>/);
+
+    if (!nav) {
       fail(url, "BreadcrumbList emitted but no breadcrumbs render on the page");
     } else {
-      const shown = [...visibleCrumbs[0].matchAll(/<(?:a|span)[^>]*>([^<]+)<\/(?:a|span)>/g)]
-        .map((m) => m[1].trim())
-        .filter((t) => t && t !== "/");
-      const declared = crumbNode.itemListElement.map((i) => i.name);
-      if (shown.join(" > ") !== declared.join(" > ")) {
-        fail(url, `breadcrumb markup "${declared.join(" > ")}" does not match rendered "${shown.join(" > ")}"`);
+      // Label AND destination. A trail that reads right but links wrong is the
+      // same divergence wearing a different hat.
+      const shown = [
+        ...nav[0].matchAll(
+          /<a href="([^"]+)"[^>]*>([^<]+)<\/a>|<span aria-current="page"[^>]*>([^<]+)<\/span>/g,
+        ),
+      ].map((m) => (m[1] ? { name: m[2].trim(), href: m[1] } : { name: m[3].trim(), href: url }));
+
+      const declared = crumbNode.itemListElement.map((i) => ({
+        name: i.name,
+        href: i.item.replace(ORIGIN, "") || "/",
+      }));
+
+      const fmt = (t) => t.map((c) => `${c.name} (${c.href})`).join(" > ");
+      if (fmt(shown) !== fmt(declared)) {
+        fail(url, `breadcrumb schema "${fmt(declared)}" does not match rendered "${fmt(shown)}"`);
+      }
+
+      /**
+       * Rendered but hidden is not rendered. Google's guidance is that
+       * breadcrumb markup describes something a person can see, so the
+       * container is checked against the CSS the page actually loads.
+       */
+      const css =
+        (h.match(/<link rel="stylesheet" href="([^"]+)"/g) ?? [])
+          .map((tag) => tag.match(/href="([^"]+)"/)[1])
+          .filter((href) => existsSync(path.join("dist", href)))
+          .map((href) => readFileSync(path.join("dist", href), "utf8"))
+          .join("") + (h.match(/<style>[\s\S]*?<\/style>/g) ?? []).join("");
+
+      const HIDE = /display\s*:\s*none|visibility\s*:\s*hidden|clip\s*:\s*rect\(\s*0|opacity\s*:\s*0|font-size\s*:\s*0/;
+      for (const m of css.matchAll(/([^{}]*\.crumbs[^{}]*)\{([^}]*)\}/g)) {
+        if (HIDE.test(m[2])) {
+          fail(url, `breadcrumbs are hidden by CSS: ${m[1].trim()} { ${m[2].trim()} }`);
+        }
       }
     }
   }

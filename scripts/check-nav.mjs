@@ -43,6 +43,16 @@ for (const entry of entries) {
   }
 }
 
+// Two URLs sharing a label makes the nav and every breadcrumb ambiguous.
+const labels = new Map();
+for (const entry of entries) {
+  const prior = labels.get(entry.label);
+  if (prior && prior !== entry.href) {
+    problems.push(`label "${entry.label}" is used by both ${prior} and ${entry.href}`);
+  }
+  labels.set(entry.label, entry.href);
+}
+
 // §2.6 — lead paint must not be linked or referenced anywhere.
 for (const entry of entries) {
   if (entry.href.includes("lead-paint")) {
