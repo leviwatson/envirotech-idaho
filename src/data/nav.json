@@ -67,7 +67,7 @@
     "_comment": "Declared, not rendered in the header. For footer, sitemap, and src/data/link-map.json.",
 
     "services": [
-      { "label": "Emergency Water Damage", "href": "/emergency-water-damage/", "built": false },
+      { "label": "Emergency Water Damage", "href": "/emergency-water-damage/", "built": true },
       { "label": "Reconstruction After Remediation", "href": "/reconstruction/", "built": true }
     ],
 

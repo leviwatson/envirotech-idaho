@@ -207,4 +207,49 @@ const audiences = defineCollection({
   schema: ({ image }) => sectionsPage(image),
 });
 
-export const collections = { services, problems, audiences };
+/**
+ * Emergency pages (§9). Their own collection because their shape is not a
+ * service page's: no process table, no scope list, no timeline. The reader has
+ * water coming in and needs a phone number and three things to do, in that
+ * order, before anything else on the page.
+ */
+const emergency = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/emergency" }),
+  schema: () =>
+    z.object({
+      slug: z.string(),
+      title: z.string().max(60),
+      h1: z.string(),
+      metaDescription: z.string().min(140).max(158),
+      subhead: z.string(),
+
+      /** The amber band at the very top, above the H1. */
+      callBand: z.object({ label: z.string(), note: z.string() }),
+
+      /** What to do before anyone arrives. Rendered large and high contrast. */
+      actions: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        items: z.array(z.object({ title: z.string(), detail: z.string() })).min(1),
+        /** Stated once, plainly. Never a wall of warnings. */
+        caution: z.string(),
+      }),
+
+      arrival: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        steps: z.array(z.object({ title: z.string(), description: z.string() })).min(1),
+      }),
+
+      /** Everything below the fold: response, insurance, what follows. */
+      sections: z
+        .array(z.object({ heading: z.string(), paragraphs: z.array(z.string()).min(1) }))
+        .min(1),
+
+      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+      relatedServices: z.array(z.string()).default([]),
+      relatedCities: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = { services, problems, audiences, emergency };

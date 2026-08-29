@@ -153,6 +153,66 @@ for (const dir of ["src/content/problems", "src/content/audiences"]) {
   }
 }
 
+// --- Emergency pages -------------------------------------------------------
+
+for (const { file, data } of await loadCollection("src/content/emergency")) {
+  const page = `/${data.slug}/`;
+  const h = await html(data.slug);
+  if (!h) {
+    fail(page, `built from ${file} but dist/${data.slug}/index.html does not exist`);
+    continue;
+  }
+
+  // One form only, and it is the secondary path at the foot of the page.
+  checkCommon(page, h, { forms: 1, schemaTypes: ["Service", "BreadcrumbList", "FAQPage"] });
+
+  const band = h.indexOf('class="callband"');
+  const h1 = h.search(H1);
+  const actions = h.indexOf('data-actions');
+  const arrival = h.indexOf('class="arrival"');
+  const form = h.indexOf('class="lead__form"');
+
+  if (band === -1) fail(page, "amber call band missing — the phone number must be the first thing on the page");
+  if (!/class="callband"[^>]*/.test(h) || !h.includes('href="tel:2084094505"')) {
+    fail(page, "call band is not a tel: link");
+  }
+
+  // The ordering IS the page. Anything that sells must come after anything
+  // that helps, and the phone number comes before both.
+  if (band > -1 && h1 > -1 && band > h1) fail(page, "call band renders after the h1");
+  if (actions === -1) fail(page, "immediate-actions block missing");
+  if (actions > -1 && arrival > -1 && actions > arrival) {
+    fail(page, "arrival section renders before the immediate actions");
+  }
+  if (actions > -1 && form > -1 && form < actions) {
+    fail(page, "a lead form renders above the immediate actions — calling is the primary path here");
+  }
+
+  const wantActions = data.actions?.items?.length ?? 0;
+  const gotActions = count(h, /class="action__num mono"/g);
+  if (gotActions !== wantActions) {
+    fail(page, `entry lists ${wantActions} immediate actions but ${gotActions} rendered`);
+  }
+  if (data.actions?.caution && !h.includes('class="actions__caution"')) {
+    fail(page, "safety caution did not render");
+  }
+
+  const wantSteps = data.arrival?.steps?.length ?? 0;
+  const gotSteps = count(h, /class="arrival__step"/g);
+  if (gotSteps !== wantSteps) fail(page, `arrival has ${wantSteps} steps but ${gotSteps} rendered`);
+
+  const wantSections = data.sections?.length ?? 0;
+  const headings = count(h, /<h2[^>]*>/g);
+  if (headings < wantSections) {
+    fail(page, `entry declares ${wantSections} sections but only ${headings} h2 headings rendered`);
+  }
+
+  // With no hero form to scroll past, the persistent bar must not be gated.
+  if (h.includes("data-cta-bar") && /data-cta-bar[^>]*data-watch-top="[^"]+"/.test(h)) {
+    fail(page, "CTA bar has a watch-top on a page with no hero form — it would never appear");
+  }
+}
+
 // --- Standalone pages ------------------------------------------------------
 
 for (const [slug, opts] of [
@@ -189,5 +249,6 @@ if (problems.length) {
 const pages =
   (await loadCollection("src/content/services")).length +
   (await loadCollection("src/content/problems")).length +
-  (await loadCollection("src/content/audiences")).length;
+  (await loadCollection("src/content/audiences")).length +
+  (await loadCollection("src/content/emergency")).length;
 console.log(`Structure check passed — ${pages} collection page(s) match what their entries describe.`);

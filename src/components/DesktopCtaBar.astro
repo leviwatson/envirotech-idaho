@@ -16,8 +16,13 @@
 import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
 
 interface Props {
-  /** Selector for the form that must scroll PAST before the bar appears. */
-  watchTop: string;
+  /**
+   * Selector for the form that must scroll PAST before the bar appears.
+   * Omit on a page with no hero form — the bar is then present from the top,
+   * which is what an emergency page wants, since there is nothing above the
+   * fold to scroll past before the phone number is worth showing.
+   */
+  watchTop?: string;
   /** Selector for the closing form. The bar hides once this is on screen. */
   watchBottom: string;
 }
@@ -29,6 +34,7 @@ const { watchTop, watchBottom } = Astro.props;
   data-cta-bar
   data-watch-top={watchTop}
   data-watch-bottom={watchBottom}
+  data-show={watchTop ? undefined : ""}
 >
   <div class="container cta-bar__inner">
     <p class="cta-bar__copy">Free inspection. Someone answers 24/7.</p>
@@ -154,11 +160,14 @@ const { watchTop, watchBottom } = Astro.props;
    * guess from scroll offsets.
    */
   const bar = document.querySelector<HTMLElement>("[data-cta-bar]");
-  const top = bar && document.querySelector(bar.dataset.watchTop ?? "");
+  const topSelector = bar?.dataset.watchTop;
+  const top = topSelector ? document.querySelector(topSelector) : null;
   const bottom = bar && document.querySelector(bar.dataset.watchBottom ?? "");
 
-  if (bar && top && bottom) {
-    let topOnScreen = true;
+  if (bar && bottom) {
+    // With no top element to watch, nothing has to scroll past first: the bar
+    // starts visible and only the closing form can hide it.
+    let topOnScreen = Boolean(top);
     let bottomOnScreen = false;
 
     const update = () => {
@@ -175,7 +184,8 @@ const { watchTop, watchBottom } = Astro.props;
         { threshold: 0 },
       ).observe(el);
 
-    watch(top, (v) => (topOnScreen = v));
+    if (top) watch(top, (v) => (topOnScreen = v));
     watch(bottom, (v) => (bottomOnScreen = v));
+    update();
   }
 </script>
