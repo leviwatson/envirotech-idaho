@@ -81,7 +81,7 @@ sections:
     paragraphs:
       - "Send the client, or send us the address and we will make the call. The inspection is free and carries no obligation, and it ends with a written scope and a number both sides can work from."
       - "With your client's permission we will keep you updated as the job runs, because you are usually the one managing the timeline for both sides. We are not trying to take over the relationship — you brought us in, and the client is yours."
-      - "If testing is needed, that is a separate paid service and we quote it before anything is collected. Samples go to an independent accredited lab. We never describe testing as free, because it is not, and an agent who has been told otherwise once does not forget it."
+      - "If testing is needed, that is a different company entirely. Your client engages an independent testing company and pays them directly — we do not perform it, quote it, or take a percentage of it. It means our read on whether a result is even worth commissioning costs us nothing to give, which is not true of every company your client might call."
 
 faqs:
   - question: How fast can you get to a property?

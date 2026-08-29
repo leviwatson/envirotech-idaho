@@ -64,7 +64,7 @@ scope:
     - Antimicrobial treatment of affected structure where the water warrants it
     - Photo documentation and a scope written so an adjuster can evaluate it
     - Reconstruction of what came out, including drywall, texture, paint, and flooring
-    - Independent lab testing where growth is suspected, quoted separately
+    - A written scope you can take to an independent testing company, where growth is suspected
   excludesHeading: Three things we will not do
   excludes:
     - "We do not pull equipment early. Drying stops when the material reads dry against a dry standard, not when the days on the estimate run out. If it needs another day it gets another day, and you hear why."
@@ -91,7 +91,7 @@ inspectionTesting:
   heading: The inspection is free. Testing is not.
   paragraphs:
     - "For water that has already stopped, someone comes out, reads the structure, and writes you an estimate. That visit costs nothing and there is no obligation attached to it."
-    - "Testing is a separate, paid service. On a water job that usually means air or surface sampling for mold after the fact — where water sat long enough that growth is a real question and you need an answer that is not our opinion. Samples go to an independent accredited lab and you get the documented result back. We tell you what it costs before anything is collected."
+    - "Laboratory testing is a different job done by a different company. On a water loss that usually means air or surface sampling for mold after the fact, where water sat long enough that growth is a real question and you want an answer that is not our opinion. You engage an independent testing company and pay them directly. We do not perform that work, sell it, or take a percentage of it."
     - "Keeping that lab independent is the whole point. The company that would get paid to remediate should not also be the company deciding whether you need remediation."
 
 insurance:

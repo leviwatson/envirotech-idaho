@@ -23,9 +23,7 @@
       "kind": "group",
       "children": [
         { "label": "Mold Remediation", "href": "/mold-remediation/", "built": true },
-        { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": true },
         { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": true },
-        { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": true },
         { "label": "Water Damage Restoration", "href": "/water-damage-restoration/", "built": true },
         { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": true },
         { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true }
@@ -37,6 +35,8 @@
       "kind": "group",
       "children": [
       { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": true },
+      { "label": "How Mold Testing Works", "href": "/mold-inspection-testing/", "built": true },
+      { "label": "Asbestos Testing Before a Remodel", "href": "/asbestos-testing/", "built": true },
       { "label": "Black Mold in a Crawl Space", "href": "/black-mold-in-crawl-space/", "built": false },
       { "label": "Musty Smell in a Basement", "href": "/musty-smell-in-basement/", "built": false },
       { "label": "Water Stain on a Ceiling", "href": "/water-stain-on-ceiling/", "built": false },

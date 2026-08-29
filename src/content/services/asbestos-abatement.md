@@ -53,8 +53,8 @@ process:
   heading: How an asbestos abatement job runs
   intro: "Seven steps, in this order. Air monitoring runs through the middle of it and an independent lab closes it out."
   steps:
-    - title: Inspection and testing
-      description: "Someone comes out and identifies what is suspect. Bulk samples go to an accredited laboratory to confirm whether the material actually contains asbestos and at what concentration. Plenty of jobs stop here, because the material comes back negative and there is nothing to abate. The inspection is free; the lab work is a separate paid service and you hear the cost first."
+    - title: Inspection, and a result you already hold
+      description: "Nothing starts without a laboratory result confirming the material contains asbestos, and we do not produce that result. You engage an independent testing company and pay them directly. Our part is free: we come out, identify what is suspect within your project, and tell you plainly what is worth sampling. Plenty of jobs stop at the result, because the material comes back negative and there is nothing to abate."
     - title: Containment
       description: "Poly sheeting seals the work area and every seam is taped. A negative air machine runs two pre-filters into a HEPA final stage and ducts to an exterior opening. A decontamination chamber goes in at the entry, so nobody walks out of the work area without passing through it."
     - title: Removal
@@ -80,7 +80,7 @@ scope:
   intro: "An asbestos job with us covers the work below. Anything on your property that falls outside it, you hear about before we start."
   items:
     - Free on-site inspection with a written estimate
-    - Bulk sampling and accredited laboratory analysis, quoted separately before collection
+    - A written scope built from your laboratory result, once an independent company has produced one
     - Sealed negative-pressure containment with HEPA filtration and a decontamination chamber
     - Wet removal, double-bagging, and labelling inside the containment
     - Air monitoring during the work, not only at the end
@@ -91,7 +91,7 @@ scope:
   excludesHeading: Three things we will not do
   excludes:
     - "We will not sign our own clearance. An independent accredited lab performs the final testing and issues the result. Most companies in this trade self-clear, and the fact that it is normal does not make it right."
-    - "We will not remove material before it has been tested. Assuming a ceiling contains asbestos and abating it anyway costs you money you may not need to spend. Assuming it does not, and being wrong, is considerably worse."
+    - "We will not remove material before an independent company has tested it. Assuming a ceiling contains asbestos and abating it anyway costs you money you may not need to spend. Assuming it does not, and being wrong, is considerably worse."
     - "We will not work without containment because a job looks small. There is no size of asbestos removal where letting fibres into the rest of the house is acceptable."
 
 timeline:
@@ -139,7 +139,7 @@ faqs:
   - question: Does asbestos always have to be removed?
     answer: "No, and anyone telling you otherwise is selling. Intact, undamaged material that is not going to be disturbed can often be left in place and documented, or encapsulated so it cannot release fibres. Removal is the right answer when the material is damaged, when it is in the way of work you are doing, or when a sale or a lender requires it — the situation covered in [what to do when something is flagged on an inspection report](/mold-found-during-home-inspection/). The inspection tells you which situation you are in, and it is free."
   - question: What does asbestos abatement cost?
-    answer: "We do not publish prices, because the number depends on the material, the square footage, how accessible it is, how complex the containment has to be, and whether reconstruction follows. Lab work and clearance testing are quoted separately from the removal. The inspection is free and ends with a written number rather than a range."
+    answer: "We do not publish prices, because the number depends on the material, the square footage, how accessible it is, how complex the containment has to be, and whether reconstruction follows. Diagnostic testing is not in our number at all — you engage and pay a testing company directly for that. Our inspection is free and ends with a written figure rather than a range."
 
 relatedProblems:
   - /popcorn-ceiling-asbestos/

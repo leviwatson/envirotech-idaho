@@ -28,13 +28,26 @@ export const CONTAINMENT = {
     "Negative-pressure containment on a Treasure Valley job: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening.",
 } as const;
 
-/** §6. These are different things and the copy must never blur them. */
+/**
+ * §6. The inspection and the testing are different things done by different
+ * companies, and the copy must never blur them.
+ *
+ * Enviro-Tech does NOT perform laboratory testing. Diagnostic testing is
+ * engaged and paid for by the customer, directly with an independent testing
+ * company. Clearance testing at the end of an abatement is engaged by
+ * Enviro-Tech but still performed and issued by that independent company.
+ *
+ * Never write anything implying we collect samples, quote testing, or mark it
+ * up. "Free testing" remains forbidden — testing is not free, it is simply
+ * not ours.
+ */
 export const INSPECTION_TESTING = {
-  heading: "The inspection is free. Testing is not.",
+  heading: "The inspection is free. The testing is not ours.",
   paragraphs: [
-    "Someone comes out, looks at the problem, and writes you an estimate. That visit costs nothing and there is no obligation attached to it.",
-    "Testing is a separate, paid service. If samples need to be collected, they go to an independent accredited lab and you get documented results back. We tell you what it costs before anything is collected.",
-    "The reason it works that way is worth saying plainly: the company that gets paid to remove mold should not also be the company deciding whether you have mold. Keeping the lab independent is what makes the result mean something to an insurer, a buyer's agent, or you.",
+    "Someone comes out, looks at the problem, takes moisture readings, and writes you an estimate. That visit costs nothing and there is no obligation attached to it.",
+    "Laboratory testing is a different job done by a different company. We do not perform it, we do not sell it, and we take no percentage of it. If you want material or air analysed, you engage an independent testing company and pay them directly, and their result belongs to you regardless of who ends up doing the work.",
+    "That separation is deliberate, and it is the whole argument. We are the company that gets paid to remove the problem. Us deciding whether you have one, and us certifying we fixed it, would be two conflicts of interest sitting either side of the same job. We have neither. Where work ends in clearance testing, we engage an independent company to carry it out and they issue the result directly.",
+    "It has a practical consequence worth knowing. Because we do not sell testing, we have nothing to gain from telling you to buy it. When we say a lab result will not change what you should do next, that advice costs us nothing to give.",
   ],
 } as const;
 

@@ -124,12 +124,18 @@ Convention: `{{TOKEN_NAME}}` in content, tracked in `PLACEHOLDERS.md` at repo ro
 
 Never write "we don't work with insurance companies." Never write "we're on your side against your insurer."
 
-**Free inspection. Paid testing.** These are different things and the copy must never blur them.
+**Free inspection. Testing is a different company.** These are different things, done by different businesses, and the copy must never blur them.
 
-- The **inspection** — someone comes out, looks at the problem, writes an estimate — is **free**.
-- **Testing** — collecting samples and sending them to an independent lab — is **paid**.
+- The **inspection** is **ours** and it is **free**. Someone comes out, looks at the problem, takes moisture readings, writes an estimate. No samples, no charge.
+- **Testing is not ours.** Enviro-Tech does not perform laboratory testing, does not sell it, and takes no percentage of it.
+  - **Diagnostic testing** (does a problem exist): the **customer engages and pays an independent testing company directly**. We are not in that transaction.
+  - **Clearance testing** (verifying finished work): **Enviro-Tech engages** the independent company as part of the job, but still does not perform it. They issue the result.
 
-Never write "free testing," "free mold test," or "free air quality test." When testing cost comes up, sell the reason: samples go to an independent accredited lab, results are documented, and the company that gets paid to remove mold is not the company deciding whether you have mold. That separation is the point.
+Never write "free testing," "free mold test," or "free air quality test" — testing is not free, it is simply not ours. Equally, never write anything implying we collect samples, quote testing, produce a sample plan, or mark it up.
+
+The separation is the strongest argument on the site, so state it fully rather than halfway. We are the company that gets paid to remove the problem. Us deciding whether you have one, and us certifying we fixed it, would be two conflicts of interest sitting either side of the same job. We have neither.
+
+It has a corollary worth using: because we do not sell testing, telling a homeowner they do not need it costs us nothing. A company that bills for sampling cannot say that as cheaply. Referrals carry **no fee** — that is the only reason the recommendation is worth anything, and the copy should say so.
 
 **24/7 is real and confirmed.** Put it in the hero. Water damage is the emergency service and the emergency page carries its own phone treatment.
 
@@ -165,9 +171,9 @@ Don't:
 | Service | Priority | Notes |
 |---|---|---|
 | Mold remediation | **Primary** | Highest search volume, client wants more of it |
-| Mold inspection & testing | High | Free inspection / paid lab testing distinction |
+| Mold inspection (page: how testing works) | High | **We do not test.** The page explains the process, names the independent company as the tester, and positions us as the free inspection and the remediation. See §6 |
 | Asbestos abatement | High | Highest margin, third-party clearance is the hook |
-| Asbestos testing | High | |
+| Asbestos inspection (page: testing before a remodel) | High | **We do not test.** Pre-renovation intent; independent company does the sampling. See §6 |
 | Water damage restoration | High | 24/7 emergency, own emergency page |
 | Crawlspace drainage | Medium | Treasure Valley crawlspace housing stock |
 | Crawlspace encapsulation | Medium | |
@@ -181,6 +187,8 @@ Don't:
 **Documented process sequences** — these are real ordered sequences, so numbered steps are appropriate here (and only here):
 
 *Asbestos:* Inspection & testing → Containment → Removal → Air monitoring → Decontamination → Disposal → Third-party clearance testing
+
+Note on step 1: the inspection is ours, the testing is not. Copy describing that step must name the independent company as the party that samples and analyses (§6).
 
 *Mold:* Inspection & assessment → Containment → HEPA air filtration → Removal → Cleaning & sanitizing → Restoration → Final inspection
 

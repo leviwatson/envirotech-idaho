@@ -54,7 +54,7 @@ scope:
     - Drying equipment and monitoring until materials read dry
     - Reconstruction of what came out, including drywall, texture, paint, insulation, and vapor barrier
     - Photo documentation and a scope written so an adjuster can evaluate it
-    - Independent lab clearance testing where the job calls for it, quoted separately
+    - Independent clearance testing where the job calls for it, carried out by a company we engage and never by us
   excludesHeading: Three things we will not do
   excludes:
     - "We do not paint over it. Primer and paint hide the material and change nothing about the moisture, so the growth continues behind a finish that now has to come off twice."
