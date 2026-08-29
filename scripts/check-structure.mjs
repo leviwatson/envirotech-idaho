@@ -482,6 +482,35 @@ checkSimilarity("service pages", serviceBodies, SERVICE_SIMILARITY_CAP);
   }
 }
 
+// --- Internal link destinations (§12) --------------------------------------
+
+/**
+ * Every in-body link written in a collection entry must point at a URL listed
+ * in link-map.json. That catches typos, renames, and stale targets which would
+ * otherwise ship as soft 404s the moment a destination moved — the exact class
+ * of rot a hand-maintained set of prose links accumulates.
+ */
+{
+  const map = JSON.parse(await readFile("src/data/link-map.json", "utf8"));
+  const known = new Set(Object.keys(map.destinations));
+  const dirs = ["services", "problems", "audiences", "cities", "guides", "emergency", "home"];
+  for (const dir of dirs) {
+    for (const { file, data } of await loadCollection(`src/content/${dir}`)) {
+      const raw = JSON.stringify(data);
+      for (const [, href] of raw.matchAll(/\]\((\/[a-z0-9-]+\/)\)/g)) {
+        if (!known.has(href)) {
+          problems.push(`src/content/${dir}/${file}: links to ${href}, which is not in link-map.json (§12)`);
+        }
+      }
+      for (const [, key] of raw.matchAll(/\[\[([^\]]+)\]\]/g)) {
+        if (!(key.trim().toLowerCase() in map.keywords)) {
+          problems.push(`src/content/${dir}/${file}: [[${key}]] is not a keyword in link-map.json (§12)`);
+        }
+      }
+    }
+  }
+}
+
 // --- Heading punctuation (§13) ---------------------------------------------
 
 /**

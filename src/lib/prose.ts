@@ -1,25 +1,57 @@
 /**
  * Inline prose rendering for collection copy.
  *
- * Supports exactly two things, deliberately: [text](/href/) links and nothing
- * else. Copy in a collection entry is not a place for arbitrary HTML.
+ * Supports exactly two things, deliberately: [text](/href/) links and
+ * [[keyword]] shorthand. Copy in a collection entry is not a place for
+ * arbitrary HTML.
+ *
+ * Both resolve through src/data/link-map.json, which is the §12 authority on
+ * WHERE a concept links. Anchor wording stays contextual in the copy — §12
+ * asks for descriptive anchor text placed where it helps the reader, and
+ * flattening every link to one canonical phrase would make the site read like
+ * a directory. The map governs the destination; the sentence governs the words.
  *
  * A link whose target is not built yet renders as its plain text, so a page
- * can declare its §12 internal links before the targets exist without ever
+ * can declare its internal links before the targets exist without ever
  * shipping a dead link.
  */
-import { isBuilt } from "./links";
+import linkMap from "../data/link-map.json";
+
+const destinations = linkMap.destinations as Record<string, { label: string; built: boolean }>;
+const keywords = linkMap.keywords as Record<string, string>;
 
 const escapeHtml = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const LINK = /\[([^\]]+)\]\((\/[^)]*\/)\)/g;
+const SHORTHAND = /\[\[([^\]]+)\]\]/g;
 
-export const renderProse = (text: string): string =>
-  escapeHtml(text).replace(LINK, (_match, label: string, href: string) =>
-    isBuilt(href) ? `<a href="${href}">${label}</a>` : label,
+/** Is this destination live? Unknown hrefs are never linked. */
+export const isLinkable = (href: string): boolean => destinations[href]?.built === true;
+
+/** Every href referenced by prose, for the build-time validation pass. */
+export const knownDestination = (href: string): boolean => href in destinations;
+
+export const renderProse = (text: string): string => {
+  let out = escapeHtml(text);
+
+  // [[keyword]] — destination and default anchor both come from the map.
+  out = out.replace(SHORTHAND, (_m, key: string) => {
+    const href = keywords[key.trim().toLowerCase()];
+    if (!href) return key;
+    const dest = destinations[href];
+    if (!dest?.built) return dest?.label ?? key;
+    return `<a href="${href}">${dest.label}</a>`;
+  });
+
+  // [text](/href/) — explicit anchor wording, destination still validated.
+  out = out.replace(LINK, (_m, label: string, href: string) =>
+    isLinkable(href) ? `<a href="${href}">${label}</a>` : label,
   );
+
+  return out;
+};
 
 /** How many links in this text actually resolved — used by the §12 audit. */
 export const countLiveLinks = (text: string): number =>
-  [...text.matchAll(LINK)].filter(([, , href]) => isBuilt(href)).length;
+  [...text.matchAll(LINK)].filter(([, , href]) => isLinkable(href)).length;

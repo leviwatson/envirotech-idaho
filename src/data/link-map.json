@@ -1,0 +1,231 @@
+{
+  "_comment": [
+    "Internal linking map (§12). keyword -> destination URL.",
+    "",
+    "This is the authority on WHERE a concept links, not on how the anchor",
+    "reads. §12 asks for descriptive anchor text placed where it helps the",
+    "reader, so anchor wording stays contextual in the copy while the",
+    "destination for a given concept lives here once.",
+    "",
+    "src/lib/prose.ts validates every in-body link against , and",
+    "scripts/check-structure.mjs fails the build on a prose link to a URL that",
+    "is not listed — which catches typos, renames, and stale targets that would",
+    "otherwise ship as soft 404s.",
+    "",
+    " mirrors nav.json. An unbuilt destination renders as plain text."
+  ],
+  "keywords": {
+    "mold remediation": "/mold-remediation/",
+    "mold removal": "/mold-remediation/",
+    "mold testing": "/mold-inspection-testing/",
+    "mold inspection": "/mold-inspection-testing/",
+    "asbestos abatement": "/asbestos-abatement/",
+    "asbestos removal": "/asbestos-abatement/",
+    "asbestos testing": "/asbestos-testing/",
+    "water damage": "/water-damage-restoration/",
+    "emergency water damage": "/emergency-water-damage/",
+    "crawlspace drainage": "/crawlspace-drainage/",
+    "crawlspace encapsulation": "/crawlspace-encapsulation/",
+    "reconstruction": "/reconstruction/",
+    "remodeling": "/remodeling/",
+    "demolition": "/demolition/",
+    "radon mitigation": "/radon-mitigation/",
+    "containment process": "/our-containment-process/",
+    "realtors": "/for-realtors/",
+    "builders": "/for-builders/",
+    "property managers": "/for-property-managers/",
+    "commercial": "/commercial/",
+    "mold found during home inspection": "/mold-found-during-home-inspection/",
+    "black mold crawl space": "/black-mold-in-crawl-space/",
+    "musty smell": "/musty-smell-in-basement/",
+    "water stain ceiling": "/water-stain-on-ceiling/",
+    "popcorn ceiling asbestos": "/popcorn-ceiling-asbestos/",
+    "vermiculite": "/vermiculite-insulation/",
+    "testing before remodel": "/asbestos-testing-before-remodel/",
+    "insurance mold coverage": "/does-homeowners-insurance-cover-mold/",
+    "boise": "/mold-remediation-boise/",
+    "meridian": "/mold-remediation-meridian/",
+    "nampa": "/mold-remediation-nampa/",
+    "caldwell": "/mold-remediation-caldwell/",
+    "eagle": "/mold-remediation-eagle/",
+    "contact": "/contact/"
+  },
+  "destinations": {
+    "/mold-remediation/": {
+      "label": "Mold Remediation",
+      "built": true
+    },
+    "/asbestos-abatement/": {
+      "label": "Asbestos Abatement",
+      "built": true
+    },
+    "/water-damage-restoration/": {
+      "label": "Water Damage Restoration",
+      "built": true
+    },
+    "/crawlspace-drainage/": {
+      "label": "Crawlspace Drainage",
+      "built": true
+    },
+    "/crawlspace-encapsulation/": {
+      "label": "Crawlspace Encapsulation",
+      "built": true
+    },
+    "/radon-mitigation/": {
+      "label": "Radon Mitigation",
+      "built": true
+    },
+    "/demolition/": {
+      "label": "Demolition",
+      "built": true
+    },
+    "/remodeling/": {
+      "label": "Home Remodeling",
+      "built": true
+    },
+    "/service-areas/": {
+      "label": "Service Areas",
+      "built": false
+    },
+    "/mold-found-during-home-inspection/": {
+      "label": "Mold Found During a Home Inspection",
+      "built": true
+    },
+    "/mold-inspection-testing/": {
+      "label": "How Mold Testing Works",
+      "built": true
+    },
+    "/asbestos-testing/": {
+      "label": "Asbestos Testing Before a Remodel",
+      "built": true
+    },
+    "/black-mold-in-crawl-space/": {
+      "label": "Black Mold in a Crawl Space",
+      "built": true
+    },
+    "/musty-smell-in-basement/": {
+      "label": "Musty Smell in a Basement",
+      "built": true
+    },
+    "/water-stain-on-ceiling/": {
+      "label": "Water Stain on a Ceiling",
+      "built": true
+    },
+    "/popcorn-ceiling-asbestos/": {
+      "label": "Popcorn Ceiling Asbestos",
+      "built": true
+    },
+    "/vermiculite-insulation/": {
+      "label": "Vermiculite Insulation",
+      "built": true
+    },
+    "/asbestos-testing-before-remodel/": {
+      "label": "Asbestos Testing Before a Remodel",
+      "built": true
+    },
+    "/does-homeowners-insurance-cover-mold/": {
+      "label": "Does Homeowners Insurance Cover Mold?",
+      "built": true
+    },
+    "/mold-remediation-cost-idaho/": {
+      "label": "Mold Remediation Cost in Idaho",
+      "built": false
+    },
+    "/is-black-mold-dangerous/": {
+      "label": "Is Black Mold Dangerous?",
+      "built": false
+    },
+    "/for-realtors/": {
+      "label": "Realtors",
+      "built": true
+    },
+    "/for-builders/": {
+      "label": "Builders",
+      "built": true
+    },
+    "/for-property-managers/": {
+      "label": "Property Managers",
+      "built": true
+    },
+    "/commercial/": {
+      "label": "Commercial",
+      "built": true
+    },
+    "/our-containment-process/": {
+      "label": "Our Process",
+      "built": true
+    },
+    "/certifications/": {
+      "label": "Certifications",
+      "built": false
+    },
+    "/contact/": {
+      "label": "Contact",
+      "built": true
+    },
+    "/emergency-water-damage/": {
+      "label": "Emergency Water Damage",
+      "built": true
+    },
+    "/reconstruction/": {
+      "label": "Reconstruction After Remediation",
+      "built": true
+    },
+    "/mold-remediation-boise/": {
+      "label": "Mold Remediation in Boise",
+      "built": true
+    },
+    "/mold-remediation-meridian/": {
+      "label": "Mold Remediation in Meridian",
+      "built": true
+    },
+    "/mold-remediation-nampa/": {
+      "label": "Mold Remediation in Nampa",
+      "built": true
+    },
+    "/mold-remediation-caldwell/": {
+      "label": "Mold Remediation in Caldwell",
+      "built": true
+    },
+    "/mold-remediation-eagle/": {
+      "label": "Mold Remediation in Eagle",
+      "built": true
+    },
+    "/asbestos-removal-boise/": {
+      "label": "Asbestos Removal in Boise",
+      "built": false
+    },
+    "/asbestos-removal-meridian/": {
+      "label": "Asbestos Removal in Meridian",
+      "built": false
+    },
+    "/asbestos-removal-nampa/": {
+      "label": "Asbestos Removal in Nampa",
+      "built": false
+    },
+    "/asbestos-removal-caldwell/": {
+      "label": "Asbestos Removal in Caldwell",
+      "built": false
+    },
+    "/asbestos-removal-eagle/": {
+      "label": "Asbestos Removal in Eagle",
+      "built": false
+    },
+    "/about/": {
+      "label": "About",
+      "built": false
+    },
+    "/faq/": {
+      "label": "FAQ",
+      "built": false
+    },
+    "/reviews/": {
+      "label": "Reviews",
+      "built": false
+    },
+    "/privacy-policy/": {
+      "label": "Privacy Policy",
+      "built": false
+    }
+  }
+}

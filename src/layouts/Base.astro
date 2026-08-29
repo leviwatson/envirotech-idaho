@@ -10,7 +10,8 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import MobileCallBar from "../components/MobileCallBar.astro";
-import { STAGING_NOINDEX } from "../data/site";
+import { existsSync } from "node:fs";
+import { STAGING_NOINDEX, BUSINESS_NAME } from "../data/site";
 
 interface Props {
   title: string;
@@ -23,6 +24,23 @@ interface Props {
 const { title, description, noindex = false, schema = [] } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+
+/**
+ * Social card image. Referenced only if the asset actually exists — a broken
+ * og:image is worse than none, because a scraper caches the failure. Tracked
+ * in PLACEHOLDERS.md until the real file lands; the moment it does, every page
+ * picks it up with no code change.
+ */
+const OG_IMAGE = "/og-default.jpg";
+const ogImage = existsSync(`public${OG_IMAGE}`)
+  ? new URL(OG_IMAGE, Astro.site ?? Astro.url).href
+  : null;
+
+/**
+ * Article for content pages, website for the homepage. Derived rather than
+ * passed, so a new page cannot forget to set it.
+ */
+const ogType = Astro.url.pathname === "/" ? "website" : "article";
 ---
 
 <!doctype html>
@@ -35,6 +53,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
+    {/* Open Graph and Twitter, from the same title and description that feed
+        the <title> and meta description above — there is no second list to
+        keep in sync (§11). */}
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={BUSINESS_NAME} />
+    <meta property="og:locale" content="en_US" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
     {
       /* Staging blanket wins over the per-page flag; both end in noindex. */
       STAGING_NOINDEX ? (

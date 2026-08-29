@@ -312,6 +312,24 @@ Still needed beyond this page:
   This is the single highest-leverage asset on the list. It is the exact
   document a buyer's agent asks for, and being able to show one before the
   job is booked answers the objection that page exists to answer.
+- **`/og-default.jpg` does not exist — social cards have no image.** Every
+  page emits Open Graph and Twitter tags, but `og:image` and `twitter:image`
+  are **omitted** rather than pointing at a missing file, because a broken
+  og:image is worse than none: scrapers cache the failure. `twitter:card`
+  currently degrades to `summary` and becomes `summary_large_image`
+  automatically once the asset lands.
+
+  Needs a **1200×630 JPEG** at `public/og-default.jpg`. Logo on `--ink`, or a
+  containment photo with the wordmark — it is what every shared link renders
+  as, including anything a realtor forwards to a client. Drop the file in and
+  every page picks it up with no code change.
+
+- **The favicon is still Astro's scaffold logo.** `public/favicon.svg` is the
+  default mark that shipped with the framework, not Enviro-Tech's. Needs a real
+  favicon derived from the logo: `favicon.svg`, a 32×32 `favicon.ico`, and a
+  180×180 `apple-touch-icon.png`. Low effort, and currently every browser tab
+  and bookmark shows another company's logo.
+
 - **GTM container `GTM-N9GZF7W7`** exists on the current Wix site. Confirm
   whether it is still in use before carrying it over (§16).
 - **Full Wix URL list.** Required before decommissioning, for 301 mapping in
