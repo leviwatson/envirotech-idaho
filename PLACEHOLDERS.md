@@ -129,6 +129,19 @@ Reuses `PHOTO_HERO` and `PHOTO_CONTAINMENT_1`. The containment shot appears on
 this page captioned for asbestos — a decon chamber visible in frame would let
 one photo carry both pages honestly.
 
+**Shot list — the five service pages added after abatement (4 new):**
+
+| Slot | Ratio | Where it appears | What to shoot |
+|---|---|---|---|
+| `PHOTO_LAB_SAMPLE_1` | **3:2** | `/mold-inspection-testing/`, `/asbestos-testing/` | Bagged, labelled samples beside a chain-of-custody form. One photo serves both testing pages. |
+| `PHOTO_CRAWLSPACE_1` | **3:2** | `/crawlspace-drainage/` | Standing water in a crawlspace with the vapor barrier floated clear of the soil. The condition, not the repair — this is the photo that makes a homeowner recognise their own house. |
+| `PHOTO_ENCAPSULATION_1` | **3:2** | `/crawlspace-encapsulation/` | Finished liner run up the piers and stem wall with seams sealed. The vertical surfaces are the part that distinguishes encapsulation from loose sheeting, so get them in frame. |
+| `PHOTO_RECONSTRUCTION_1` | **3:2** | `/reconstruction/` | Rebuild in progress — drywall going back into a space that was opened for remediation. |
+
+`/reconstruction/` also uses `PHOTO_BEFORE_AFTER_1` and `PHOTO_BEFORE_AFTER_2`
+as its before/after pair. All five pages reuse `PHOTO_HERO` and
+`PHOTO_CONTAINMENT_1`.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

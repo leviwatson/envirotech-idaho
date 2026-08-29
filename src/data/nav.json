@@ -23,12 +23,12 @@
       "kind": "group",
       "children": [
         { "label": "Mold Remediation", "href": "/mold-remediation/", "built": true },
-        { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": false },
+        { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": true },
         { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": true },
-        { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": false },
+        { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": true },
         { "label": "Water Damage Restoration", "href": "/water-damage-restoration/", "built": false },
-        { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": false },
-        { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": false }
+        { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": true },
+        { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true }
       ]
     },
     { "label": "Service Areas", "href": "/service-areas/", "built": false },
@@ -68,7 +68,7 @@
 
     "services": [
       { "label": "Emergency Water Damage", "href": "/emergency-water-damage/", "built": false },
-      { "label": "Reconstruction After Remediation", "href": "/reconstruction/", "built": false }
+      { "label": "Reconstruction After Remediation", "href": "/reconstruction/", "built": true }
     ],
 
     "cities": [
