@@ -32,6 +32,22 @@
       ]
     },
     { "label": "Service Areas", "href": "/service-areas/", "built": false },
+    {
+      "label": "Common Problems",
+      "kind": "group",
+      "children": [
+      { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": true },
+      { "label": "Black Mold in a Crawl Space", "href": "/black-mold-in-crawl-space/", "built": false },
+      { "label": "Musty Smell in a Basement", "href": "/musty-smell-in-basement/", "built": false },
+      { "label": "Water Stain on a Ceiling", "href": "/water-stain-on-ceiling/", "built": false },
+      { "label": "Popcorn Ceiling Asbestos", "href": "/popcorn-ceiling-asbestos/", "built": false },
+      { "label": "Vermiculite Insulation", "href": "/vermiculite-insulation/", "built": false },
+      { "label": "Asbestos Testing Before a Remodel", "href": "/asbestos-testing-before-remodel/", "built": false },
+      { "label": "Does Homeowners Insurance Cover Mold?", "href": "/does-homeowners-insurance-cover-mold/", "built": false },
+      { "label": "Mold Remediation Cost in Idaho", "href": "/mold-remediation-cost-idaho/", "built": false },
+      { "label": "Is Black Mold Dangerous?", "href": "/is-black-mold-dangerous/", "built": false }
+      ]
+    },
     { "label": "Our Process", "href": "/our-containment-process/", "built": false },
     { "label": "Certifications", "href": "/certifications/", "built": false },
     { "label": "Contact", "href": "/contact/", "built": true }
@@ -59,18 +75,6 @@
       { "label": "Asbestos Removal in Eagle", "href": "/asbestos-removal-eagle/", "built": false, "phase": 2 }
     ],
 
-    "problems": [
-      { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": true },
-      { "label": "Black Mold in a Crawl Space", "href": "/black-mold-in-crawl-space/", "built": false },
-      { "label": "Musty Smell in a Basement", "href": "/musty-smell-in-basement/", "built": false },
-      { "label": "Water Stain on a Ceiling", "href": "/water-stain-on-ceiling/", "built": false },
-      { "label": "Popcorn Ceiling Asbestos", "href": "/popcorn-ceiling-asbestos/", "built": false },
-      { "label": "Vermiculite Insulation", "href": "/vermiculite-insulation/", "built": false },
-      { "label": "Asbestos Testing Before a Remodel", "href": "/asbestos-testing-before-remodel/", "built": false },
-      { "label": "Does Homeowners Insurance Cover Mold?", "href": "/does-homeowners-insurance-cover-mold/", "built": false },
-      { "label": "Mold Remediation Cost in Idaho", "href": "/mold-remediation-cost-idaho/", "built": false },
-      { "label": "Is Black Mold Dangerous?", "href": "/is-black-mold-dangerous/", "built": false }
-    ],
 
     "audiences": [
       { "label": "For Realtors", "href": "/for-realtors/", "built": false },
