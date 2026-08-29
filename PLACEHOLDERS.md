@@ -135,13 +135,27 @@ Still needed beyond this page:
 
 ## Not a placeholder, but still open
 
-- **Resend not configured.** The lead Worker at `src/worker/index.ts` is
-  built and deployed, but `RESEND_API_KEY` is unset, so `/api/lead` returns
-  `500 not_configured` and the form shows its "call us" fallback. Two steps:
-  `npx wrangler secret put RESEND_API_KEY`, and verify `envirotechidaho.com`
-  in Resend so `website@envirotechidaho.com` can send. Resend will not send
-  from an unverified domain, and its test sender only delivers to the Resend
-  account owner, so there is no workaround that reaches `office@`.
+- **`LEAD_WEBHOOK_URL` is not set.** The lead Worker validates, rate-limits,
+  and forwards, but `/api/lead` returns `500 not_configured` until the secret
+  exists, and the form shows its "call us" fallback. Set it with:
+
+  ```
+  npx wrangler secret put LEAD_WEBHOOK_URL
+  ```
+
+  Point it at whatever receives leads — Zapier, Make, n8n, a CRM endpoint —
+  and have that destination email `office@envirotechidaho.com`. Optionally set
+  `LEAD_WEBHOOK_TOKEN` too; it is sent as `X-Lead-Token` if the receiver wants
+  to authenticate the caller.
+
+  **The receiving end must be durable.** Nothing identifying is logged, by
+  design, so a lead that fails delivery cannot be recovered afterwards. The
+  Worker retries once and then tells the customer to phone, but the webhook
+  target should have its own retry or queue rather than dropping on error.
+
+  Payload is JSON: `name`, `phone`, `email`, `city`, `service`, `details`,
+  `sourcePath`, `sourceUrl`, `receivedAt`, `receivedAtLocal`, `requestId`.
+
 - **`STAGING_NOINDEX` in `src/data/site.ts` is `true`.** Every page emits
   `<meta name="robots" content="noindex">` while the site is on workers.dev,
   because the canonical already points at `https://envirotechidaho.com` and an

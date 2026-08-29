@@ -417,7 +417,23 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
           headers: { Accept: "application/json" },
         });
 
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        // The endpoint returns a reason; a rate-limited person is not having
+        // the same problem as a failed delivery and should not read the same
+        // message. Every branch still ends with the phone number.
+        const result = await response.json().catch(() => ({}) as { error?: string });
+
+        if (!response.ok) {
+          const message =
+            result.error === "rate_limited"
+              ? `That is a few requests in quick succession, so we have paused new ones for a minute. If it is urgent, do not wait — ${callFallback}`
+              : result.error === "missing_required"
+                ? "We need a name and a phone number to call you back."
+                : `That did not send. ${callFallback}`;
+          button.disabled = false;
+          button.textContent = original;
+          setStatus("error", message);
+          return;
+        }
 
         form.querySelector<HTMLElement>(".lead__grid")?.setAttribute("hidden", "");
         button.hidden = true;
@@ -426,6 +442,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
           `Got it. We will call you to set up the inspection — usually same day, and we are on site within one to two days for non-emergency work. If it is urgent, call <a class="mono" href="${PHONE_LINK}">${PHONE}</a>.`,
         );
       } catch {
+        // Network failure, offline, request blocked.
         button.disabled = false;
         button.textContent = original;
         setStatus("error", `That did not send. ${callFallback}`);

@@ -23,10 +23,11 @@ export const CITIES = ["Boise", "Meridian", "Nampa", "Caldwell", "Eagle"] as con
  * Where the lead form posts.
  *
  * Handled by src/worker/index.ts, scoped to /api/* via run_worker_first in
- * wrangler.jsonc. Delivery still needs RESEND_API_KEY set and the domain
- * verified in Resend — see PLACEHOLDERS.md. The form degrades to a native
- * POST without JS, so this constant is the only thing that changes if the
- * endpoint ever moves.
+ * wrangler.jsonc. The handler is page-agnostic: every form on the site posts
+ * here and stamps its own source path, so this constant is the only thing
+ * that changes if the endpoint ever moves.
+ *
+ * Delivery needs the LEAD_WEBHOOK_URL secret set — see PLACEHOLDERS.md.
  */
 export const LEAD_ENDPOINT = "/api/lead";
 

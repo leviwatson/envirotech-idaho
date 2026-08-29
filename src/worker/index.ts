@@ -1,33 +1,44 @@
 /**
  * Lead delivery Worker.
  *
- * The site is static assets on Cloudflare Workers. This script handles the one
+ * The site is static assets on Cloudflare Workers. This handles the one
  * dynamic route the site has — POST /api/lead — and Cloudflare serves
  * everything else straight from ./dist. `run_worker_first` in wrangler.jsonc
- * scopes this to /api/*; nothing else touches the Worker.
+ * scopes this to /api/*, so nothing else invokes the Worker.
  *
- * At a ~$7,500 average job (CLAUDE.md §1) a dropped lead is expensive, so the
- * failure behaviour matters more than the happy path:
- *  - A submission that cannot be emailed returns a non-2xx, which makes the
- *    form surface its "call us" fallback. It never reports success it did not
- *    achieve, and it never swallows a lead silently.
- *  - Every failure is logged with enough context to reconstruct the lead from
- *    Workers logs if the email never lands.
+ * The handler is page-agnostic: every LeadForm on the site posts the same
+ * payload here and stamps its own path, so adding the form to a new page
+ * needs no change in this file.
+ *
+ * PRIVACY: nothing identifying is ever logged. No name, phone, email, address
+ * or free text reaches console output, and the client IP is hashed before it
+ * is used as a rate-limit key. Diagnostics carry a request id, a status, and
+ * the source path — enough to debug a failure, nothing that describes a
+ * person. The consequence is deliberate and worth knowing: a submission that
+ * cannot be delivered is NOT recoverable from logs. That is what the retry
+ * and the phone-number fallback are for.
  */
 
+interface RateLimiter {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}
+
 interface Env {
-  /** Resend API key. Set with: npx wrangler secret put RESEND_API_KEY */
-  RESEND_API_KEY?: string;
-  /** Destination inbox. */
-  LEAD_TO: string;
-  /** Sender. Must be on a domain verified in Resend. */
-  LEAD_FROM: string;
-  LEAD_FROM_NAME: string;
-  /** Static asset binding — used for the no-JS redirect target. */
+  /**
+   * Where leads are forwarded. Set with:
+   *   npx wrangler secret put LEAD_WEBHOOK_URL
+   * Never committed — it is a secret, not a var, because most webhook URLs
+   * are themselves the credential.
+   */
+  LEAD_WEBHOOK_URL?: string;
+  /** Optional shared secret, sent as X-Lead-Token if the receiver wants one. */
+  LEAD_WEBHOOK_TOKEN?: string;
+  /** Cloudflare rate limiting binding. Absent bindings degrade gracefully. */
+  LEAD_LIMITER?: RateLimiter;
   ASSETS: Fetcher;
 }
 
-/** Field length caps. Generous for humans, bounded against payload abuse. */
+/** Field caps. Generous for humans, bounded against payload abuse. */
 const LIMITS = {
   name: 120,
   phone: 40,
@@ -47,12 +58,18 @@ const json = (body: unknown, status: number) =>
     headers: { "content-type": "application/json; charset=utf-8" },
   });
 
-/**
- * The no-JS path posts natively and gets a redirect; the enhanced path sends
- * Accept: application/json and gets JSON back.
- */
+/** Enhanced form sends Accept: application/json; a native POST does not. */
 const wantsJson = (request: Request) =>
   (request.headers.get("accept") ?? "").includes("application/json");
+
+/** Short, non-reversible identifier for a client, for rate limiting only. */
+const hashed = async (value: string): Promise<string> => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)]
+    .slice(0, 8)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+};
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -63,26 +80,40 @@ export default {
       return new Response("Method not allowed", { status: 405, headers: { allow: "POST" } });
     }
 
-    // Same-origin check. Not a security boundary — just keeps the endpoint
-    // from being trivially used as a mail relay from another site.
+    // Same-origin check. Not a security boundary — it just stops the endpoint
+    // being used as an open relay from another site.
     const origin = request.headers.get("origin");
     if (origin && new URL(origin).host !== url.host) {
       return json({ ok: false, error: "bad_origin" }, 403);
     }
 
+    // Correlates a client-side failure with a log line, and carries nothing
+    // about who submitted.
+    const requestId = crypto.randomUUID().slice(0, 8);
+
     let form: FormData;
     try {
       form = await request.formData();
     } catch {
-      return json({ ok: false, error: "bad_request" }, 400);
+      return json({ ok: false, error: "bad_request", requestId }, 400);
     }
 
-    // Honeypot. Bots fill the hidden field; humans never see it. Return a
-    // plausible success so the bot has nothing to learn from the response.
+    const redirect = () => Response.redirect(new URL("/thank-you/", url).href, 303);
+
+    // Honeypot. Bots fill the hidden field; humans never see it. Answer with a
+    // plausible success so the bot learns nothing, and drop it on the floor.
     if (clean(form.get("company"), 200) !== "") {
-      return wantsJson(request)
-        ? json({ ok: true }, 200)
-        : Response.redirect(new URL("/thank-you/", url).href, 303);
+      return wantsJson(request) ? json({ ok: true }, 200) : redirect();
+    }
+
+    // Rate limit on a hash of the client IP. The raw address is never stored,
+    // logged, or forwarded.
+    const ip = request.headers.get("cf-connecting-ip");
+    if (env.LEAD_LIMITER && ip) {
+      const { success } = await env.LEAD_LIMITER.limit({ key: await hashed(ip) });
+      if (!success) {
+        return json({ ok: false, error: "rate_limited", requestId }, 429);
+      }
     }
 
     const lead = {
@@ -95,79 +126,59 @@ export default {
       source: clean(form.get("source"), LIMITS.source),
     };
 
-    // Mirrors the `required` attributes on the form. Name and phone only —
-    // the field list is deliberately short (§10) and anything more is optional.
+    // Mirrors the `required` attributes on the form. Name and phone only.
     if (!lead.name || !lead.phone) {
-      return json({ ok: false, error: "missing_required" }, 422);
+      return json({ ok: false, error: "missing_required", requestId }, 422);
     }
 
-    if (!env.RESEND_API_KEY) {
-      // Misconfiguration, not a user error. Log the whole lead so it is
-      // recoverable, and fail loudly so the form shows the phone number.
-      console.error("RESEND_API_KEY missing — lead not delivered", JSON.stringify(lead));
-      return json({ ok: false, error: "not_configured" }, 500);
+    if (!env.LEAD_WEBHOOK_URL) {
+      console.error(`[${requestId}] LEAD_WEBHOOK_URL is not set — lead not delivered`);
+      return json({ ok: false, error: "not_configured", requestId }, 500);
     }
 
-    const received = new Date().toLocaleString("en-US", {
-      timeZone: "America/Boise",
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
+    const sourcePath = lead.source || "/";
+    const payload = {
+      ...lead,
+      // Which page produced the lead, as a path and as a full URL.
+      sourcePath,
+      sourceUrl: new URL(sourcePath, url.origin).href,
+      receivedAt: new Date().toISOString(),
+      receivedAtLocal: new Date().toLocaleString("en-US", {
+        timeZone: "America/Boise",
+        dateStyle: "medium",
+        timeStyle: "short",
+      }),
+      requestId,
+    };
 
-    // Subject is built to be triaged from a phone lock screen: who, where,
-    // what. The crew is three people (§3) and reads these on site.
-    const subjectParts = ["New lead", lead.city || "Idaho", lead.service || "General", lead.name];
-    const subject = subjectParts.join(" — ");
-
-    const body = [
-      `Name:     ${lead.name}`,
-      `Phone:    ${lead.phone}`,
-      `Email:    ${lead.email || "—"}`,
-      `City:     ${lead.city || "—"}`,
-      `Service:  ${lead.service || "—"}`,
-      "",
-      "Details:",
-      lead.details || "—",
-      "",
-      "—",
-      `Submitted from: ${lead.source || "/"}`,
-      `Received:       ${received} (Mountain)`,
-    ].join("\n");
-
-    try {
-      const response = await fetch("https://api.resend.com/emails", {
+    const post = () =>
+      fetch(env.LEAD_WEBHOOK_URL!, {
         method: "POST",
         headers: {
-          authorization: `Bearer ${env.RESEND_API_KEY}`,
           "content-type": "application/json",
+          ...(env.LEAD_WEBHOOK_TOKEN ? { "x-lead-token": env.LEAD_WEBHOOK_TOKEN } : {}),
         },
-        body: JSON.stringify({
-          from: `${env.LEAD_FROM_NAME} <${env.LEAD_FROM}>`,
-          to: [env.LEAD_TO],
-          subject,
-          text: body,
-          // Replying to the notification reaches the customer directly when
-          // they gave an email. Otherwise replies go nowhere useful, so the
-          // header is omitted rather than pointed at the sending address.
-          ...(lead.email ? { reply_to: lead.email } : {}),
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        const detail = await response.text();
+    // One retry. Nothing identifying is logged, so a lost lead cannot be
+    // reconstructed afterwards — a cheap second attempt is worth more here
+    // than it would be on a route where the payload is recoverable.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const response = await post();
+        if (response.ok) {
+          return wantsJson(request) ? json({ ok: true, requestId }, 200) : redirect();
+        }
         console.error(
-          `Resend rejected the lead (HTTP ${response.status}): ${detail}`,
-          JSON.stringify(lead),
+          `[${requestId}] webhook rejected: HTTP ${response.status}, attempt ${attempt}, from ${sourcePath}`,
         );
-        return json({ ok: false, error: "send_failed" }, 502);
+      } catch {
+        console.error(`[${requestId}] webhook threw, attempt ${attempt}, from ${sourcePath}`);
       }
-    } catch (error) {
-      console.error("Lead send threw", error, JSON.stringify(lead));
-      return json({ ok: false, error: "send_failed" }, 502);
+      if (attempt === 1) await new Promise((r) => setTimeout(r, 400));
     }
 
-    return wantsJson(request)
-      ? json({ ok: true }, 200)
-      : Response.redirect(new URL("/thank-you/", url).href, 303);
+    return json({ ok: false, error: "send_failed", requestId }, 502);
   },
 };

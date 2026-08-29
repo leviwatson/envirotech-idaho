@@ -15,13 +15,18 @@
 
   "observability": { "enabled": true },
 
-  "vars": {
-    // Canonical business inbox (CLAUDE.md §3).
-    "LEAD_TO": "office@envirotechidaho.com",
-    // Must be on a domain verified in Resend before real sending works.
-    "LEAD_FROM": "website@envirotechidaho.com",
-    "LEAD_FROM_NAME": "Enviro-Tech Idaho Website"
-  }
+  // Rate limit per hashed client IP. Deliberately loose: a household behind
+  // one address, or a realtor sending several properties, must not be blocked.
+  // This is here to stop floods, not to ration real people.
+  "ratelimits": [
+    {
+      "name": "LEAD_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ]
 
-  // Secret, never committed:  npx wrangler secret put RESEND_API_KEY
+  // Secrets, never committed:
+  //   npx wrangler secret put LEAD_WEBHOOK_URL
+  //   npx wrangler secret put LEAD_WEBHOOK_TOKEN   (optional)
 }
