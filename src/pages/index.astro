@@ -1,69 +1,13 @@
 ---
 /**
- * Placeholder home page — NOT the real homepage content (build order step 4+).
- *
- * The hero layout here is real though: §10 puts the lead form above the fold
- * on desktop, so it sits beside the intro rather than below the page. Replace
- * the copy when / is built for real; keep the form where it is.
+ * Homepage (§10). Thin consumer — copy lives in the `home` collection entry
+ * and the structure lives in HomePage.astro.
  */
-import Base from "../layouts/Base.astro";
-import SeamDivider from "../components/SeamDivider.astro";
-import LeadForm from "../components/LeadForm.astro";
+import { getEntry } from "astro:content";
+import HomePage from "../layouts/HomePage.astro";
+
+const entry = await getEntry("home", "index");
+if (!entry) throw new Error("src/content/home/index.md is missing");
 ---
 
-<Base
-  title="Enviro-Tech Idaho — Design System Preview"
-  description="Internal design system preview. Not a content page."
->
-  {/* Above the fold: intro left, lead form right (§10). */}
-  <section class="container hero">
-    <div class="hero__intro">
-      <p class="mono hero__eyebrow">Design system preview</p>
-      <h1>Containment-first restoration.</h1>
-      <p class="hero__lead">
-        This placeholder confirms the tokens, self-hosted fonts, base layout,
-        header, nav, footer, and mobile call bar are wired correctly. No
-        content pages have been built yet.
-      </p>
-      <p class="mono hero__cred">RCE-8871958</p>
-    </div>
-
-    <div class="hero__form">
-      <LeadForm id="lead-form" />
-    </div>
-  </section>
-
-  <SeamDivider class="container" />
-</Base>
-
-<style>
-  .hero {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-    align-items: start;
-    padding-block: var(--space-7) var(--space-2);
-  }
-  /* Two-up from 900px so the form clears the fold on desktop. Same 55/45
-     split as the service pages. */
-  @media (min-width: 900px) {
-    .hero {
-      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
-      gap: var(--space-7);
-    }
-  }
-
-  .hero__eyebrow {
-    color: var(--seal);
-  }
-  .hero__intro h1 {
-    margin-block-start: var(--space-3);
-  }
-  .hero__lead {
-    margin-block-start: var(--space-4);
-    font-size: var(--step-1);
-  }
-  .hero__cred {
-    margin-block-start: var(--space-5);
-  }
-</style>
+<HomePage entry={entry} />

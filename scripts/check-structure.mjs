@@ -22,6 +22,21 @@ import { parse as parseYaml } from "yaml";
 const problems = [];
 const fail = (page, msg) => problems.push(`${page}: ${msg}`);
 
+/** Every href nav.json marks as built — the same source the site filters on. */
+const navBuiltSet = new Set();
+{
+  const nav = JSON.parse(await readFile("src/data/nav.json", "utf8"));
+  const walk = (node) => {
+    if (Array.isArray(node)) return node.forEach(walk);
+    if (node && typeof node === "object") {
+      if (typeof node.href === "string" && node.built === true) navBuiltSet.add(node.href);
+      for (const v of Object.values(node)) if (v && typeof v === "object") walk(v);
+    }
+  };
+  walk(nav);
+}
+const navBuilt = (href) => navBuiltSet.has(href);
+
 /** Frontmatter from every .md in a collection directory. */
 const loadCollection = async (dir) => {
   if (!existsSync(dir)) return [];
@@ -283,6 +298,53 @@ for (const [slug, opts] of [
   if (h.includes("{{")) fail(`/${slug}/`, "unfilled {{ token in output");
 }
 
+// --- Homepage --------------------------------------------------------------
+
+{
+  const [entry] = await loadCollection("src/content/home");
+  const h = await html("");
+  if (!entry) {
+    fail("/", "src/content/home/index.md is missing");
+  } else if (!h) {
+    fail("/", "dist/index.html does not exist");
+  } else {
+    const d = entry.data;
+    checkCommon("/", h, { forms: 2, schemaTypes: ["HomeAndConstructionBusiness", "FAQPage"] });
+
+    // The grid is the routing core, and it must only offer pages that exist.
+    const built = d.services.tiles.filter((t) => navBuilt(t.href));
+    const rendered = count(h, /class="tile"/g);
+    if (rendered !== built.length) {
+      fail("/", `services grid: ${built.length} tiles target built pages but ${rendered} rendered`);
+    }
+    if (rendered === 0) fail("/", "services grid is empty — the homepage cannot route");
+    for (const tile of d.services.tiles) {
+      const live = navBuilt(tile.href);
+      const present = h.includes(`href="${tile.href}"`);
+      if (!live && !present) continue;
+      if (!live && count(h, new RegExp(`href="${tile.href}"`, "g")) > 0 && !navBuilt(tile.href)) {
+        // Only a nav/footer link may reference an unbuilt page — and nothing does.
+        fail("/", `grid links to unbuilt ${tile.href}`);
+      }
+    }
+
+    if (!h.includes("data-creds")) fail("/", "credentials strip missing");
+    if (!h.includes("RCE-8871958")) fail("/", "Idaho registration missing from the credentials strip");
+    if (!h.includes(`href="${d.emergency.href}"`)) fail("/", "emergency routing link missing");
+    if (!h.includes(`href="${d.containment.href}"`)) fail("/", "containment teaser link missing");
+
+    const wantCities = d.areas.cities.length;
+    const gotCities = count(h, /class="area"/g);
+    if (gotCities !== wantCities) fail("/", `areas: ${wantCities} declared but ${gotCities} rendered`);
+
+    // A mask is not a credential. It must never reach structured data (§2.1).
+    const ld = [...h.matchAll(LDJSON)].map((m) => m[1]).join(" ");
+    if (ld.includes("NAT-F")) fail("/", "EPA RRP format mask is in structured data — it is not a real number");
+
+    if (h.includes("Design system preview")) fail("/", "placeholder homepage copy still present");
+  }
+}
+
 // --- Sitewide chrome -------------------------------------------------------
 
 const home = await html("");
@@ -305,5 +367,6 @@ const pages =
   (await loadCollection("src/content/problems")).length +
   (await loadCollection("src/content/audiences")).length +
   (await loadCollection("src/content/emergency")).length +
-  (await loadCollection("src/content/guides")).length;
+  (await loadCollection("src/content/guides")).length +
+  (await loadCollection("src/content/home")).length;
 console.log(`Structure check passed — ${pages} collection page(s) match what their entries describe.`);

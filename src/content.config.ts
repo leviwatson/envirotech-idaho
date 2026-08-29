@@ -314,4 +314,49 @@ const guides = defineCollection({
     }),
 });
 
-export const collections = { services, problems, audiences, emergency, guides };
+/**
+ * The homepage (§10). A collection of one, so its copy lives in an entry like
+ * every other page rather than inside the template (§14).
+ */
+const home = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/home" }),
+  schema: () =>
+    z.object({
+      title: z.string().max(60),
+      h1: z.string(),
+      metaDescription: z.string().min(140).max(158),
+      subhead: z.string(),
+
+      /** One line to the emergency page, for someone who lands here at 2am. */
+      emergency: z.object({ text: z.string(), href: z.string() }),
+
+      /**
+       * The routing core. Each tile answers "is this my problem?" and hands
+       * off. Tiles whose target is unbuilt are dropped, so the grid grows as
+       * pages ship without this entry being edited.
+       */
+      services: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        tiles: z.array(z.object({ href: z.string(), line: z.string() })).min(1),
+      }),
+
+      /** Three sentences and a link. The argument lives on the other page. */
+      containment: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+        linkText: z.string(),
+        href: z.string(),
+      }),
+
+      areas: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        cities: z.array(z.object({ name: z.string(), href: z.string(), line: z.string() })).min(1),
+      }),
+
+      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+    }),
+});
+
+export const collections = { services, problems, audiences, emergency, guides, home };

@@ -1,0 +1,460 @@
+---
+/**
+ * Homepage (§10).
+ *
+ * A routing page. Its job is to get someone to the right service page fast,
+ * not to re-argue what those pages already say — so the services grid is the
+ * centre of gravity and every other section is deliberately brief.
+ *
+ * Copy lives in the collection entry; this file is structure only.
+ *
+ * This is the page that emits the sitewide HomeAndConstructionBusiness schema
+ * §11 asks for. No PostalAddress (§3 — service-area business) and no
+ * aggregateRating (§2.2 — zero reviews today).
+ */
+import type { CollectionEntry } from "astro:content";
+import Base from "./Base.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { renderProse } from "../lib/prose";
+import { isBuilt, labelFor } from "../lib/links";
+import { TRUST_STRIP } from "../data/service-defaults";
+import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES, DOMAIN, FOUNDED } from "../data/site";
+
+interface Props {
+  entry: CollectionEntry<"home">;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+
+// No dead links, same rule as everywhere. The grid grows on its own.
+const tiles = d.services.tiles.filter((t) => isBuilt(t.href));
+const origin = `https://${DOMAIN}`;
+
+/**
+ * Only credentials with a real, confirmed value. The EPA RRP entry in the
+ * footer is a visible format mask, not a number — putting a mask into
+ * structured data would be asserting a credential to machines (§2.1).
+ */
+const credentials = [
+  { name: "Idaho Contractor Registration", id: "RCE-8871958" },
+  { name: "Asbestos / Mold Certification", id: "CMR0000023347" },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: BUSINESS_NAME,
+    url: `${origin}/`,
+    telephone: PHONE_DISPLAY,
+    email: EMAIL,
+    foundingDate: String(FOUNDED),
+    description: d.metaDescription,
+    areaServed: CITIES.map((city) => ({ "@type": "City", name: `${city}, Idaho` })),
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      opens: "00:00",
+      closes: "23:59",
+    },
+    hasCredential: credentials.map((c) => ({
+      "@type": "EducationalOccupationalCredential",
+      name: c.name,
+      identifier: c.id,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: d.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  },
+];
+---
+
+<Base title={d.title} description={d.metaDescription} schema={schema}>
+  {/* --- Hero. Form beside the copy above the fold on desktop (§10). --- */}
+  <section class="container hero">
+    <div class="hero__copy">
+      <h1>{d.h1}</h1>
+      <p class="hero__subhead">{d.subhead}</p>
+
+      <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
+      <p class="hero__note">Free inspection. No obligation.</p>
+
+      {/* The one amber element here — emergency routing (§13). */}
+      <a href={d.emergency.href} class="hero__emergency">
+        <span class="hero__emergency-badge mono">24/7</span>
+        <span>{d.emergency.text}</span>
+      </a>
+
+      <ul class="trust">
+        {
+          TRUST_STRIP.map((item) => (
+            <li class="trust__item">
+              <span class="trust__label">{item.label}</span>
+              <span class="trust__detail">{item.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hero__form">
+      <LeadForm id="inspection" heading="Get a free inspection" />
+    </div>
+  </section>
+
+  <div class="container">
+    {/* --- Services grid: the routing core ---------------------------- */}
+    <section class="band" data-services>
+      <h2>{d.services.heading}</h2>
+      {d.services.intro && <p class="band__intro" set:html={renderProse(d.services.intro)} />}
+      <ul class="grid">
+        {
+          tiles.map((tile) => (
+            <li class="tile">
+              <a href={tile.href} class="tile__link">
+                <h3 class="tile__name">{labelFor(tile.href) ?? tile.href}</h3>
+                <p class="tile__line">{tile.line}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <SeamDivider />
+
+    {/* --- Containment teaser. Three sentences, then a link. ----------- */}
+    <section class="band teaser">
+      <h2>{d.containment.heading}</h2>
+      {d.containment.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+      <a href={d.containment.href} class="teaser__link">{d.containment.linkText}</a>
+    </section>
+
+    {/* --- Credentials strip ------------------------------------------ */}
+    <section class="band creds" data-creds>
+      <h2 class="creds__head">Licensed and certified</h2>
+      <dl class="creds__list">
+        <div class="cred">
+          <dt>Idaho Contractor Registration</dt>
+          <dd class="mono">RCE-8871958</dd>
+        </div>
+        <div class="cred">
+          <dt>Asbestos / Mold Certification</dt>
+          <dd class="mono">CMR0000023347</dd>
+        </div>
+        <div class="cred">
+          <dt>Final clearance</dt>
+          <dd>Carried out by an independent company, never by us</dd>
+        </div>
+      </dl>
+    </section>
+
+    <SeamDivider />
+
+    {/* --- Service areas ---------------------------------------------- */}
+    <section class="band">
+      <h2>{d.areas.heading}</h2>
+      {d.areas.intro && <p class="band__intro" set:html={renderProse(d.areas.intro)} />}
+      <ul class="areas">
+        {
+          d.areas.cities.map((city) => (
+            <li class="area">
+              <h3 class="area__name">
+                {isBuilt(city.href) ? <a href={city.href}>{city.name}</a> : city.name}
+              </h3>
+              <p class="area__line">{city.line}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* --- FAQ --------------------------------------------------------- */}
+    <section class="band">
+      <h2>Common questions</h2>
+      <div class="faq">
+        {
+          d.faqs.map((faq) => (
+            <div class="faq__item">
+              <h3 class="faq__q">{faq.question}</h3>
+              <p class="faq__a" set:html={renderProse(faq.answer)} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="band final">
+      <LeadForm
+        id="request-inspection"
+        heading="Request a free inspection"
+        blurb="Tell us what you found. We come look at it and write you an estimate."
+      />
+    </section>
+  </div>
+</Base>
+
+<style>
+  /* --- Hero -------------------------------------------------------------- */
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    align-items: start;
+    padding-block: var(--space-7) var(--space-4);
+  }
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
+      gap: 0 var(--space-7);
+    }
+  }
+  .hero__subhead {
+    margin-block-start: var(--space-4);
+    font-size: var(--step-1);
+    max-width: 46ch;
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    margin-block-start: var(--space-6);
+    padding: var(--space-3) var(--space-6);
+    background: var(--seal);
+    color: var(--paper);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--track-display);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+  .hero__cta:hover {
+    background: color-mix(in srgb, var(--seal) 88%, black);
+  }
+  .hero__note {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+
+  /* Emergency routing — the only amber on this page (§13). */
+  .hero__emergency {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-inline-start: 3px solid var(--caution);
+    background: color-mix(in srgb, var(--caution) 12%, var(--surface));
+    color: var(--ink);
+    font-weight: 600;
+    font-size: var(--step-0);
+    text-decoration: none;
+    border-radius: var(--radius);
+  }
+  .hero__emergency:hover {
+    background: color-mix(in srgb, var(--caution) 22%, var(--surface));
+  }
+  .hero__emergency-badge {
+    flex: none;
+    padding: 2px 6px;
+    border-radius: var(--radius);
+    background: var(--caution);
+    color: var(--ink);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+  }
+
+  .trust {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    max-width: none;
+  }
+  @media (min-width: 560px) {
+    .trust {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .trust__item {
+    display: grid;
+    gap: 2px;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 2px solid var(--spark);
+  }
+  .trust__label {
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  .trust__detail {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+
+  /* --- Bands -------------------------------------------------------------- */
+
+  .band {
+    padding-block: var(--space-6);
+  }
+  .band h2 {
+    margin-block-end: var(--space-4);
+  }
+  .band p + p {
+    margin-block-start: var(--space-4);
+  }
+  .band__intro {
+    margin-block-end: var(--space-5);
+  }
+
+  /* --- Services grid ------------------------------------------------------ */
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    max-width: none;
+  }
+  @media (min-width: 620px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 980px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .tile__link {
+    display: block;
+    height: 100%;
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .tile__link:hover {
+    border-color: var(--seal);
+  }
+  .tile__name {
+    font-size: var(--step-1);
+    color: var(--seal);
+  }
+  .tile__line {
+    margin-block-start: var(--space-2);
+    font-size: var(--step-0);
+    max-width: none;
+  }
+
+  /* --- Teaser ------------------------------------------------------------- */
+
+  .teaser__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block-start: var(--space-5);
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--seal);
+    border-radius: var(--radius);
+    color: var(--seal);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .teaser__link:hover {
+    background: var(--seal);
+    color: var(--paper);
+  }
+
+  /* --- Credentials -------------------------------------------------------- */
+
+  .creds__head {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--ink) 70%, var(--surface));
+  }
+  .creds__list {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  @media (min-width: 720px) {
+    .creds__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .cred {
+    display: grid;
+    gap: var(--space-1);
+    padding-inline-start: var(--space-4);
+    border-inline-start: 1px solid var(--rule);
+  }
+  .cred dt {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+  .cred dd {
+    margin: 0;
+    font-size: var(--step-0);
+    font-weight: 600;
+  }
+
+  /* --- Areas / FAQ -------------------------------------------------------- */
+
+  .areas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    max-width: none;
+  }
+  @media (min-width: 720px) {
+    .areas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .area__name {
+    font-size: var(--step-1);
+  }
+  .area__line {
+    margin-block-start: var(--space-2);
+    font-size: var(--step-0);
+  }
+
+  .faq {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .faq__q {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-2);
+  }
+  .faq__a {
+    margin: 0;
+    max-width: var(--measure);
+  }
+  .final {
+    padding-block-end: var(--space-8);
+  }
+</style>
