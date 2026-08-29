@@ -6,13 +6,6 @@ metaDescription: "Working a Boise or Meridian deal with mold or asbestos flagged
 question: How do realtors handle mold or asbestos found during a transaction?
 subhead: "Tell us the closing date first. You get a straight answer about whether it is achievable, and clearance paperwork that ends the argument."
 
-photos:
-  hero:
-    name: PHOTO_HERO
-    ratio: 16/9
-    alt: ""
-    caption: "Containment goes up before any material is disturbed, so a house can stay showable while the work runs."
-
 sections:
   - heading: What you actually need from a remediation contractor
     paragraphs:
@@ -58,9 +51,10 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
-      ratio: 3/2
+      ratio: 16/9
+      maxWidth: 560px
       tone: dark
-      caption: "Negative-pressure containment: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening."
+      caption: "Containment goes up before any material is disturbed, so a house can stay showable while the work runs."
     paragraphs:
       - "A negative-pressure containment goes up before any work starts. Every job, mold or asbestos, regardless of size. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so nothing airborne leaves the work area."
       - "For a listing that is still being shown, that is the difference between a contained repair and a house nobody wants to walk through. Air moves into the containment and never out of it, so the rest of the property stays usable while the work runs."

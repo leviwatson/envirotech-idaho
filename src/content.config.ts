@@ -34,6 +34,8 @@ const slot = (image: ImageFn) =>
     caption: z.string().optional(),
     alt: z.string().optional(),
     src: image().optional(),
+    /** Rendered cap, e.g. "560px". Per placement, not per photo. */
+    maxWidth: z.string().optional(),
     tone: z.enum(["light", "dark"]).default("light"),
   });
 
