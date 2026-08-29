@@ -1,0 +1,447 @@
+---
+/**
+ * Problem / intent page shell (§9, §14).
+ *
+ * STRUCTURE ONLY — every word comes from the collection entry or from
+ * src/data/service-defaults.ts.
+ *
+ * Unlike a service page, the section list is ordered data rather than fixed
+ * fields, because problem pages argue different things in different orders.
+ * The layout still decides how a section renders, where seams fall, and what
+ * the page's schema says.
+ *
+ * Schema: FAQPage + BreadcrumbList (§11). No PostalAddress, no
+ * aggregateRating.
+ */
+import type { CollectionEntry } from "astro:content";
+import Base from "./Base.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import LeadForm from "../components/LeadForm.astro";
+import PhotoSlot from "../components/PhotoSlot.astro";
+import DesktopCtaBar from "../components/DesktopCtaBar.astro";
+import { renderProse } from "../lib/prose";
+import { resolveLinks } from "../lib/links";
+import { TRUST_STRIP } from "../data/service-defaults";
+import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, CITIES, DOMAIN } from "../data/site";
+
+interface Props {
+  entry: CollectionEntry<"problems">;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+
+const related = [...resolveLinks(d.relatedServices), ...resolveLinks(d.relatedCities)];
+
+const origin = `https://${DOMAIN}`;
+const url = `${origin}${Astro.url.pathname}`;
+
+/**
+ * A seam sits above any section marked as a thematic shift, except where the
+ * previous section is the full-bleed band — its own edge is already the break
+ * and a rule against it reads as a doubled line (§13).
+ */
+const showSeam = (index: number) =>
+  d.sections[index].shift && !(index > 0 && d.sections[index - 1].band);
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    name: d.h1,
+    mainEntity: d.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+      { "@type": "ListItem", position: 2, name: d.h1, item: url },
+    ],
+  },
+];
+---
+
+<Base title={d.title} description={d.metaDescription} schema={schema}>
+  {/* --- Hero ---------------------------------------------------------- */}
+  <section class="container hero">
+    <div class="hero__main">
+      <div class="hero__copy">
+        <h1>{d.h1}</h1>
+        <p class="hero__subhead">{d.subhead}</p>
+
+        <ul class="trust">
+          {
+            TRUST_STRIP.map((item) => (
+              <li class="trust__item">
+                <span class="trust__label">{item.label}</span>
+                <span class="trust__detail">{item.detail}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
+        <p class="hero__cta-note">Or request a free inspection using the form.</p>
+
+        {
+          d.photos?.hero && (
+            <PhotoSlot
+              name={d.photos.hero.name}
+              ratio={d.photos.hero.ratio}
+              ratioMobile="16/9"
+              caption={d.photos.hero.caption}
+              alt={d.photos.hero.alt}
+              src={d.photos.hero.src}
+              loading="eager"
+              maxWidth="560px"
+              sizes="(min-width: 900px) 560px, 100vw"
+              class="hero__photo"
+            />
+          )
+        }
+      </div>
+    </div>
+
+    <div class="hero__side">
+      <div class="hero__form">
+        <LeadForm id="inspection" heading="Get a free inspection" />
+      </div>
+    </div>
+  </section>
+
+  {/* --- Sections ------------------------------------------------------- */}
+  {
+    d.sections.map((section, i) =>
+      section.band ? (
+        <section class="band-full">
+          <div class="container band-full__inner">
+            <div class="band-full__copy">
+              <h2>{section.heading}</h2>
+              {section.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+            </div>
+            {section.photo && (
+              <PhotoSlot
+                name={section.photo.name}
+                ratio={section.photo.ratio}
+                caption={section.photo.caption}
+                alt={section.photo.alt}
+                src={section.photo.src}
+                tone="dark"
+              />
+            )}
+          </div>
+        </section>
+      ) : (
+        <div class="container">
+          {showSeam(i) && <SeamDivider />}
+          <section class="band">
+            <h2>{section.heading}</h2>
+            {section.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+
+            {section.stages && (
+              <ul class="timeline">
+                {section.stages.map((stage) => (
+                  <li class="timeline__row">
+                    <span class="timeline__figure mono">{stage.figure}</span>
+                    <span class="timeline__label">{stage.label}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {section.items && (
+              <ul class="checklist">
+                {section.items.map((item) => <li set:html={renderProse(item)} />)}
+              </ul>
+            )}
+
+            {section.outro?.map((p) => <p set:html={renderProse(p)} />)}
+
+            {/* Rendered only once the asset it points at exists, so the page
+                never carries a CTA to something unavailable. */}
+            {section.cta && (
+              <a href={section.cta.href} class="section-cta">{section.cta.label}</a>
+            )}
+
+            {section.photo && (
+              <PhotoSlot
+                name={section.photo.name}
+                ratio={section.photo.ratio}
+                caption={section.photo.caption}
+                alt={section.photo.alt}
+                src={section.photo.src}
+                maxWidth="640px"
+                sizes="(min-width: 900px) 640px, 100vw"
+                class="section-photo"
+              />
+            )}
+          </section>
+        </div>
+      ),
+    )
+  }
+
+  <div class="container">
+    {/* --- FAQ ---------------------------------------------------------- */}
+    <SeamDivider />
+    <section class="band">
+      <h2>Common questions</h2>
+      <div class="faq">
+        {
+          d.faqs.map((faq) => (
+            <div class="faq__item">
+              <h3 class="faq__q">{faq.question}</h3>
+              <p class="faq__a" set:html={renderProse(faq.answer)} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {
+      related.length > 0 && (
+        <section class="band">
+          <h2>Related</h2>
+          <ul class="related">
+            {related.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="band final">
+      <LeadForm
+        id="request-inspection"
+        heading="Request a free inspection"
+        blurb="Tell us the closing date. We will tell you straight whether it is achievable."
+      />
+    </section>
+  </div>
+
+  <DesktopCtaBar watchTop="#inspection" watchBottom="#request-inspection" />
+</Base>
+
+<style>
+  /* Hero mirrors the service layout: two independent columns, nothing spans
+     rows, so neither column's height moves the other's content. */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    align-items: start;
+    padding-block: var(--space-6) var(--space-2);
+  }
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
+      gap: 0 var(--space-7);
+    }
+  }
+  @media (max-width: 899px) {
+    .hero__main,
+    .hero__side {
+      display: contents;
+    }
+  }
+  .hero__subhead {
+    margin-block-start: var(--space-4);
+    font-size: var(--step-1);
+    max-width: 46ch;
+  }
+  .hero__copy :global(.hero__photo) {
+    margin-block-start: var(--space-3);
+  }
+
+  .trust {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    max-width: none;
+  }
+  @media (min-width: 560px) {
+    .trust {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .trust__item {
+    display: grid;
+    gap: 2px;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 2px solid var(--spark);
+  }
+  .trust__label {
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  .trust__detail {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    margin-block-start: var(--space-6);
+    padding: var(--space-3) var(--space-6);
+    background: var(--seal);
+    color: var(--paper);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--track-display);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+  .hero__cta:hover {
+    background: color-mix(in srgb, var(--seal) 88%, black);
+  }
+  .hero__cta-note {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+
+  /* --- Sections -------------------------------------------------------- */
+
+  .band {
+    padding-block: var(--space-6);
+  }
+  .band h2 {
+    margin-block-end: var(--space-4);
+  }
+  .band p + p {
+    margin-block-start: var(--space-4);
+  }
+
+  .band-full {
+    margin-block: var(--space-8);
+    padding-block: var(--space-8);
+    background: var(--ink);
+    color: var(--surface);
+  }
+  .band-full__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .band-full__inner {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+  .band-full h2 {
+    color: var(--paper);
+    margin-block-end: var(--space-4);
+  }
+  .band-full p + p {
+    margin-block-start: var(--space-4);
+  }
+
+  /* --- Lists ----------------------------------------------------------- */
+
+  .checklist {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+    padding: 0;
+    list-style: none;
+    max-width: var(--measure);
+  }
+  .checklist li {
+    padding-inline-start: var(--space-5);
+    position: relative;
+  }
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.62em;
+    width: 8px;
+    height: 1px;
+    background: var(--seal);
+  }
+
+  .timeline {
+    list-style: none;
+    margin: var(--space-5) 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--measure);
+  }
+  .timeline__row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding-block-end: var(--space-3);
+    border-block-end: 1px solid var(--rule);
+  }
+  .timeline__row:last-child {
+    border-block-end: 0;
+    padding-block-end: 0;
+  }
+  .timeline__figure {
+    color: var(--seal);
+    font-size: var(--step-0);
+  }
+
+  .section-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block-start: var(--space-5);
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--seal);
+    border-radius: var(--radius);
+    color: var(--seal);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .section-cta:hover {
+    background: var(--seal);
+    color: var(--paper);
+  }
+
+  .band :global(.section-photo) {
+    margin-block-start: var(--space-5);
+  }
+
+  /* --- FAQ / related --------------------------------------------------- */
+
+  .faq {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .faq__q {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-2);
+  }
+  .faq__a {
+    margin: 0;
+    max-width: var(--measure);
+  }
+  .related {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .final {
+    padding-block-end: var(--space-8);
+  }
+</style>

@@ -102,6 +102,7 @@ guard rejects `{{` in `dist/`.
 | `PHOTO_INTRO_1` | **3:4 portrait** | Beside "What mold remediation actually is", sticky on desktop | Shot vertically. Moisture meter against framing or drywall, or a hand-held reading. Portrait suits the tall column — do not send a cropped landscape. |
 | `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band | The signature shot: poly sheeting with taped seams, negative air machine, ducting to an exterior opening. A visible manometer reading is a bonus. |
 | `PHOTO_PROCESS_1` | **3:2** | Inside the process list, after step 04 (Removal) | Affected material bagged inside the containment, before it crosses the barrier. |
+| `PHOTO_CLEARANCE_DOC_1` | **3:2** | `/mold-found-during-home-inspection/`, documentation section | A clearance package on a table: the lab report, chain-of-custody form, moisture log, scope of work. Shot flat or at a slight angle. Redact addresses and owner names before sending. This is the proof that page is selling. |
 | `PHOTO_BEFORE_1` | **4:3** | "Before and after", left | Before. Must be the same angle and framing as the after shot. |
 | `PHOTO_AFTER_1` | **4:3** | "Before and after", right | After. Same camera position as the before shot — a mismatched pair reads as a different house. |
 
@@ -163,6 +164,27 @@ Still needed beyond this page:
   canonical to a page that does not exist. **Set to `false` at DNS cutover** —
   leaving it on means the launched site is invisible to search, which is the
   worst possible failure mode for this project.
+- **Sample clearance package.** `/mold-found-during-home-inspection/` tells
+  the reader they can see a sample before booking, and the FAQ repeats the
+  offer. Right now that is answered by phone or the form. Ask Cody for a
+  redacted clearance package from a completed job — scope of work, moisture
+  log, photographs, independent lab clearance report, chain of custody —
+  with address and owner details removed.
+
+  Once it exists, host it and add a `cta` to that section's entry:
+
+  ```yaml
+  cta:
+    label: See a sample clearance package
+    href: /sample-clearance-package.pdf
+  ```
+
+  The layout renders that button only when `cta` is present, so the page never
+  points at an asset that does not exist. Nothing else needs changing.
+
+  This is the single highest-leverage asset on the list. It is the exact
+  document a buyer's agent asks for, and being able to show one before the
+  job is booked answers the objection that page exists to answer.
 - **GTM container `GTM-N9GZF7W7`** exists on the current Wix site. Confirm
   whether it is still in use before carrying it over (§16).
 - **Full Wix URL list.** Required before decommissioning, for 301 mapping in

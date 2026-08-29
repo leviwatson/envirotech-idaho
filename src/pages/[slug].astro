@@ -1,0 +1,37 @@
+---
+/**
+ * Generates every top-level content page from the collections (§14).
+ *
+ * One route rather than [service].astro plus [problem].astro: two dynamic
+ * routes at the same depth both match /foo/, and which one wins is not
+ * something to leave to resolution order. Explicit pages (/contact/,
+ * /thank-you/) still take precedence over this.
+ */
+import { getCollection } from "astro:content";
+import ServicePage from "../layouts/ServicePage.astro";
+import ProblemPage from "../layouts/ProblemPage.astro";
+
+export async function getStaticPaths() {
+  const [services, problems] = await Promise.all([
+    getCollection("services"),
+    getCollection("problems"),
+  ]);
+
+  return [
+    ...services.map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { kind: "service" as const, entry },
+    })),
+    ...problems.map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { kind: "problem" as const, entry },
+    })),
+  ];
+}
+
+const { kind, entry } = Astro.props;
+---
+
+{
+  kind === "service" ? <ServicePage entry={entry} /> : <ProblemPage entry={entry} />
+}

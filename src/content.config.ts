@@ -126,4 +126,60 @@ const services = defineCollection({
     }),
 });
 
-export const collections = { services };
+/**
+ * Problem / intent pages (§9). Their section structure genuinely varies —
+ * one page argues a timeline, another explains a material — so sections are
+ * an ordered array rather than named fields. The layout still owns rendering
+ * and holds no copy.
+ */
+const problems = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/problems" }),
+  schema: ({ image }) =>
+    z.object({
+      slug: z.string(),
+      title: z.string().max(60),
+      h1: z.string(),
+      metaDescription: z.string().min(140).max(158),
+      /** The question this page answers, for schema and internal reference. */
+      question: z.string(),
+      subhead: z.string(),
+
+      sections: z
+        .array(
+          z.object({
+            heading: z.string(),
+            paragraphs: z.array(z.string()).min(1),
+            /** Optional bullets after the paragraphs. */
+            items: z.array(z.string()).optional(),
+            /** Prose after the list, where the list needs closing out. */
+            outro: z.array(z.string()).optional(),
+            /** Optional figures, set in mono (§13). */
+            stages: z.array(z.object({ figure: z.string(), label: z.string() })).optional(),
+            /**
+             * Renders on the full-bleed dark band instead of the light field.
+             * At most one per page — it is the containment callout.
+             */
+            band: z.boolean().default(false),
+            /**
+             * Marks a thematic shift, so the layout puts a seam divider above
+             * it. §13 fixes the four positions on a service page, but a
+             * problem page's sections vary, so the shift is declared here and
+             * the layout still enforces the rule that no divider may sit
+             * against a full-bleed band.
+             */
+            shift: z.boolean().default(false),
+            /** Optional CTA. Omitted until the asset it points at exists. */
+            cta: z.object({ label: z.string(), href: z.string() }).optional(),
+            photo: slot(image).optional(),
+          }),
+        )
+        .min(1),
+
+      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+      photos: z.object({ hero: slot(image).optional() }).optional(),
+      relatedServices: z.array(z.string()).default([]),
+      relatedCities: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = { services, problems };

@@ -60,7 +60,7 @@
     ],
 
     "problems": [
-      { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": false },
+      { "label": "Mold Found During a Home Inspection", "href": "/mold-found-during-home-inspection/", "built": true },
       { "label": "Black Mold in a Crawl Space", "href": "/black-mold-in-crawl-space/", "built": false },
       { "label": "Musty Smell in a Basement", "href": "/musty-smell-in-basement/", "built": false },
       { "label": "Water Stain on a Ceiling", "href": "/water-stain-on-ceiling/", "built": false },
