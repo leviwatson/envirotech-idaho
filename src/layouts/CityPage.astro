@@ -1,0 +1,306 @@
+---
+/**
+ * City page (§9, §10).
+ *
+ * §2.5 forbids spun city pages, and the surest way to spin one is to reuse a
+ * service layout: the shared containment, insurance and inspection blocks
+ * would make five pages that are largely the same text with a name swapped.
+ *
+ * So this layout carries almost no shared copy. Everything above the handoff
+ * is city-specific and comes from the entry. The handoff is three or four
+ * sentences pointing at the service pages, which is where the process,
+ * scope and terms actually live.
+ */
+import type { CollectionEntry } from "astro:content";
+import Base from "./Base.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import LeadForm from "../components/LeadForm.astro";
+import PhotoSlot from "../components/PhotoSlot.astro";
+import DesktopCtaBar from "../components/DesktopCtaBar.astro";
+import { renderProse } from "../lib/prose";
+import { resolveLinks, labelFor } from "../lib/links";
+import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, DOMAIN } from "../data/site";
+
+interface Props {
+  entry: CollectionEntry<"cities">;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+
+const related = resolveLinks(d.relatedServices);
+const origin = `https://${DOMAIN}`;
+const url = `${origin}${Astro.url.pathname}`;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: d.h1,
+    serviceType: "Mold Remediation",
+    description: d.metaDescription,
+    url,
+    provider: {
+      "@type": "HomeAndConstructionBusiness",
+      name: BUSINESS_NAME,
+      telephone: PHONE_DISPLAY,
+      url: origin,
+    },
+    // A city page serves one city. That is the point of it.
+    areaServed: { "@type": "City", name: `${d.name}, Idaho` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+      { "@type": "ListItem", position: 2, name: labelFor(Astro.url.pathname) ?? d.h1, item: url },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: d.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  },
+];
+---
+
+<Base title={d.title} description={d.metaDescription} schema={schema}>
+  <section class="container hero">
+    <div class="hero__main">
+      <div class="hero__copy">
+        <h1>{d.h1}</h1>
+        <p class="hero__subhead">{d.subhead}</p>
+        <p class="hero__meta mono">{d.name}, Idaho &middot; {d.county} County</p>
+
+        <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
+        <p class="hero__note">Free inspection. Someone answers 24/7.</p>
+
+        {
+          d.photo && (
+            <PhotoSlot
+              name={d.photo.name}
+              ratio={d.photo.ratio}
+              ratioMobile="16/9"
+              caption={d.photo.caption}
+              alt={d.photo.alt}
+              src={d.photo.src}
+              loading="eager"
+              maxWidth="560px"
+              sizes="(min-width: 900px) 560px, 100vw"
+              class="hero__photo"
+            />
+          )
+        }
+      </div>
+
+      {/* The local story starts in the hero grid, beside the form. */}
+      <section class="band hero__intro">
+        <h2>{d.housingStock.heading}</h2>
+        {d.housingStock.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+      </section>
+    </div>
+
+    <div class="hero__side">
+      <div class="hero__form">
+        <LeadForm id="inspection" heading="Get a free inspection" />
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <SeamDivider />
+
+    <section class="band">
+      <h2>{d.areas.heading}</h2>
+      {d.areas.intro && <p class="band__intro" set:html={renderProse(d.areas.intro)} />}
+      <ul class="locals">
+        {
+          d.areas.items.map((item) => (
+            <li class="local">
+              <h3 class="local__name">{item.name}</h3>
+              <p class="local__detail" set:html={renderProse(item.detail)} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="band">
+      <h2>{d.localDetail.heading}</h2>
+      {d.localDetail.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+    </section>
+
+    <SeamDivider />
+
+    <section class="band">
+      <h2>{d.logistics.heading}</h2>
+      <ul class="timeline">
+        {
+          d.logistics.stages.map((stage) => (
+            <li class="timeline__row">
+              <span class="timeline__figure mono">{stage.figure}</span>
+              <span>{stage.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+      {d.logistics.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+    </section>
+
+    {/* Handoff. The process, scope and terms live on the service pages. */}
+    <section class="band">
+      <h2>{d.handoff.heading}</h2>
+      {d.handoff.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+      {
+        related.length > 0 && (
+          <ul class="related">
+            {related.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <SeamDivider />
+
+    <section class="band">
+      <h2>Common questions in {d.name}</h2>
+      <div class="faq">
+        {
+          d.faqs.map((faq) => (
+            <div class="faq__item">
+              <h3 class="faq__q">{faq.question}</h3>
+              <p class="faq__a" set:html={renderProse(faq.answer)} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="band final">
+      <LeadForm
+        id="request-inspection"
+        heading={`Request a free inspection in ${d.name}`}
+        blurb="Tell us what you found. We come look at it and write you an estimate."
+      />
+    </section>
+  </div>
+
+  <DesktopCtaBar watchTop="#inspection" watchBottom="#request-inspection" />
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    align-items: start;
+    padding-block: var(--space-6) var(--space-2);
+  }
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
+      gap: 0 var(--space-7);
+    }
+  }
+  @media (max-width: 899px) {
+    .hero__main,
+    .hero__side {
+      display: contents;
+    }
+    .hero__copy { order: 1; }
+    .hero__form { order: 2; }
+    .hero__intro { order: 3; padding-block: var(--space-3) var(--space-4); }
+  }
+  .hero__subhead {
+    margin-block-start: var(--space-4);
+    font-size: var(--step-1);
+    max-width: 46ch;
+  }
+  .hero__meta {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    margin-block-start: var(--space-5);
+    padding: var(--space-3) var(--space-6);
+    background: var(--seal);
+    color: var(--paper);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--track-display);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+  .hero__cta:hover { background: color-mix(in srgb, var(--seal) 88%, black); }
+  .hero__note {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+  .hero__copy :global(.hero__photo) { margin-block-start: var(--space-5); }
+  .hero__intro { padding-block-start: var(--space-6); }
+
+  .band { padding-block: var(--space-6); }
+  .band h2 { margin-block-end: var(--space-4); }
+  .band p + p { margin-block-start: var(--space-4); }
+  .band__intro { margin-block-end: var(--space-5); }
+
+  .locals {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    max-width: var(--measure);
+  }
+  .local {
+    padding-block-end: var(--space-5);
+    border-block-end: 1px solid var(--rule);
+  }
+  .local:last-child { border-block-end: 0; padding-block-end: 0; }
+  .local__name { font-size: var(--step-1); margin-block-end: var(--space-2); }
+  .local__detail { margin: 0; }
+
+  .timeline {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--measure);
+  }
+  .timeline__row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding-block-end: var(--space-3);
+    border-block-end: 1px solid var(--rule);
+  }
+  .timeline__row:last-child { border-block-end: 0; padding-block-end: 0; }
+  .timeline__figure { color: var(--seal); font-size: var(--step-0); }
+
+  .related {
+    display: grid;
+    gap: var(--space-2);
+    margin-block-start: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .faq { display: grid; gap: var(--space-5); }
+  .faq__q { font-size: var(--step-1); margin-block-end: var(--space-2); }
+  .faq__a { margin: 0; max-width: var(--measure); }
+  .final { padding-block-end: var(--space-8); }
+</style>

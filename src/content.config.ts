@@ -359,4 +359,60 @@ const home = defineCollection({
     }),
 });
 
-export const collections = { services, problems, audiences, emergency, guides, home };
+/**
+ * City pages (§9, §10). Local content is the entire justification for these
+ * existing at all (§2.5) — the layout is deliberately thin on shared material
+ * so a city page cannot become a service page with a name swapped in.
+ */
+const cities = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/cities" }),
+  schema: ({ image }) =>
+    z.object({
+      slug: z.string(),
+      name: z.string(),
+      county: z.string(),
+      priority: z.number().int().min(1),
+
+      title: z.string().max(60),
+      h1: z.string(),
+      metaDescription: z.string().min(140).max(158),
+      subhead: z.string(),
+      photo: slot(image).optional(),
+
+      /** The housing-stock story. The reason this page exists. */
+      housingStock: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      }),
+
+      /** Sub-areas, or the specific failures that recur in this city. */
+      areas: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        items: z.array(z.object({ name: z.string(), detail: z.string() })).min(1),
+      }),
+
+      /** How local conditions change the work itself. */
+      localDetail: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      }),
+
+      /** Brief handoff to the service pages. Never a restatement of them. */
+      handoff: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      }),
+
+      logistics: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+        stages: z.array(z.object({ figure: z.string(), label: z.string() })).min(1),
+      }),
+
+      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+      relatedServices: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = { services, problems, audiences, emergency, guides, home, cities };

@@ -177,6 +177,25 @@ is there, and what goes wrong without it — so the photographs are load-bearing
 rather than decorative. Until they land the page ships with skeletons at the
 correct ratios and nothing reflows when they arrive.
 
+**Shot list — the five city pages (5 slots, lower priority).**
+
+| Slot | Ratio | Page |
+|---|---|---|
+| `PHOTO_CITY_BOISE` | **16:9** | `/mold-remediation-boise/` |
+| `PHOTO_CITY_MERIDIAN` | **16:9** | `/mold-remediation-meridian/` |
+| `PHOTO_CITY_NAMPA` | **16:9** | `/mold-remediation-nampa/` |
+| `PHOTO_CITY_CALDWELL` | **16:9** | `/mold-remediation-caldwell/` |
+| `PHOTO_CITY_EAGLE` | **16:9** | `/mold-remediation-eagle/` |
+
+One job photo per city, **actually taken in that city**. That is the only
+requirement, and it is the whole point: §11 allows alt text naming the city
+only where it is truthful, so a shared photo cannot carry a local claim. A
+containment in a Nampa crawlspace on the Nampa page is worth more than a
+better photograph from somewhere else.
+
+Lower priority than the containment set. The pages ship with skeletons at the
+right ratio and nothing reflows when the photos arrive.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

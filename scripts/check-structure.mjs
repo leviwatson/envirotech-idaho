@@ -298,6 +298,83 @@ for (const [slug, opts] of [
   if (h.includes("{{")) fail(`/${slug}/`, "unfilled {{ token in output");
 }
 
+// --- City pages ------------------------------------------------------------
+
+const cityBodies = new Map();
+
+for (const { file, data } of await loadCollection("src/content/cities")) {
+  const page = `/${data.slug}/`;
+  const h = await html(data.slug);
+  if (!h) {
+    fail(page, `built from ${file} but dist/${data.slug}/index.html does not exist`);
+    continue;
+  }
+
+  checkCommon(page, h, { forms: 2, schemaTypes: ["Service", "BreadcrumbList", "FAQPage"] });
+
+  const wantItems = data.areas?.items?.length ?? 0;
+  const gotItems = count(h, /class="local"/g);
+  if (gotItems !== wantItems) fail(page, `areas: ${wantItems} declared but ${gotItems} rendered`);
+
+  const wantStages = data.logistics?.stages?.length ?? 0;
+  const gotStages = count(h, /class="timeline__row"/g);
+  if (gotStages !== wantStages) fail(page, `logistics: ${wantStages} stages but ${gotStages} rows`);
+
+  // A city page serves one city; areaServed must not be the whole valley.
+  const ld = [...h.matchAll(LDJSON)].map((m) => m[1]).join(" ");
+  if (!ld.includes(`${data.name}, Idaho`)) {
+    fail(page, `schema areaServed does not name ${data.name}`);
+  }
+
+  // §11: city pages carry an 800 word floor.
+  const words = h
+    .replace(/<script[\s\S]*?<\/script>/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  if (words < 800) fail(page, `${words} words, below the 800 floor for city pages (§11)`);
+
+  cityBodies.set(data.slug, h);
+}
+
+/**
+ * §2.5 forbids spun city pages, and no other guard would notice one. This
+ * compares every pair on 6-word shingles taken from the rendered body. The
+ * chrome alone — nav, footer, two lead forms — puts genuine pages around 0.09,
+ * so 0.20 leaves headroom while a page written by find-and-replace from its
+ * neighbour would land far above it.
+ */
+if (cityBodies.size > 1) {
+  const SIMILARITY_CAP = 0.2;
+  const shingle = (h) => {
+    const words = h
+      .replace(/<script[\s\S]*?<\/script>/g, " ")
+      .replace(/<[^>]+>/g, " ")
+      .toLowerCase()
+      .match(/[a-z]+/g) ?? [];
+    const out = new Set();
+    for (let i = 0; i + 6 <= words.length; i++) out.add(words.slice(i, i + 6).join(" "));
+    return out;
+  };
+  const sets = new Map([...cityBodies].map(([slug, h]) => [slug, shingle(h)]));
+  const slugs = [...sets.keys()];
+  for (let i = 0; i < slugs.length; i++) {
+    for (let j = i + 1; j < slugs.length; j++) {
+      const a = sets.get(slugs[i]);
+      const b = sets.get(slugs[j]);
+      let shared = 0;
+      for (const sh of a) if (b.has(sh)) shared++;
+      const jaccard = shared / (a.size + b.size - shared);
+      if (jaccard > SIMILARITY_CAP) {
+        fail(
+          `/${slugs[i]}/`,
+          `${(jaccard * 100).toFixed(0)}% text overlap with /${slugs[j]}/ — city pages must not be spun variants (§2.5)`,
+        );
+      }
+    }
+  }
+}
+
 // --- Homepage --------------------------------------------------------------
 
 {
@@ -368,5 +445,6 @@ const pages =
   (await loadCollection("src/content/audiences")).length +
   (await loadCollection("src/content/emergency")).length +
   (await loadCollection("src/content/guides")).length +
-  (await loadCollection("src/content/home")).length;
+  (await loadCollection("src/content/home")).length +
+  (await loadCollection("src/content/cities")).length;
 console.log(`Structure check passed — ${pages} collection page(s) match what their entries describe.`);

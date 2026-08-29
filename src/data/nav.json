@@ -72,11 +72,11 @@
     ],
 
     "cities": [
-      { "label": "Mold Remediation in Boise", "href": "/mold-remediation-boise/", "built": false },
-      { "label": "Mold Remediation in Meridian", "href": "/mold-remediation-meridian/", "built": false },
-      { "label": "Mold Remediation in Nampa", "href": "/mold-remediation-nampa/", "built": false },
-      { "label": "Mold Remediation in Caldwell", "href": "/mold-remediation-caldwell/", "built": false },
-      { "label": "Mold Remediation in Eagle", "href": "/mold-remediation-eagle/", "built": false },
+      { "label": "Mold Remediation in Boise", "href": "/mold-remediation-boise/", "built": true },
+      { "label": "Mold Remediation in Meridian", "href": "/mold-remediation-meridian/", "built": true },
+      { "label": "Mold Remediation in Nampa", "href": "/mold-remediation-nampa/", "built": true },
+      { "label": "Mold Remediation in Caldwell", "href": "/mold-remediation-caldwell/", "built": true },
+      { "label": "Mold Remediation in Eagle", "href": "/mold-remediation-eagle/", "built": true },
 
       { "label": "Asbestos Removal in Boise", "href": "/asbestos-removal-boise/", "built": false, "phase": 2 },
       { "label": "Asbestos Removal in Meridian", "href": "/asbestos-removal-meridian/", "built": false, "phase": 2 },
