@@ -142,6 +142,18 @@ one photo carry both pages honestly.
 as its before/after pair. All five pages reuse `PHOTO_HERO` and
 `PHOTO_CONTAINMENT_1`.
 
+**Shot list — /water-damage-restoration/ (1 new):**
+
+| Slot | Ratio | Where it appears | What to shoot |
+|---|---|---|---|
+| `PHOTO_WATER_DRYING_1` | **3:2** | Process list, after step 05 (Structural drying) | Air movers set against the affected surfaces with a dehumidifier in frame. The equipment in a room mid-dry, not a stack of it on a truck — this is the photo that shows why the last two days of the job exist. |
+
+Reuses `PHOTO_HERO`, `PHOTO_INTRO_1`, and `PHOTO_CONTAINMENT_1`. No
+before/after pair on this page: a dried wall photographs identically to a wet
+one, so a pair would be making a claim the image cannot support. If a water
+before/after is wanted later, shoot the removal — open wall cavity versus
+finished rebuild — rather than the drying.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the
