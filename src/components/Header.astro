@@ -22,7 +22,7 @@ type Item = Link | Group;
 const isGroup = (item: Item): item is Group =>
   "kind" in item && item.kind === "group";
 
-// Unbuilt pages do not appear at all. Not greyed out, not labelled "soon" —
+// Unbuilt pages do not appear at all. Not greyed out, not labeled "soon" —
 // absent. A nav that advertises unfinished sections undercuts the credibility
 // the pages themselves are built on. A group empties out and disappears with
 // its children.
@@ -433,7 +433,7 @@ const currentPath = Astro.url.pathname;
 
 <script>
   /**
-   * Nav behaviour — the mobile panel and the Services dropdown.
+   * Nav behavior — the mobile panel and the Services dropdown.
    *
    * One of only two scripts on the site (§14). CSS already opens the desktop
    * dropdown on hover and focus-within, so a failure here degrades to a menu

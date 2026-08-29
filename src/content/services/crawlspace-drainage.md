@@ -27,7 +27,7 @@ intro:
   heading: Why so many crawlspaces here hold water
   paragraphs:
     - "The Treasure Valley sits on irrigated ground with a seasonal water table that rises when the canals run. A great many houses here were built with a shallow crawlspace, a dirt floor, and drainage that assumed the ground behaved the way it does in a drier place. It does not."
-    - "So the pattern repeats across the valley. Water appears under the house in spring, sits there through the irrigation season, drops in late summer, and comes back the following year. Owners often assume it is normal for the neighbourhood, and in the narrow sense they are right, which is exactly why it goes unaddressed for a decade."
+    - "So the pattern repeats across the valley. Water appears under the house in spring, sits there through the irrigation season, drops in late summer, and comes back the following year. Owners often assume it is normal for the neighborhood, and in the narrow sense they are right, which is exactly why it goes unaddressed for a decade."
     - "It is not harmless. A wet crawlspace puts moisture into the framing above it continuously, and a house moves air upward whether you want it to or not, which means crawlspace air ends up in living space. The predictable results are mold on joists and subfloor, a musty smell that never quite leaves, rot at the sill and the rim joist, cupping hardwood on the floor above, and insulation that has fallen out of the bays because it has been wet for years."
     - "Drainage is what stops the water arriving. It is the piece that has to come first, because everything else — a new vapor barrier, encapsulation, remediating the growth — is temporary while water is still coming in."
 
@@ -116,7 +116,7 @@ faqs:
   - question: Will a sump pump on its own fix it?
     answer: "Rarely. A pump only removes water that reaches the basin, so without a drain line collecting water and directing it there, most of the crawlspace stays wet. A pump is one component of a drainage system rather than a substitute for one."
   - question: How much does crawlspace drainage cost?
-    answer: "We do not publish a price, because it depends on the size of the crawlspace, the clearance available to work in, the length of drain required, whether exterior grading is part of the answer, and whether remediation has to happen first. The inspection is free and ends with a written number."
+    answer: "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. On a crawlspace that often means establishing where the water comes from first, because that decides the whole shape of the job."
   - question: Does homeowners insurance cover this?
     answer: "Usually not. Groundwater intrusion and long-term seepage are commonly excluded, while a sudden failure such as a burst supply line under the house commonly is covered. The policy decides it. Where there is a claim we bill the insurer directly and work with the adjuster, and we document the scope so it holds up."
   - question: Will the smell go away?

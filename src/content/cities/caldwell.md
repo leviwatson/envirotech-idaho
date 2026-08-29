@@ -31,7 +31,7 @@ areas:
     - name: Grade transitions between phases
       detail: "Each addition changed how water moves around the building. Old grading that drained away from the original footprint often drains toward an addition that was added later, and the crawlspace beneath it takes the difference."
     - name: Roof and flashing junctions
-      detail: "Where a newer roof plane meets an older one, flashing is a frequent long-term failure point. That produces water entering high and travelling down inside a wall, which reads as a wall problem rather than a roof one."
+      detail: "Where a newer roof plane meets an older one, flashing is a frequent long-term failure point. That produces water entering high and traveling down inside a wall, which reads as a wall problem rather than a roof one."
     - name: Plumbing added in stages
       detail: "A bathroom added to a house that was not plumbed for it means supply and drain runs threaded through original framing, often in a crawlspace with restricted access, and a slow leak there can run for years unseen."
 

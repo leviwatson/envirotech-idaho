@@ -79,7 +79,7 @@ sections:
       - Chain-of-custody paperwork recording who handled the samples and when
       - A final invoice that matches the scope it was quoted against
     outro:
-      - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples, and we do not interpret them in our favour. The company that gets paid to remove the mold should not also be the company certifying it is gone, and a buyer's agent understands that distinction immediately."
+      - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples, and we do not interpret them in our favor. The company that gets paid to remove the mold should not also be the company certifying it is gone, and a buyer's agent understands that distinction immediately."
       - "If you want to see what the package looks like before committing to anything, ask and we will send a sample from a completed job with the address and owner details removed. Paperwork is easier to evaluate when you can read it than when it has been described to you."
     photo:
       name: PHOTO_CLEARANCE_DOC_1
@@ -92,7 +92,7 @@ sections:
       - "It gets negotiated, and it gets negotiated far more calmly when there is a written scope to negotiate against rather than a guess."
       - "The common shapes are these. The seller completes the work before closing. The seller issues a credit and the buyer handles it afterward. The price is adjusted. Or funds are held in escrow until the clearance report lands. Which one fits depends on how much time is left and on which side needs certainty more."
       - "If the water came from something sudden, such as a supply line that failed or an appliance that let go, there may be an insurance claim behind it. We bill the insurer directly and work with the adjuster, and we document the scope so it holds up. Long-term seepage and deferred maintenance are commonly not covered. The policy decides that, not us."
-      - "We do not publish a price, because the number depends on square footage, whether the growth is in a crawlspace or in finished living space, whether drywall has to come out, and whether reconstruction follows. The inspection is free and it ends with a written number both sides can work from."
+      - "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. Both sides can work from that written figure, which is what makes the negotiation short."
 
 faqs:
   - question: Can we still close on time?
@@ -106,7 +106,7 @@ faqs:
   - question: What documentation will my agent need?
     answer: "A written scope of work, moisture readings, photographs of the containment and the removal, an independent lab clearance report with sample locations and results, and chain-of-custody paperwork for those samples. Ask and we will send you a sample package from a completed job with the identifying details removed."
   - question: What if the buyer wants their own independent test?
-    answer: "Good. We would rather they did. We do not process our own clearance samples and we do not interpret them in our favour, so an independent result from a lab the buyer chose is the same kind of evidence we would have handed them anyway. The company that gets paid to remove the mold should not be the company certifying it is gone."
+    answer: "Good. We would rather they did. We do not process our own clearance samples and we do not interpret them in our favor, so an independent result from a lab the buyer chose is the same kind of evidence we would have handed them anyway. The company that gets paid to remove the mold should not be the company certifying it is gone."
 
 relatedServices:
   - /mold-remediation/

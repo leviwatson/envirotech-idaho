@@ -32,7 +32,7 @@ arrival:
     - title: Extraction
       description: "Standing water comes out first, with equipment sized to the volume rather than a wet vac. Until the water is gone nothing else can be assessed properly, because saturated material hides what is underneath it."
     - title: Moisture mapping
-      description: "Meters and thermal imaging find how far the water actually travelled. It is almost always further than the wet floor suggests — water moves along joists, down wall cavities, and under flooring into rooms that look untouched."
+      description: "Meters and thermal imaging find how far the water actually traveled. It is almost always further than the wet floor suggests — water moves along joists, down wall cavities, and under flooring into rooms that look untouched."
     - title: Drying equipment
       description: "Air movers and dehumidifiers go in, positioned to the moisture map rather than spread evenly around the room. Where flooring or drywall has to be opened to dry the cavity behind it, you hear that before it happens."
     - title: Daily monitoring

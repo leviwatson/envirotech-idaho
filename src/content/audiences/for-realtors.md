@@ -40,7 +40,7 @@ sections:
       - Chain-of-custody paperwork recording who handled the samples and when
       - A final invoice that matches the scope it was quoted against
     outro:
-      - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples and we do not interpret them in our favour. Most remediation companies self-clear. The company that gets paid to remove the problem should not also be the company certifying it is gone, and an agent who has been through a few of these knows the difference."
+      - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples and we do not interpret them in our favor. Most remediation companies self-clear. The company that gets paid to remove the problem should not also be the company certifying it is gone, and an agent who has been through a few of these knows the difference."
       - "If you want to see what the package looks like before you refer anyone, ask and we will send a sample from a completed job with the address and owner details removed. It is easier to judge paperwork you can read."
     photo:
       name: PHOTO_CLEARANCE_DOC_1
@@ -93,7 +93,7 @@ faqs:
   - question: Do you work with the adjuster if there is a claim?
     answer: "Yes. We bill the insurer directly and work with the adjuster, and we document the scope so it holds up. Sudden and accidental damage such as a failed supply line is commonly covered; long-term seepage and deferred maintenance commonly are not. The policy decides that, not us."
   - question: What does it cost?
-    answer: "We do not publish prices, because the number depends on square footage, whether the growth is in a crawlspace or in finished space, whether drywall comes out, and whether reconstruction follows. The inspection is free and ends with a written number rather than a range, which is what makes the negotiation short."
+    answer: "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. Testing, where it is needed, is arranged with an independent company and paid to them rather than to us."
   - question: Do you handle asbestos as well as mold?
     answer: "Yes, and it comes up often in pre-1980 Treasure Valley housing — popcorn ceilings, floor tile, vermiculite insulation, duct wrap. Asbestos runs its own sequence with air monitoring throughout and third-party clearance at the end. If a remodel is planned after closing, testing before demolition is worth raising with your client early."
 

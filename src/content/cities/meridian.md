@@ -18,7 +18,7 @@ housingStock:
     - "Almost all of Meridian was built during the growth of the last three decades, which changes the mold conversation completely. There is no asbestos question, the plumbing is modern, and the crawlspaces are generally dry. What you get instead is a set of failures that come from how quickly and how uniformly the housing was built."
     - "The single most common one we find here is a bathroom exhaust fan that does not vent outside. It terminates in the attic, or into a joist bay, or into a soffit that pushes the air straight back under the roof. The fan runs, the homeowner assumes the moisture is leaving, and it is depositing into insulation and sheathing a few feet above the ceiling instead."
     - "That failure is invisible for years. It shows up as staining on a bedroom ceiling, or a smell in a closet that shares a wall with the bathroom, long after the sheathing above has been taking on moisture every shower. By the time anyone looks, the affected area is usually larger than the stain suggests."
-    - "The second Meridian pattern is water arriving from above rather than below. Second-floor laundry, refrigerator supply lines to icemakers, upstairs bathrooms over finished living space. When any of those fail, the water travels down through the floor structure and the damage runs across two storeys rather than one room."
+    - "The second Meridian pattern is water arriving from above rather than below. Second-floor laundry, refrigerator supply lines to icemakers, upstairs bathrooms over finished living space. When any of those fail, the water travels down through the floor structure and the damage runs across two stories rather than one room."
 
 areas:
   heading: The failures that repeat here
@@ -61,8 +61,8 @@ logistics:
     - figure: 24/7
       label: Response for active water, any hour
   paragraphs:
-    - "Meridian is a short run from the centre of our service area and scheduling is straightforward. Non-emergency work gets someone on site within one to two days."
-    - "Because the failure modes here are well understood, the inspection usually ends with both a cause and a written number rather than a recommendation to investigate further. Where that is not the case, it is normally an attic or a ceiling cavity that needs opening in one spot to see how far the moisture travelled."
+    - "Meridian is a short run from the center of our service area and scheduling is straightforward. Non-emergency work gets someone on site within one to two days."
+    - "Because the failure modes here are well understood, the inspection usually ends with both a cause and a written number rather than a recommendation to investigate further. Where that is not the case, it is normally an attic or a ceiling cavity that needs opening in one spot to see how far the moisture traveled."
 
 faqs:
   - question: My bathroom fan runs but there is a stain on the ceiling below. Why?

@@ -19,6 +19,7 @@ import PhotoSlot from "../components/PhotoSlot.astro";
 import DesktopCtaBar from "../components/DesktopCtaBar.astro";
 import { renderProse } from "../lib/prose";
 import { resolveLinks, labelFor } from "../lib/links";
+import { TRUST_STRIP } from "../data/service-defaults";
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, DOMAIN } from "../data/site";
 
 interface Props {
@@ -75,6 +76,18 @@ const schema = [
         <h1>{d.h1}</h1>
         <p class="hero__subhead">{d.subhead}</p>
         <p class="hero__meta mono">{d.name}, Idaho &middot; {d.county} County</p>
+
+        {/* Same strip as the service pages — credentials carry everywhere. */}
+        <ul class="trust">
+          {
+            TRUST_STRIP.map((item) => (
+              <li class="trust__item">
+                <span class="trust__label">{item.label}</span>
+                <span class="trust__detail">{item.detail}</span>
+              </li>
+            ))
+          }
+        </ul>
 
         <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
         <p class="hero__note">Free inspection. Someone answers 24/7.</p>
@@ -186,7 +199,6 @@ const schema = [
       <LeadForm
         id="request-inspection"
         heading={`Request a free inspection in ${d.name}`}
-        blurb="Tell us what you found. We come look at it and write you an estimate."
       />
     </section>
   </div>
@@ -227,6 +239,29 @@ const schema = [
     font-size: var(--step--1);
     color: color-mix(in srgb, var(--ink) 62%, var(--surface));
   }
+  .trust {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    max-width: none;
+  }
+  @media (min-width: 560px) {
+    .trust { grid-template-columns: repeat(3, 1fr); }
+  }
+  .trust__item {
+    display: grid;
+    gap: 2px;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 2px solid var(--spark);
+  }
+  .trust__label { font-weight: 600; font-size: var(--step--1); }
+  .trust__detail {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  }
+
   .hero__cta {
     display: inline-flex;
     align-items: center;

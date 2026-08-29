@@ -422,6 +422,38 @@ if (cityBodies.size > 1) {
   }
 }
 
+// --- Pricing framing (§6) --------------------------------------------------
+
+/**
+ * One phrasing, not five. A page that talks about cost must carry the approved
+ * framing verbatim, and must not carry the older policy-flavored wording.
+ */
+{
+  const defaults = await readFile("src/data/service-defaults.ts", "utf8");
+  const canon = defaults.match(/export const PRICING_LINE =\s*\n?\s*"([^"]+)"/)?.[1];
+  if (!canon) {
+    problems.push("service-defaults.ts: PRICING_LINE is missing");
+  } else {
+    const needle = canon.slice(0, 90);
+    for (const file of await readdir("dist")) {
+      const page = `/${file}/`;
+      const h = await html(file === "index.html" ? "" : file);
+      if (!h) continue;
+      const talksPrice = /what does .{0,30}cost|how much does/i.test(h);
+      // A page may instead be discussing the testing company's fee, which is
+      // not ours to frame — those attribute it explicitly.
+      const attributedToTester =
+        /that is the testing company's figure|the testing company sets|is the testing company's charge/i.test(h);
+      if (talksPrice && !attributedToTester && !h.includes(needle)) {
+        fail(page, "discusses our cost without the approved §6 pricing framing");
+      }
+      if (/We do not publish (a )?price/i.test(h)) {
+        fail(page, 'uses the retired "we do not publish prices" wording (§6)');
+      }
+    }
+  }
+}
+
 // --- Sitewide chrome -------------------------------------------------------
 
 const home = await html("");

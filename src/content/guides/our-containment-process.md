@@ -13,9 +13,9 @@ hero:
 premise:
   heading: The whole thing rests on one idea
   paragraphs:
-    - "Air moves from higher pressure to lower pressure. That is the entire mechanism, and everything else on this page exists to make that one fact work in your favour."
+    - "Air moves from higher pressure to lower pressure. That is the entire mechanism, and everything else on this page exists to make that one fact work in your favor."
     - "We seal the work area, then put a machine inside it that pulls air out and pushes it outside the building. Removing air faster than it can leak back in leaves the enclosure at slightly lower pressure than the rooms around it. From that moment, air can only move one direction across the barrier: inward, toward the work."
-    - "So when a wall gets opened and material is disturbed, what comes off it does not drift down your hallway. It goes into the filter stack and out the duct. The containment is not holding dust in by being a good wall. It is holding it in because the air itself is travelling the right way."
+    - "So when a wall gets opened and material is disturbed, what comes off it does not drift down your hallway. It goes into the filter stack and out the duct. The containment is not holding dust in by being a good wall. It is holding it in because the air itself is traveling the right way."
     - "That distinction matters, because it is what separates a containment from a curtain. Plastic taped across a doorway with nothing running behind it looks like containment and does nothing. The pressure is what works. The plastic just makes the pressure possible."
 
 build:
@@ -110,7 +110,7 @@ sections:
       - "A containment costs time and materials on every job, regardless of size. It is a couple of hours of setup before any billable removal starts, sheeting and tape that get thrown away at the end, a machine tied up for the duration, and filters that are consumed. On a small job it can be a meaningful share of the total cost, and it makes a two-hour job into a half-day one."
       - "It is also invisible. A homeowner cannot tell from the finished result whether the work was contained. The wall looks the same either way. The consequences, when there are consequences, arrive weeks later and land somewhere that does not obviously connect back — a room across the house, a duct system, a second growth in a place nobody touched."
       - "So the incentive runs one direction. Skipping containment is cheaper, faster, and unlikely to be traced back. Doing it on every job means being more expensive than a competitor who does not, on a difference the customer cannot see at the point of choosing. That is why it is the first thing to go on a small job, and why it is worth asking about."
-      - "We build one on every job, mold or asbestos, whatever the size. Partly because the small jobs are exactly where cross-contamination is most likely to go unnoticed, and partly because a company that decides containment is optional has to make that decision job by job — and the judgement drifts."
+      - "We build one on every job, mold or asbestos, whatever the size. Partly because the small jobs are exactly where cross-contamination is most likely to go unnoticed, and partly because a company that decides containment is optional has to make that decision job by job — and the judgment drifts."
 
   - heading: What it costs you in time
     paragraphs:

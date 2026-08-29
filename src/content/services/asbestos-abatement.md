@@ -21,7 +21,7 @@ photos:
     name: PHOTO_ASBESTOS_1
     ratio: 3/2
     afterStep: 3
-    caption: "Removed material double-bagged and labelled inside the containment, before anything crosses the barrier."
+    caption: "Removed material double-bagged and labeled inside the containment, before anything crosses the barrier."
   beforeAfter:
     heading: Before and after
     before:
@@ -36,7 +36,7 @@ photos:
 intro:
   heading: What abatement is, and who certifies it is done
   paragraphs:
-    - "Start with the part most companies leave until last. When the work is finished, someone has to verify the space is clean. On our jobs that is an independent accredited laboratory, and it is not us. We do not collect our own clearance samples, we do not process them, and we do not get to interpret them in our favour."
+    - "Start with the part most companies leave until last. When the work is finished, someone has to verify the space is clean. On our jobs that is an independent accredited laboratory, and it is not us. We do not collect our own clearance samples, we do not process them, and we do not get to interpret them in our favor."
     - "Most abatement firms self-clear. The same company that quoted the job, did the removal, and wants to be paid also signs the paper saying the air is clean. That is legal and it is common and it is a conflict of interest sitting at the exact point where you have no way to check the work yourself."
     - "Everything else on this page is standard practice done properly. Containment, negative pressure, air monitoring, disposal to a licensed facility. It matters, and we will explain all of it. But the reason to call us instead of the next company is the paragraph above."
     - "Abatement itself means one of three things depending on what you have: removing the material, encapsulating it so it cannot release fibres, or leaving intact material alone and documenting it. A good inspection tells you which of those you actually need, and sometimes the honest answer is the third one. Older houses that have taken water often have both problems at once, and [mold remediation](/mold-remediation/) runs the same containment-first way."
@@ -58,7 +58,7 @@ process:
     - title: Containment
       description: "Poly sheeting seals the work area and every seam is taped. A negative air machine runs two pre-filters into a HEPA final stage and ducts to an exterior opening. A decontamination chamber goes in at the entry, so nobody walks out of the work area without passing through it."
     - title: Removal
-      description: "The material comes out wet wherever wetting is appropriate, because keeping it damp keeps fibres down. It is double-bagged and labelled inside the containment before anything crosses the barrier. Nothing gets carried through your house in an open container."
+      description: "The material comes out wet wherever wetting is appropriate, because keeping it damp keeps fibres down. It is double-bagged and labeled inside the containment before anything crosses the barrier. Nothing gets carried through your house in an open container."
     - title: Air monitoring
       description: "Air is sampled while the work is happening, not only at the end. That is what tells us the containment is doing its job while there is still time to correct it, rather than discovering a problem at clearance when the work is already finished."
     - title: Decontamination
@@ -119,7 +119,7 @@ inspectionTesting:
 
 serviceAreas:
   heading: Where we work
-  blurb: "Treasure Valley focus, with statewide coverage across Idaho. Asbestos is largely a function of when a house was built, so what we find tracks the age of the neighbourhood."
+  blurb: "Treasure Valley focus, with statewide coverage across Idaho. Asbestos is largely a function of when a house was built, so what we find tracks the age of the neighborhood."
   cities:
     - "[Boise](/mold-remediation-boise/) — the North End, the Bench, and the older pockets of the East End are heavily pre-1980. Textured ceilings, 9x9 floor tile with black mastic, duct and pipe wrap in crawlspaces, and vermiculite in attics that were insulated before the material fell out of use."
     - "[Meridian](/mold-remediation-meridian/) — newer overall, which usually means asbestos turns up in an older outbuilding, a remodel of a property that predates the subdivision around it, or a rural parcel that got absorbed as the city grew."
@@ -133,13 +133,15 @@ faqs:
   - question: Can I scrape a popcorn ceiling myself?
     answer: "Not until it has been tested, and often not afterwards either. Scraping is one of the most effective ways to put fibres into the air, and it happens in the room where you live rather than inside a containment. If the material tests negative, scrape away. If it tests positive, it is a contained job with clearance testing at the end, and doing it any other way leaves the house dirtier than it started."
   - question: What is vermiculite and why does it come up?
-    answer: "Vermiculite is a loose-fill attic insulation that looks like small grey-brown pebbles. A large share of what was sold in this country came from a mine whose deposit was contaminated with asbestos, so it is treated as suspect until testing says otherwise. If you have it, the practical advice is to stay out of the attic and not disturb it while you decide what to do."
+    answer: "Vermiculite is a loose-fill attic insulation that looks like small gray-brown pebbles. A large share of what was sold in this country came from a mine whose deposit was contaminated with asbestos, so it is treated as suspect until testing says otherwise. If you have it, the practical advice is to stay out of the attic and not disturb it while you decide what to do."
   - question: How do you know the material is actually gone?
     answer: "An independent accredited laboratory performs the final clearance testing and issues the result. We do not collect those samples, we do not run them, and we do not interpret them. Most abatement companies clear their own work, which means the company that wants to be paid is also the company saying the job passed. Ours is the one step in the process we deliberately do not control."
+  - question: There is mold in the same room. Which gets dealt with first?
+    answer: "They are separate jobs and the asbestos decides the sequence. An independent testing company samples the suspect material first; you engage them directly. Negative result: the ceiling is ordinary material, and the mold work proceeds normally — containment, removal, and drying, with the ceiling opened as needed. Positive result: the asbestos-containing material comes out first, as its own job, inside its own containment with air monitoring and independent clearance testing at the end. Only once that space is cleared does the mold work continue into it. Doing it the other way round — opening a ceiling or a wall of unknown material to reach wet framing — is how a contained mold job becomes an uncontained asbestos one."
   - question: Does asbestos always have to be removed?
     answer: "No, and anyone telling you otherwise is selling. Intact, undamaged material that is not going to be disturbed can often be left in place and documented, or encapsulated so it cannot release fibres. Removal is the right answer when the material is damaged, when it is in the way of work you are doing, or when a sale or a lender requires it — the situation covered in [what to do when something is flagged on an inspection report](/mold-found-during-home-inspection/). The inspection tells you which situation you are in, and it is free."
   - question: What does asbestos abatement cost?
-    answer: "We do not publish prices, because the number depends on the material, the square footage, how accessible it is, how complex the containment has to be, and whether reconstruction follows. Diagnostic testing is not in our number at all — you engage and pay a testing company directly for that. Our inspection is free and ends with a written figure rather than a range."
+    answer: "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. Diagnostic testing is not in our number at all — you engage and pay a testing company directly for that."
 
 relatedProblems:
   - /popcorn-ceiling-asbestos/

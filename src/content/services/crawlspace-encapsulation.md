@@ -118,7 +118,7 @@ faqs:
   - question: Should the vents be sealed?
     answer: "Often, but not always, and it depends on how the house is built and how the space will be conditioned. Sealing vents on a crawlspace with no plan for managing humidity inside it can make things worse rather than better. It is decided per house at the inspection instead of applied as a default."
   - question: How much does encapsulation cost?
-    answer: "We do not publish a price, because it depends on square footage, clearance, how much has to be cleared out first, whether the stem walls are insulated, and whether drainage or remediation is needed before it. The inspection is free and ends with a written number rather than a range."
+    answer: "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. Whether drainage has to happen first changes it more than square footage does."
   - question: Can I do it myself with plastic from the hardware store?
     answer: "You can lay a vapor barrier yourself, and on a dry crawlspace with good clearance it is real improvement. What is hard to do alone is sealing the seams properly, running and sealing the liner up piers and walls, and knowing whether the moisture is soil evaporation or water arriving from outside. That last one is the judgment that decides whether the whole exercise is worth doing."
   - question: Does it help with the smell in the house?

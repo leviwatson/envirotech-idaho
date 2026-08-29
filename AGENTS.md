@@ -137,6 +137,14 @@ The separation is the strongest argument on the site, so state it fully rather t
 
 It has a corollary worth using: because we do not sell testing, telling a homeowner they do not need it costs us nothing. A company that bills for sampling cannot say that as cheaply. Referrals carry **no fee** — that is the only reason the recommendation is worth anything, and the copy should say so.
 
+**No pricing — framed as scope, not policy.** The site never states a price for this business (§10). But the reason given must be about the work rather than about our willingness to say, and there is exactly one approved phrasing:
+
+> Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with.
+
+It lives in `PRICING_LINE` in `src/data/service-defaults.ts` and is used verbatim wherever cost comes up — cost FAQs, form microcopy, anywhere else. A page-specific sentence may follow it, but the framing itself does not get reworded. `check-structure.mjs` fails the build on a page that discusses pricing without it.
+
+Do not write "we do not publish prices" or any variant that reads as a policy being defended. Confident, not defensive: the number depends on the job, so the job gets looked at first.
+
 **24/7 is real and confirmed.** Put it in the hero. Water damage is the emergency service and the emergency page carries its own phone treatment.
 
 ---

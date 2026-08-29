@@ -45,7 +45,7 @@ export const INSPECTION_TESTING = {
   heading: "The inspection is free. The testing is not ours.",
   paragraphs: [
     "Someone comes out, looks at the problem, takes moisture readings, and writes you an estimate. That visit costs nothing and there is no obligation attached to it.",
-    "Laboratory testing is a different job done by a different company. We do not perform it, we do not sell it, and we take no percentage of it. If you want material or air analysed, you engage an independent testing company and pay them directly, and their result belongs to you regardless of who ends up doing the work.",
+    "Laboratory testing is a different job done by a different company. We do not perform it, we do not sell it, and we take no percentage of it. If you want material or air analyzed, you engage an independent testing company and pay them directly, and their result belongs to you regardless of who ends up doing the work.",
     "That separation is deliberate, and it is the whole argument. We are the company that gets paid to remove the problem. Us deciding whether you have one, and us certifying we fixed it, would be two conflicts of interest sitting either side of the same job. We have neither. Where work ends in clearance testing, we engage an independent company to carry it out and they issue the result directly.",
     "It has a practical consequence worth knowing. Because we do not sell testing, we have nothing to gain from telling you to buy it. When we say a lab result will not change what you should do next, that advice costs us nothing to give.",
   ],
@@ -59,6 +59,18 @@ export const INSURANCE = {
     "In practice that means photographing conditions before we touch anything, recording moisture readings as they change, and writing a scope specific enough that it does not come back denied for vagueness. Documentation is the difference between a claim that pays and a claim that argues.",
   ],
 } as const;
+
+/**
+ * §6. The single approved way to answer "what does it cost".
+ *
+ * Framed as scope rather than policy: the reason there is no price list is
+ * that jobs genuinely differ, not that we decline to say. Use this wording
+ * verbatim wherever cost comes up — one phrasing, not five variations.
+ * check-structure.mjs fails the build on a page that discusses pricing
+ * without it.
+ */
+export const PRICING_LINE =
+  "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with.";
 
 export const SERVICE_AREAS = {
   heading: "Where we work",

@@ -41,7 +41,12 @@ interface Props {
 
 const {
   heading = "Get a free inspection",
-  blurb = "Tell us what you are seeing. We come out, look at it, and write you an estimate. The inspection costs nothing.",
+  /**
+   * Warm, customer-first, two sentences. Defined here rather than per page so
+   * the voice cannot drift across the site — override only where a page has a
+   * genuinely different ask.
+   */
+  blurb = "We come out, look at what you are dealing with, and walk you through what it will take. The visit is free and there is no obligation attached to it.",
   id = "lead-form",
   compact = false,
   class: className,
@@ -76,7 +81,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         The field is named verify_ref precisely because it maps to nothing in
         any browser's autofill heuristics. It was previously "company", which
         Chrome and Safari happily filled from a saved address profile, and
-        autocomplete="off" is widely ignored for organisation fields — so real
+        autocomplete="off" is widely ignored for organization fields — so real
         people were tripping it. */}
     <div class="lead__trap" aria-hidden="true">
       <input
@@ -168,9 +173,10 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
     <button type="submit" class="lead__submit">Request a free inspection</button>
 
     <p class="lead__terms">
-      No obligation. We are usually on site within one to two days for
-      non-emergency work. If samples need to go to an independent lab, that
-      testing is a separate paid service and we tell you the cost first.
+      Usually on site within one to two days for non-emergency work. Every job
+      has its own scope, so the estimate is written after someone has seen it
+      rather than quoted from a price list. Laboratory testing, where it is
+      needed, is arranged with an independent company and paid to them.
     </p>
 
     {/* Status region. Replaced in place on submit; announced to screen

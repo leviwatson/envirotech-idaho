@@ -196,6 +196,12 @@ better photograph from somewhere else.
 Lower priority than the containment set. The pages ship with skeletons at the
 right ratio and nothing reflows when the photos arrive.
 
+One further slot from the problem pages:
+
+| Slot | Ratio | Page | What to shoot |
+|---|---|---|---|
+| `PHOTO_VERMICULITE_1` | **16:9** | `/vermiculite-insulation/` | Loose-fill vermiculite in an attic — the granules close enough to be identifiable. This photo does the work the copy cannot: people arrive at that page trying to identify what they are looking at. |
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

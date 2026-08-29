@@ -52,9 +52,9 @@ process:
     - title: Sample collection
       description: "Their technician collects what the situation calls for. Bulk or surface samples take a physical piece of material or a tape lift from the surface. Air sampling runs cassettes indoors alongside a control sample taken outdoors at the same time, because indoor air is compared against outdoor air rather than against zero."
     - title: Chain of custody
-      description: "Samples are bagged, labelled, and logged against a form recording who handled them and when. That document is what makes a result usable by an insurer, a buyer's agent, or a landlord, rather than merely interesting."
+      description: "Samples are bagged, labeled, and logged against a form recording who handled them and when. That document is what makes a result usable by an insurer, a buyer's agent, or a landlord, rather than merely interesting."
     - title: Laboratory analysis
-      description: "The samples are analysed and the testing company issues the report. It goes to you, because you commissioned it. We never see it unless you choose to send it to us."
+      description: "The samples are analyzed and the testing company issues the report. It goes to you, because you commissioned it. We never see it unless you choose to send it to us."
     - title: You decide what happens next
       description: "A result is a decision tool. Bring it to us and we will write a scope and a number against it, and you are free to bring it to anyone else instead. The report is yours and it does not commit you to us."
 
@@ -100,7 +100,7 @@ timeline:
 
 serviceAreas:
   heading: Where we work
-  blurb: "Treasure Valley focus, with statewide coverage across Idaho. What an inspection finds tracks the age and the ground conditions of the neighbourhood."
+  blurb: "Treasure Valley focus, with statewide coverage across Idaho. What an inspection finds tracks the age and the ground conditions of the neighborhood."
   cities:
     - "[Boise](/mold-remediation-boise/) — older stock in the North End and on the Bench, where unsealed crawlspaces and original plumbing put moisture into framing that was never detailed to dry out."
     - "[Meridian](/mold-remediation-meridian/) — newer construction, so the recurring finds are supply lines to refrigerators and upstairs laundry, and bath fans vented into the attic instead of through the roof."

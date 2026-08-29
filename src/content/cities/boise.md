@@ -22,7 +22,7 @@ housingStock:
 
 areas:
   heading: What we find, and where
-  intro: "Boise is not one housing stock, and the failures cluster by neighbourhood."
+  intro: "Boise is not one housing stock, and the failures cluster by neighborhood."
   items:
     - name: North End
       detail: "Pre-1940 in much of it, with basements, original plumbing runs, and a mature tree canopy that keeps north-facing walls shaded and slow to dry. Growth here often starts at a below-grade wall or around a supply line that has been weeping quietly for years. Plaster rather than drywall in the oldest houses, which behaves differently when wet and cannot be cut back the same way."
@@ -59,18 +59,18 @@ logistics:
     - figure: 24/7
       label: Response for active water, any hour
   paragraphs:
-    - "Boise is the centre of our service area, so scheduling here is usually the most flexible part of the valley. Non-emergency work gets someone on site within one to two days, and active water gets a response at any hour."
+    - "Boise is the center of our service area, so scheduling here is usually the most flexible part of the valley. Non-emergency work gets someone on site within one to two days, and active water gets a response at any hour."
     - "Where a Boise job takes longer than the valley norm it is almost always one of two things: a finished basement that dries slowly, or waiting on a laboratory result before it is safe to open a pre-1980 ceiling. Both are worth the days they cost."
 
 faqs:
-  - question: My house is on the Bench and has a popcorn ceiling. Can you just remove the mold?
-    answer: "Not until the ceiling has been tested. On pre-1980 Bench housing, textured ceilings are a common source of asbestos-containing material, and cutting into one to reach wet framing above is how a contained job becomes an uncontained one. An independent company tests it — you engage them directly — and the result decides the order of the work."
+  - question: There is mold in my wall and a popcorn ceiling in the same room. Are those the same problem?
+    answer: "No — they are two separate materials and two separate jobs, and the order matters. The mold is a moisture problem. The textured ceiling is a possible asbestos-containing material, which on pre-1980 Bench and North End housing is common enough to check before anyone cuts into the room. An independent testing company samples the ceiling; you engage them directly. Negative result: the ceiling is ordinary material, and the mold work proceeds normally — containment, removal, and drying, with the ceiling opened as needed. Positive result: the asbestos-containing material comes out first, as its own job, inside its own containment with air monitoring and independent clearance testing at the end. Only once that space is cleared does the mold work continue into it. What we will not do is open a ceiling of unknown material to reach wet framing above it."
   - question: Do North End basements need different treatment?
     answer: "The sequence is the same but the timeline is usually longer. Below-grade walls dry more slowly than a crawlspace or a main floor, so the final stretch of machines running tends to add a day or two. Older North End houses also frequently have plaster rather than drywall, which behaves differently when wet and cannot simply be cut back to the next stud."
   - question: Is mold worse in older Boise homes?
     answer: "Not inherently — mold needs moisture regardless of the decade. What differs is what surrounds it. An older house is more likely to have materials that complicate the removal, and more likely to have original plumbing and drainage that produced the moisture in the first place."
   - question: How much does mold remediation cost in Boise?
-    answer: "We do not publish prices, because the number depends on the area affected, whether it is a crawlspace or finished space, whether drywall or plaster has to come out, and whether asbestos-containing material is in the way. The inspection is free and ends with a written figure."
+    answer: "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. On a pre-1980 Boise house that sometimes includes waiting on a laboratory result before anything is opened, and that wait is part of the scope rather than an add-on."
 
 relatedServices:
   - /mold-remediation/

@@ -50,7 +50,7 @@ process:
     - title: Sample collection
       description: "Their technician takes samples wet wherever wetting is appropriate and keeps them small, because collecting a sample should not create the problem you are testing for. Materials are sampled in groups, since a result only speaks for the material it came from — a ceiling and a floor are two separate questions."
     - title: Chain of custody
-      description: "Each sample is bagged, labelled, and logged against a form recording who handled it and when. That form is what makes the result usable by an insurer, a buyer, or a contractor deciding whether it is safe to start."
+      description: "Each sample is bagged, labeled, and logged against a form recording who handled it and when. That form is what makes the result usable by an insurer, a buyer, or a contractor deciding whether it is safe to start."
     - title: Laboratory analysis
       description: "The laboratory determines whether asbestos is present and at what concentration, and the testing company issues the report to you. You commissioned it, so it is yours, and it does not commit you to anybody."
     - title: Reading the result
@@ -99,7 +99,7 @@ timeline:
 
 serviceAreas:
   heading: Where we work
-  blurb: "Treasure Valley focus, with statewide coverage across Idaho. Asbestos tracks the age of the building, so it tracks the age of the neighbourhood."
+  blurb: "Treasure Valley focus, with statewide coverage across Idaho. Asbestos tracks the age of the building, so it tracks the age of the neighborhood."
   cities:
     - "[Boise](/mold-remediation-boise/) — the North End, the Bench, and older parts of the East End are heavily pre-1980. Textured ceilings, 9x9 tile with black mastic, duct and pipe wrap, and vermiculite in attics insulated before the material fell out of use."
     - "[Meridian](/mold-remediation-meridian/) — newer overall, so it usually surfaces in an older outbuilding, a rural parcel absorbed as the city grew, or a property predating the subdivision around it."
