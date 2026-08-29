@@ -50,6 +50,28 @@ Before DNS cutover (build order step 12), one of these has to happen:
 
 ## Credentials
 
+### ⚠ Radon certification is unverified and /radon-mitigation/ is live
+
+`/radon-mitigation/` describes radon mitigation as a service Enviro-Tech
+performs. §4 lists no radon credential, and the page currently makes no
+certification claim at all — which is the only reason it is not a §2.1
+problem today.
+
+**Confirm before DNS cutover:** does Cody hold NRPP or NRSB certification for
+radon mitigation, and does Idaho require any registration to perform it?
+Radon mitigation is a trade where certification is the industry norm and where
+buyers, agents, and lenders routinely ask. Selling it without one is a
+different kind of exposure than the page currently acknowledges.
+
+| Token | Used on | Needed from client |
+|---|---|---|
+| `{{RADON_CERT}}` | `/radon-mitigation/`, `/certifications/`, footer | NRPP or NRSB certification number and holder, or confirmation that none is held |
+
+If no certification is held, the honest options are to state that plainly, to
+partner with a certified mitigator, or to take the page down. Do not add a
+credential line to the page without a real number behind it.
+
+
 | Token | Used on | Needed from client |
 |---|---|---|
 | `{{CMR_ISSUING_ORG}}` | Footer credential row, `/certifications/` | Which body issued `CMR0000023347`. The number is confirmed; the issuer is not. §4 requires every number to be paired with its issuer — an unpaired number reads as weak. |
@@ -201,6 +223,16 @@ One further slot from the problem pages:
 | Slot | Ratio | Page | What to shoot |
 |---|---|---|---|
 | `PHOTO_VERMICULITE_1` | **16:9** | `/vermiculite-insulation/` | Loose-fill vermiculite in an attic — the granules close enough to be identifiable. This photo does the work the copy cannot: people arrive at that page trying to identify what they are looking at. |
+
+**Shot list — the two new service pages (3 new slots):**
+
+| Slot | Ratio | Page | What to shoot |
+|---|---|---|---|
+| `PHOTO_RADON_1` | **16:9** | `/radon-mitigation/` hero | A finished sub-slab system: riser, inline fan, and the discharge above the roofline. Get the manometer in frame if you can — same logic as the containment gauge, it is the part a homeowner can actually read. |
+| `PHOTO_RADON_2` | **3:2** | `/radon-mitigation/` process | The suction point cut and sealed into the slab, before the riser goes in. This is the step that decides whether a system performs, and nobody ever sees it. |
+| `PHOTO_DEMO_1` | **16:9** | `/demolition/` hero | An interior strip-out mid-job with protection in place on what is staying. The contrast between the stripped area and the protected area is the whole argument for selective demolition. |
+
+`/demolition/` reuses `PHOTO_ASBESTOS_1` for its process slot.
 
 Still needed beyond this page:
 

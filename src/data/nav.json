@@ -26,7 +26,9 @@
         { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": true },
         { "label": "Water Damage Restoration", "href": "/water-damage-restoration/", "built": true },
         { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": true },
-        { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true }
+        { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true },
+        { "label": "Radon Mitigation", "href": "/radon-mitigation/", "built": true },
+        { "label": "Demolition", "href": "/demolition/", "built": true }
       ]
     },
     { "label": "Service Areas", "href": "/service-areas/", "built": false },
