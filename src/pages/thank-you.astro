@@ -7,14 +7,25 @@
  * conversion confirmation, not a page anyone should reach from search.
  */
 import Base from "../layouts/Base.astro";
-import { PHONE_DISPLAY, PHONE_HREF } from "../data/site";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { buildGraph } from "../lib/schema";
+import { PHONE_DISPLAY, PHONE_HREF, DOMAIN } from "../data/site";
+
+const crumbs = [{ name: "Request received", href: "/thank-you/" }];
+const graph = buildGraph({
+  url: `https://${DOMAIN}/thank-you/`,
+  crumbs,
+});
 ---
 
 <Base
   title="Request received | Enviro-Tech Idaho"
   description="Your inspection request reached us. We will call you to schedule."
   noindex
+  graph={graph}
 >
+  <Breadcrumbs crumbs={crumbs} />
+
   <section class="container thanks">
     <h1>We got it.</h1>
     <p class="thanks__lead">

@@ -10,15 +10,26 @@
  * process/, and the city pages ship.
  */
 import Base from "../layouts/Base.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { buildGraph } from "../lib/schema";
 import LeadForm from "../components/LeadForm.astro";
 import SeamDivider from "../components/SeamDivider.astro";
-import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES } from "../data/site";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES, DOMAIN } from "../data/site";
+
+const crumbs = [{ name: "Contact", href: "/contact/" }];
+const graph = buildGraph({
+  url: `https://${DOMAIN}/contact/`,
+  crumbs,
+});
 ---
 
 <Base
   title="Contact Enviro-Tech Idaho | Free Inspection, 24/7"
   description="Reach Enviro-Tech Idaho about mold, asbestos, or water damage in Boise and across the Treasure Valley. The inspection is free and someone answers 24/7."
+  graph={graph}
 >
+  <Breadcrumbs crumbs={crumbs} />
+
   <section class="container contact">
     <div class="contact__intro">
       <h1>Contact Enviro-Tech Idaho</h1>

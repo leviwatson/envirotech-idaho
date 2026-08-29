@@ -52,6 +52,22 @@ export const renderProse = (text: string): string => {
   return out;
 };
 
+/**
+ * The same string as it renders on the page, with markup removed.
+ *
+ * Structured data must mirror the visible text exactly (Google's own
+ * requirement), so this exists to keep schema and copy from diverging: the
+ * schema was previously fed the raw source, which shipped literal
+ * "[label](/href/)" into 14 FAQ answers.
+ */
+export const toPlainText = (text: string): string =>
+  text
+    .replace(SHORTHAND, (_m, key: string) => {
+      const href = keywords[key.trim().toLowerCase()];
+      return href ? (destinations[href]?.label ?? key) : key;
+    })
+    .replace(LINK, (_m, label: string) => label);
+
 /** How many links in this text actually resolved — used by the §12 audit. */
 export const countLiveLinks = (text: string): number =>
   [...text.matchAll(LINK)].filter(([, , href]) => isLinkable(href)).length;

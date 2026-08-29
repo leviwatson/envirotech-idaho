@@ -91,7 +91,7 @@ credential line to the page without a real number behind it.
 
 | Token | Used on | Needed from client |
 |---|---|---|
-| `{{GBP_URL}}` | Footer, `/reviews/`, `/contact/` | Live GBP URL once the profile is claimed and verified |
+| `{{GBP_URL}}` | Footer, `/reviews/`, `/contact/`, **and `sameAs` in structured data on all 34 pages** | Live GBP URL once the profile is claimed and verified. Add it to `SAME_AS` in `src/data/organization.ts` — it is an empty array today, so `sameAs` is omitted rather than emitted empty, and one edit populates every page |
 | `{{GBP_REVIEW_COUNT}}` | `/reviews/` | Real count, pulled from the live profile |
 
 **There are zero Google reviews today.** No testimonials get written, no

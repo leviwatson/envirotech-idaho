@@ -14,16 +14,27 @@
  * business has not adopted (§2.1 applies to legal text as much as to copy).
  */
 import Base from "../layouts/Base.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { buildGraph } from "../lib/schema";
 import SeamDivider from "../components/SeamDivider.astro";
-import { PHONE_DISPLAY, PHONE_HREF, EMAIL, BUSINESS_NAME } from "../data/site";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, BUSINESS_NAME, DOMAIN } from "../data/site";
 
 const EFFECTIVE = "August 29, 2026";
+
+const crumbs = [{ name: "Privacy Policy", href: "/privacy-policy/" }];
+const graph = buildGraph({
+  url: `https://${DOMAIN}/privacy-policy/`,
+  crumbs,
+});
 ---
 
 <Base
   title="Privacy Policy | Enviro-Tech Idaho"
   description="What Enviro-Tech Idaho collects when you request an inspection, why we collect it, who it goes to, and how to have it deleted. Plain language."
+  graph={graph}
 >
+  <Breadcrumbs crumbs={crumbs} />
+
   <section class="container legal">
     <h1>Privacy Policy</h1>
     <p class="legal__effective mono">Effective date: {EFFECTIVE}</p>

@@ -14,6 +14,7 @@
  */
 import type { CollectionEntry } from "astro:content";
 import Base from "./Base.astro";
+import { buildGraph } from "../lib/schema";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
 import { renderProse } from "../lib/prose";
@@ -31,52 +32,12 @@ const d = entry.data;
 const tiles = d.services.tiles.filter((t) => isBuilt(t.href));
 const origin = `https://${DOMAIN}`;
 
-/**
- * Only credentials with a real, confirmed value. The EPA RRP entry in the
- * footer is a visible format mask, not a number — putting a mask into
- * structured data would be asserting a credential to machines (§2.1).
- */
-const credentials = [
-  { name: "Idaho Contractor Registration", id: "RCE-8871958" },
-  { name: "Asbestos / Mold Certification", id: "CMR0000023347" },
-];
+// Homepage carries no breadcrumb — it is the root of the trail.
+const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
 
-const schema = [
-  {
-    "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    name: BUSINESS_NAME,
-    url: `${origin}/`,
-    telephone: PHONE_DISPLAY,
-    email: EMAIL,
-    foundingDate: String(FOUNDED),
-    description: d.metaDescription,
-    areaServed: CITIES.map((city) => ({ "@type": "City", name: `${city}, Idaho` })),
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      opens: "00:00",
-      closes: "23:59",
-    },
-    hasCredential: credentials.map((c) => ({
-      "@type": "EducationalOccupationalCredential",
-      name: c.name,
-      identifier: c.id,
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: d.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  },
-];
 ---
 
-<Base title={d.title} description={d.metaDescription} schema={schema}>
+<Base title={d.title} description={d.metaDescription} graph={graph}>
   {/* --- Hero. Form beside the copy above the fold on desktop (§10). --- */}
   <section class="container hero">
     <div class="hero__copy">

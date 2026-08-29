@@ -18,6 +18,8 @@
  */
 import type { CollectionEntry } from "astro:content";
 import Base from "./Base.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { buildGraph } from "../lib/schema";
 import LeadForm from "../components/LeadForm.astro";
 import DesktopCtaBar from "../components/DesktopCtaBar.astro";
 import SeamDivider from "../components/SeamDivider.astro";
@@ -35,50 +37,20 @@ const related = [...resolveLinks(d.relatedServices), ...resolveLinks(d.relatedCi
 const origin = `https://${DOMAIN}`;
 const url = `${origin}${Astro.url.pathname}`;
 
-const schema = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: d.h1,
-    serviceType: "Emergency Water Damage Restoration",
-    description: d.metaDescription,
-    url,
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: BUSINESS_NAME,
-      telephone: PHONE_DISPLAY,
-      url: origin,
-      // The whole premise of the page.
-      openingHoursSpecification: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-        opens: "00:00",
-        closes: "23:59",
-      },
-      areaServed: CITIES.map((city) => ({ "@type": "City", name: `${city}, Idaho` })),
-    },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-      { "@type": "ListItem", position: 2, name: labelFor(Astro.url.pathname) ?? d.h1, item: url },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: d.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  },
-];
+const crumbs = [{ name: labelFor(Astro.url.pathname) ?? d.h1, href: Astro.url.pathname }];
+
+const graph = buildGraph({
+  url,
+  crumbs,
+  faqs: d.faqs,
+  service: { name: d.h1, serviceType: "Emergency Water Damage Restoration", description: d.metaDescription },
+});
+
 ---
 
-<Base title={d.title} description={d.metaDescription} schema={schema}>
+<Base title={d.title} description={d.metaDescription} graph={graph}>
+  <Breadcrumbs crumbs={crumbs} />
+
   {/* --- The phone number, before anything else ------------------------- */}
   <a href={PHONE_HREF} class="callband" data-callband>
     <span class="callband__label">{d.callBand.label}</span>

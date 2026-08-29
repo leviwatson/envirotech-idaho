@@ -1,0 +1,67 @@
+---
+/**
+ * Visible breadcrumbs.
+ *
+ * The site emitted BreadcrumbList markup on 30 pages while showing breadcrumbs
+ * on none of them. Structured data is supposed to describe what is on the
+ * page, so this renders the same trail the graph declares.
+ */
+export type Crumb = { name: string; href: string };
+interface Props {
+  crumbs: Crumb[];
+}
+const { crumbs } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <div class="container">
+    <ol class="crumbs__list">
+      <li class="crumbs__item"><a href="/">Home</a></li>
+      {
+        crumbs.map((c, i) => (
+          <li class="crumbs__item">
+            <span class="crumbs__sep" aria-hidden="true">/</span>
+            {i === crumbs.length - 1 ? (
+              <span aria-current="page">{c.name}</span>
+            ) : (
+              <a href={c.href}>{c.name}</a>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .crumbs {
+    padding-block-start: var(--space-4);
+    font-size: var(--step--1);
+  }
+  .crumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: none;
+  }
+  .crumbs__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+  }
+  .crumbs__sep {
+    color: var(--rule);
+  }
+  .crumbs a {
+    color: color-mix(in srgb, var(--ink) 72%, var(--surface));
+  }
+  .crumbs [aria-current="page"] {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

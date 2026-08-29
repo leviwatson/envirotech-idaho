@@ -13,29 +13,13 @@
  */
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES } from "../data/site";
 import { isBuilt } from "../lib/links";
+import { visibleCredentials, isPlaceholder } from "../data/credentials";
 
 const YEAR = new Date().getFullYear();
 
-// Unfilled {{TOKENS}} must never render to the page (§5 build guard). A row
-// whose value is still a placeholder is omitted entirely; a row with a real
-// value but an unknown issuer keeps the number and drops the issuer line.
-// As real values land in §5, swap them in and the row/issuer appears.
-const isPlaceholder = (v: string | null) => !v || /^\{\{.*\}\}$/.test(v);
-
-const credentials = [
-  { label: "Idaho Contractor Registration", value: "RCE-8871958", issuer: null },
-  { label: "Asbestos / Mold Certification", value: "CMR0000023347", issuer: "{{CMR_ISSUING_ORG}}" },
-  // Visible format mask, NOT a number. Underscores are the unfilled digits, so
-  // the row lays out at true width while reading as obviously pending. It is
-  // deliberately not a {{TOKEN}} — a token would be stripped by the filter
-  // below and the row would not render at all. See PLACEHOLDERS.md: the row
-  // asserts the firm holds EPA RRP certification, which is unconfirmed (§4),
-  // so it must not reach the production domain until that is verified.
-  { label: "EPA RRP Firm Certification", value: "NAT-F______-_", issuer: null },
-  { label: "IICRC", value: "{{IICRC_CERT}}", issuer: null },
-  { label: "Liability Coverage", value: "{{LIABILITY_COVERAGE_AMOUNT}}", issuer: null },
-  { label: "Workers' Comp", value: "{{WORKERS_COMP_STATUS}}", issuer: null },
-].filter((c) => !isPlaceholder(c.value));
+// Credential strings live in src/data/credentials.ts so the footer and the
+// structured data cannot drift apart.
+const credentials = visibleCredentials;
 ---
 
 <footer class="site-footer">

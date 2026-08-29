@@ -7,13 +7,14 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run check:placeholders && npm run check:structure && npm run check:nav && npm run check:images",
+    "build": "astro build && npm run check:placeholders && npm run check:structure && npm run check:schema && npm run check:nav && npm run check:images",
     "check:placeholders": "! grep -rlI '{{' dist/ || (echo 'Unfilled placeholder in build output' && exit 1)",
     "preview": "astro preview",
     "astro": "astro",
     "check:nav": "node scripts/check-nav.mjs",
     "check:images": "node scripts/check-images.mjs",
-    "check:structure": "node scripts/check-structure.mjs"
+    "check:structure": "node scripts/check-structure.mjs",
+    "check:schema": "node scripts/check-schema.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

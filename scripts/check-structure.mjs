@@ -82,7 +82,12 @@ const checkCommon = (page, h, { forms = 1, schemaTypes = [] } = {}) => {
       return null;
     }
   });
-  const types = blocks.filter(Boolean).map((b) => b["@type"]);
+  // Types may sit at the top level (legacy) or inside an @graph (current).
+  const types = blocks
+    .filter(Boolean)
+    .flatMap((b) => (Array.isArray(b["@graph"]) ? b["@graph"] : [b]))
+    .map((n) => n["@type"])
+    .filter(Boolean);
   if (types.length === 0) fail(page, "no JSON-LD schema block");
   for (const t of schemaTypes) {
     if (!types.includes(t)) fail(page, `missing ${t} schema (found ${types.join(", ") || "none"})`);

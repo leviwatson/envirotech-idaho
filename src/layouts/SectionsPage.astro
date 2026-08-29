@@ -16,6 +16,8 @@
  */
 import type { CollectionEntry } from "astro:content";
 import Base from "./Base.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { buildGraph } from "../lib/schema";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
 import PhotoSlot from "../components/PhotoSlot.astro";
@@ -49,36 +51,19 @@ const showSeam = (index: number) =>
 const leadSection = d.sections[0];
 const restStart = leadSection.band ? 0 : 1;
 
-const schema = [
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    name: d.h1,
-    mainEntity: d.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-      {
-        "@type": "ListItem",
-        position: 2,
-        // The nav label, not the H1 — a page should be called the same thing
-        // in the nav, in a Related list, and in a breadcrumb.
-        name: labelFor(Astro.url.pathname) ?? d.h1,
-        item: url,
-      },
-    ],
-  },
-];
+const crumbs = [{ name: labelFor(Astro.url.pathname) ?? d.h1, href: Astro.url.pathname }];
+
+const graph = buildGraph({
+  url,
+  crumbs,
+  faqs: d.faqs,
+});
+
 ---
 
-<Base title={d.title} description={d.metaDescription} schema={schema}>
+<Base title={d.title} description={d.metaDescription} graph={graph}>
+  <Breadcrumbs crumbs={crumbs} />
+
   {/* --- Hero ---------------------------------------------------------- */}
   <section class="container hero">
     <div class="hero__main">

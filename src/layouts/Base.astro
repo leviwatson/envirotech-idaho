@@ -18,10 +18,13 @@ interface Props {
   description?: string;
   /** Keeps a page out of the index. Conversion confirmations only. */
   noindex?: boolean;
-  /** JSON-LD blocks. §11: no PostalAddress, no aggregateRating, ever. */
-  schema?: Record<string, unknown>[];
+  /**
+   * One JSON-LD @graph for the page, from buildGraph(). Single block rather
+   * than several: the business entity is defined once and referenced by @id.
+   */
+  graph?: Record<string, unknown>;
 }
-const { title, description, noindex = false, schema = [] } = Astro.props;
+const { title, description, noindex = false, graph } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 
@@ -95,11 +98,7 @@ const ogType = Astro.url.pathname === "/" ? "website" : "article";
       crossorigin
     />
 
-    {
-      schema.map((block) => (
-        <script type="application/ld+json" set:html={JSON.stringify(block)} />
-      ))
-    }
+    {graph && <script type="application/ld+json" set:html={JSON.stringify(graph)} />}
 
     <meta name="generator" content={Astro.generator} />
   </head>
