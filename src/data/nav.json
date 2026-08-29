@@ -52,7 +52,7 @@
       "label": "Who We Help",
       "kind": "group",
       "children": [
-      { "label": "For Realtors", "href": "/for-realtors/", "built": true },
+      { "label": "Realtors", "href": "/for-realtors/", "built": true },
       { "label": "For Builders", "href": "/for-builders/", "built": false },
       { "label": "For Property Managers", "href": "/for-property-managers/", "built": false },
       { "label": "Commercial", "href": "/commercial/", "built": false }
