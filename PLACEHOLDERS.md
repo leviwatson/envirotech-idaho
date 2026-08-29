@@ -117,6 +117,18 @@ serves the smallest candidate that fits the slot. Nothing needs pre-resizing,
 but anything dropped straight into `public/` bypasses that and must already be
 under the cap.
 
+**Shot list — /asbestos-abatement/ (3 new, 2 reused):**
+
+| Slot | Ratio | Where it appears | What to shoot |
+|---|---|---|---|
+| `PHOTO_ASBESTOS_1` | **3:2** | Process list, after step 03 (Removal) | Double-bagged, labelled asbestos waste inside the containment, before it crosses the barrier. The printed warning label should be readable. |
+| `PHOTO_ASBESTOS_BEFORE_1` | **4:3** | "Before and after", left | A popcorn ceiling before removal. Same camera position as the after shot. |
+| `PHOTO_ASBESTOS_AFTER_1` | **4:3** | "Before and after", right | The same ceiling finished. A mismatched pair reads as a different house. |
+
+Reuses `PHOTO_HERO` and `PHOTO_CONTAINMENT_1`. The containment shot appears on
+this page captioned for asbestos — a decon chamber visible in frame would let
+one photo carry both pages honestly.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

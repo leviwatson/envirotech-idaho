@@ -24,7 +24,7 @@
       "children": [
         { "label": "Mold Remediation", "href": "/mold-remediation/", "built": true },
         { "label": "Mold Inspection & Testing", "href": "/mold-inspection-testing/", "built": false },
-        { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": false },
+        { "label": "Asbestos Abatement", "href": "/asbestos-abatement/", "built": true },
         { "label": "Asbestos Testing", "href": "/asbestos-testing/", "built": false },
         { "label": "Water Damage Restoration", "href": "/water-damage-restoration/", "built": false },
         { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": false },
