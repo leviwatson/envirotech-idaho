@@ -234,6 +234,16 @@ One further slot from the problem pages:
 
 `/demolition/` reuses `PHOTO_ASBESTOS_1` for its process slot.
 
+**Shot list — /remodeling/ (3 new slots):**
+
+| Slot | Ratio | What to shoot |
+|---|---|---|
+| `PHOTO_REMODEL_1` | **16:9** | A finished remodel in an older Treasure Valley home. Hero shot — this one sells the work rather than explaining it, which is unusual for this site. |
+| `PHOTO_REMODEL_BEFORE_1` | **4:3** | Before. Same camera position as the after. |
+| `PHOTO_REMODEL_AFTER_1` | **4:3** | After. A mismatched pair reads as a different house. |
+
+`/remodeling/` also reuses `PHOTO_CONTAINMENT_1` and `PHOTO_DEMO_1`.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

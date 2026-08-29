@@ -40,6 +40,7 @@ intro:
     - "A large share of the companies doing this work stop at that point. They are abatement contractors, the scope ends when the clearance test passes, and finding a builder to close the walls is now your project. That is a legitimate way to run a business and it is rarely explained clearly at the estimate."
     - "We do the rebuild. Same company, same crew, one scope covering both halves, one number, one person to call. The practical difference is that nobody is standing in your living room explaining that the hole in the wall belongs to a different contract."
     - "It matters most when an insurance claim is involved, because remediation and reconstruction are usually priced and documented as one continuous scope. Split across two companies, the seam between them is exactly where a claim gets argued."
+    - "This page is about rebuilding after a loss. If you are planning a kitchen or a bathroom because you want a different one, that is [home remodeling](/remodeling/) and it is a different conversation with a different starting point."
 
 problem:
   heading: What goes wrong at the handoff
@@ -121,6 +122,8 @@ serviceAreas:
     - "[Eagle](/mold-remediation-eagle/) — larger homes and more finished square footage, so a failure that runs into living space takes more back out with it."
 
 faqs:
+  - question: Is this the same as your remodeling service?
+    answer: "No. Reconstruction is putting back what a loss took out — you had water damage or a remediation, material came out, and it has to be replaced. You did not choose to be doing it and it is frequently insurance-involved. [Home remodeling](/remodeling/) is work you decided to do because you want a different kitchen. Same crew and the same standards, but the starting point, the scope, and usually who pays are all different. If a remodel is what you are planning, start there instead."
   - question: Do you actually do the rebuild, or subcontract it?
     answer: "We do it. Same company, same crew, one scope and one point of contact from containment through to the final coat. The reason to care is not craft pride, it is that the seam between two companies is where scope disputes and claim denials live."
   - question: Is reconstruction included in the remediation quote?

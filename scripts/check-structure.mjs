@@ -93,6 +93,8 @@ const checkCommon = (page, h, { forms = 1, schemaTypes = [] } = {}) => {
 
 // --- Service pages ---------------------------------------------------------
 
+const serviceBodies = new Map();
+
 for (const { file, data } of await loadCollection("src/content/services")) {
   const page = `/${data.slug}/`;
   const h = await html(data.slug);
@@ -130,6 +132,8 @@ for (const { file, data } of await loadCollection("src/content/services")) {
 
   const scopeItems = data.scope?.items?.length ?? 0;
   if (scopeItems > 0 && !h.includes("class=\"scope\"")) fail(page, "scope list did not render");
+
+  serviceBodies.set(data.slug, h);
 }
 
 // --- Problem and audience pages -------------------------------------------
@@ -353,6 +357,15 @@ for (const { file, data } of await loadCollection("src/content/cities")) {
  */
 const SIMILARITY_CAP = 0.2;
 
+/**
+ * Service pages run higher than cities or audiences and legitimately so: the
+ * two testing pages share the whole independence argument and sit around 0.17.
+ * The cap allows that while still catching a page written from a neighbor.
+ * /reconstruction/ and /remodeling/ are the pair this most exists for — they
+ * describe adjacent work to different buyers and must not converge.
+ */
+const SERVICE_SIMILARITY_CAP = 0.25;
+
 const shingle = (h) => {
   const words =
     h
@@ -365,7 +378,7 @@ const shingle = (h) => {
   return out;
 };
 
-const checkSimilarity = (label, bodies) => {
+const checkSimilarity = (label, bodies, cap = SIMILARITY_CAP) => {
   if (bodies.size < 2) return;
   const sets = new Map([...bodies].map(([slug, h]) => [slug, shingle(h)]));
   const slugs = [...sets.keys()];
@@ -376,7 +389,7 @@ const checkSimilarity = (label, bodies) => {
       let shared = 0;
       for (const sh of a) if (b.has(sh)) shared++;
       const jaccard = shared / (a.size + b.size - shared);
-      if (jaccard > SIMILARITY_CAP) {
+      if (jaccard > cap) {
         fail(
           `/${slugs[i]}/`,
           `${(jaccard * 100).toFixed(0)}% text overlap with /${slugs[j]}/ — ${label} must not be spun variants (§2.5)`,
@@ -388,6 +401,7 @@ const checkSimilarity = (label, bodies) => {
 
 checkSimilarity("city pages", cityBodies);
 checkSimilarity("audience pages", audienceBodies);
+checkSimilarity("service pages", serviceBodies, SERVICE_SIMILARITY_CAP);
 
 // --- Homepage --------------------------------------------------------------
 

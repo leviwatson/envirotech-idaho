@@ -28,7 +28,8 @@
         { "label": "Crawlspace Drainage", "href": "/crawlspace-drainage/", "built": true },
         { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true },
         { "label": "Radon Mitigation", "href": "/radon-mitigation/", "built": true },
-        { "label": "Demolition", "href": "/demolition/", "built": true }
+        { "label": "Demolition", "href": "/demolition/", "built": true },
+        { "label": "Home Remodeling", "href": "/remodeling/", "built": true }
       ]
     },
     { "label": "Service Areas", "href": "/service-areas/", "built": false },
