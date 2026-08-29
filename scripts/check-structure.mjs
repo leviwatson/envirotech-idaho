@@ -416,6 +416,30 @@ checkSimilarity("city pages", cityBodies);
 checkSimilarity("audience pages", audienceBodies);
 checkSimilarity("service pages", serviceBodies, SERVICE_SIMILARITY_CAP);
 
+/**
+ * Per-collection comparison has a blind spot: two pages in different
+ * collections were never checked against each other. /asbestos-testing/ (a
+ * service) and /asbestos-testing-before-remodel/ (a problem) shipped with
+ * identical <title> tags for exactly that reason. They turned out to share
+ * only 7% of their text, so the content was fine and the metadata was not —
+ * but nothing was watching the pair at all.
+ *
+ * This sweeps every built page against every other regardless of collection.
+ * The cap is looser than the per-collection ones because adjacent pages across
+ * collections legitimately share more argument: the highest honest pair on the
+ * site is 17%.
+ */
+{
+  const all = new Map([...cityBodies, ...audienceBodies, ...serviceBodies]);
+  for (const dir of ["src/content/guides", "src/content/emergency", "src/content/problems"]) {
+    for (const { data } of await loadCollection(dir)) {
+      const h = await html(data.slug);
+      if (h) all.set(data.slug, h);
+    }
+  }
+  checkSimilarity("pages", all, 0.25);
+}
+
 // --- Homepage --------------------------------------------------------------
 
 {

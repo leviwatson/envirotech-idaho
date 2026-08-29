@@ -54,11 +54,31 @@ await walk("dist");
 
 let counts = {};
 let businessNodes = 0;
+/** §11 requires these unique on every page. Duplicates read as cannibalization. */
+const titles = new Map();
+const descriptions = new Map();
 
 for (const file of pages.sort()) {
   const h = await readFile(file, "utf8");
   const url = "/" + file.slice("dist/".length, -"index.html".length);
   const isHome = url === "/";
+
+  const title = h.match(/<title>([^<]*)<\/title>/)?.[1]?.trim();
+  const desc = h.match(/name="description" content="([^"]*)"/)?.[1]?.trim();
+  if (title) {
+    const prior = titles.get(title);
+    if (prior) fail(url, `duplicate <title>, shared with ${prior} (§11)`);
+    else titles.set(title, url);
+  } else {
+    fail(url, "no <title>");
+  }
+  if (desc) {
+    const prior = descriptions.get(desc);
+    if (prior) fail(url, `duplicate meta description, shared with ${prior} (§11)`);
+    else descriptions.set(desc, url);
+  } else {
+    fail(url, "no meta description");
+  }
 
   const blocks = [...h.matchAll(/type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(
     (m) => m[1],

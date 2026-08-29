@@ -1,8 +1,8 @@
 ---
 slug: asbestos-testing
-title: "Asbestos Testing Before a Remodel | Enviro-Tech Idaho"
-h1: Asbestos Testing Before a Remodel in the Treasure Valley
-metaDescription: "Testing before demolition in Boise, Meridian, or Nampa. An independent company does the sampling; we handle what happens if it comes back positive."
+title: "How Asbestos Testing Works in Boise | Enviro-Tech"
+h1: How Asbestos Testing Works in the Treasure Valley
+metaDescription: "What sampling involves, who performs it, turnaround, and what a result means. An independent company tests; we handle what comes next if it is positive."
 priority: high
 serviceType: Asbestos Abatement
 subhead: "Test before demolition, not after. We do not do the testing — an independent company does, and you engage them directly. We are who you call if it comes back positive."
