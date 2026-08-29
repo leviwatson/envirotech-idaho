@@ -213,6 +213,60 @@ for (const { file, data } of await loadCollection("src/content/emergency")) {
   }
 }
 
+// --- Guides (visual walkthroughs) -----------------------------------------
+
+for (const { file, data } of await loadCollection("src/content/guides")) {
+  const page = `/${data.slug}/`;
+  const h = await html(data.slug);
+  if (!h) {
+    fail(page, `built from ${file} but dist/${data.slug}/index.html does not exist`);
+    continue;
+  }
+
+  checkCommon(page, h, { forms: 1, schemaTypes: ["BreadcrumbList", "FAQPage"] });
+
+  // The walkthrough IS the page: every element must render with its photo.
+  const wantElements = data.build?.elements?.length ?? 0;
+  const gotElements = count(h, /class="container element"/g);
+  if (gotElements !== wantElements) {
+    fail(page, `build declares ${wantElements} elements but ${gotElements} rendered`);
+  }
+
+  const wantPhotos = wantElements + (data.hero ? 1 : 0);
+  const gotPhotos = count(h, /data-photo=/g);
+  if (gotPhotos !== wantPhotos) {
+    fail(page, `expected ${wantPhotos} photo slots (${wantElements} elements + hero), found ${gotPhotos}`);
+  }
+
+  // Each element must carry all three parts, or it is not making its argument.
+  for (const part of [/class="element__what"/g, /class="element__without"/g]) {
+    if (count(h, part) !== wantElements) {
+      fail(page, `an element is missing a ${String(part).includes("what") ? "what" : "without"} block`);
+    }
+  }
+
+  const wantChecks = data.checklist?.items?.length ?? 0;
+  const gotChecks = count(h, /class="check"/g);
+  if (gotChecks !== wantChecks) {
+    fail(page, `checklist declares ${wantChecks} items but ${gotChecks} rendered`);
+  }
+
+  const wantSections = data.sections?.length ?? 0;
+  if (count(h, /<h2[^>]*>/g) < wantSections) {
+    fail(page, `entry declares ${wantSections} sections but fewer h2 headings rendered`);
+  }
+
+  // §13 allows one scroll reveal and it lives here. It must degrade safely:
+  // nothing may be hidden by CSS that a script has to undo.
+  if (!h.includes("data-reveal")) fail(page, "scroll reveal hooks missing");
+  if (/\.element\[data-reveal\]\s*\{[^}]*opacity:\s*0/.test(h)) {
+    fail(page, "elements are hidden before the script runs — reveal must be opt-in, not opt-out");
+  }
+
+  // §13: numbered markers belong only to the two 7-step process sequences.
+  if (h.includes("step__marker")) fail(page, "numbered process markers on a guide (§13)");
+}
+
 // --- Standalone pages ------------------------------------------------------
 
 for (const [slug, opts] of [
@@ -250,5 +304,6 @@ const pages =
   (await loadCollection("src/content/services")).length +
   (await loadCollection("src/content/problems")).length +
   (await loadCollection("src/content/audiences")).length +
-  (await loadCollection("src/content/emergency")).length;
+  (await loadCollection("src/content/emergency")).length +
+  (await loadCollection("src/content/guides")).length;
 console.log(`Structure check passed — ${pages} collection page(s) match what their entries describe.`);

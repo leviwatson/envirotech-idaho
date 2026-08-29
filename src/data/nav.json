@@ -58,7 +58,7 @@
       { "label": "Commercial", "href": "/commercial/", "built": false }
       ]
     },
-    { "label": "Our Process", "href": "/our-containment-process/", "built": false },
+    { "label": "Our Process", "href": "/our-containment-process/", "built": true },
     { "label": "Certifications", "href": "/certifications/", "built": false },
     { "label": "Contact", "href": "/contact/", "built": true }
   ],

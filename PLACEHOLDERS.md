@@ -154,6 +154,29 @@ one, so a pair would be making a claim the image cannot support. If a water
 before/after is wanted later, shoot the removal — open wall cavity versus
 finished rebuild — rather than the drying.
 
+**Shot list — /our-containment-process/ (8 slots, the biggest single ask).**
+
+This is the signature page (§10) and it is mostly photographs. All eight can
+come from **one well-documented job**: an hour on a single site, shooting each
+element as it goes up. That one hour produces the most linkable asset on the
+site.
+
+| Slot | Ratio | What to shoot |
+|---|---|---|
+| `PHOTO_CONTAINMENT_HERO` | **16:9** | A finished containment, wide. Enclosure, machine running, duct visible if possible. Establishing shot. |
+| `PHOTO_CONTAINMENT_1` | **3:2** | The barrier: sheeting floor to ceiling, sealed to the surrounding surfaces. |
+| `PHOTO_CONTAINMENT_2` | **3:2** | Taped seams, close in. The tape has to be legible — this shot is the difference between an enclosure and a stack of sheets. |
+| `PHOTO_CONTAINMENT_3` | **3:2** | The filter stack: two pre-filters ahead of the HEPA. Open machine if that shows the staging. |
+| `PHOTO_CONTAINMENT_4` | **3:2** | Exhaust duct leaving the building through a window or vent, sealed where it passes through. |
+| `PHOTO_CONTAINMENT_5` | **3:2** | **The manometer, with a readable number.** The single most valuable image on the site — it is the only thing that *proves* the pressure differential rather than asserting it. Get the display in focus. |
+| `PHOTO_CONTAINMENT_6` | **3:2** | The decontamination chamber at the entry. |
+| `PHOTO_CONTAINMENT_7` | **3:2** | A sealed HVAC return or supply register inside the work area. |
+
+Every one of these appears on the page with copy explaining what it is, why it
+is there, and what goes wrong without it — so the photographs are load-bearing
+rather than decorative. Until they land the page ships with skeletons at the
+correct ratios and nothing reflows when they arrive.
+
 Still needed beyond this page:
 
 - Three further containment shots for `/our-containment-process/`, the

@@ -252,4 +252,66 @@ const emergency = defineCollection({
     }),
 });
 
-export const collections = { services, problems, audiences, emergency };
+/**
+ * Guides (§9 trust cluster). Visual walkthroughs: an ordered list of elements,
+ * each one a photo plus what it is, why it is there, and what goes wrong
+ * without it. /our-containment-process/ is the signature page (§10).
+ */
+const guides = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/guides" }),
+  schema: ({ image }) =>
+    z.object({
+      slug: z.string(),
+      title: z.string().max(60),
+      h1: z.string(),
+      metaDescription: z.string().min(140).max(158),
+      subhead: z.string(),
+      hero: slot(image).optional(),
+
+      /** The single idea the rest of the page demonstrates. */
+      premise: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      }),
+
+      /**
+       * The walkthrough. Deliberately no numbered markers: §13 reserves those
+       * for the two 7-step process sequences. Order is carried by sequence
+       * and by the copy, not by a counter.
+       */
+      build: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        elements: z
+          .array(
+            z.object({
+              name: z.string(),
+              what: z.string(),
+              why: z.string(),
+              /** What goes wrong when this element is missing or done badly. */
+              without: z.string(),
+              photo: slot(image),
+            }),
+          )
+          .min(1),
+      }),
+
+      /** The homeowner-usable checklist — the reason anyone links to this. */
+      checklist: z.object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        items: z.array(z.object({ ask: z.string(), detail: z.string() })).min(1),
+        outro: z.array(z.string()).optional(),
+      }),
+
+      /** Remaining prose sections, rendered in order. */
+      sections: z
+        .array(z.object({ heading: z.string(), paragraphs: z.array(z.string()).min(1) }))
+        .min(1),
+
+      faqs: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+      relatedServices: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = { services, problems, audiences, emergency, guides };

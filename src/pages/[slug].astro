@@ -11,13 +11,15 @@ import { getCollection } from "astro:content";
 import ServicePage from "../layouts/ServicePage.astro";
 import SectionsPage from "../layouts/SectionsPage.astro";
 import EmergencyPage from "../layouts/EmergencyPage.astro";
+import ContainmentPage from "../layouts/ContainmentPage.astro";
 
 export async function getStaticPaths() {
-  const [services, problems, audiences, emergency] = await Promise.all([
+  const [services, problems, audiences, emergency, guides] = await Promise.all([
     getCollection("services"),
     getCollection("problems"),
     getCollection("audiences"),
     getCollection("emergency"),
+    getCollection("guides"),
   ]);
 
   return [
@@ -37,6 +39,10 @@ export async function getStaticPaths() {
       params: { slug: entry.data.slug },
       props: { kind: "emergency" as const, entry },
     })),
+    ...guides.map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { kind: "guide" as const, entry },
+    })),
   ];
 }
 
@@ -48,6 +54,8 @@ const { kind, entry } = Astro.props;
     <ServicePage entry={entry} />
   ) : kind === "emergency" ? (
     <EmergencyPage entry={entry} />
+  ) : kind === "guide" ? (
+    <ContainmentPage entry={entry} />
   ) : (
     <SectionsPage entry={entry} />
   )
