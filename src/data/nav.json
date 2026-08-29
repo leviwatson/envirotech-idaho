@@ -53,8 +53,8 @@
       "kind": "group",
       "children": [
       { "label": "Realtors", "href": "/for-realtors/", "built": true },
-      { "label": "For Builders", "href": "/for-builders/", "built": true },
-      { "label": "For Property Managers", "href": "/for-property-managers/", "built": true },
+      { "label": "Builders", "href": "/for-builders/", "built": true },
+      { "label": "Property Managers", "href": "/for-property-managers/", "built": true },
       { "label": "Commercial", "href": "/commercial/", "built": true }
       ]
     },
