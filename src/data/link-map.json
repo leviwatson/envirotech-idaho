@@ -1,15 +1,15 @@
 {
   "_comment": [
-    "Internal linking map (§12). keyword -> destination URL.",
+    "Internal linking map (\u00a712). keyword -> destination URL.",
     "",
     "This is the authority on WHERE a concept links, not on how the anchor",
-    "reads. §12 asks for descriptive anchor text placed where it helps the",
+    "reads. \u00a712 asks for descriptive anchor text placed where it helps the",
     "reader, so anchor wording stays contextual in the copy while the",
     "destination for a given concept lives here once.",
     "",
     "src/lib/prose.ts validates every in-body link against , and",
     "scripts/check-structure.mjs fails the build on a prose link to a URL that",
-    "is not listed — which catches typos, renames, and stale targets that would",
+    "is not listed \u2014 which catches typos, renames, and stale targets that would",
     "otherwise ship as soft 404s.",
     "",
     " mirrors nav.json. An unbuilt destination renders as plain text."
@@ -48,7 +48,12 @@
     "nampa": "/mold-remediation-nampa/",
     "caldwell": "/mold-remediation-caldwell/",
     "eagle": "/mold-remediation-eagle/",
-    "contact": "/contact/"
+    "contact": "/contact/",
+    "certifications": "/certifications/",
+    "licensed": "/certifications/",
+    "licenses": "/certifications/",
+    "credentials": "/certifications/",
+    "verify our license": "/certifications/"
   },
   "destinations": {
     "/mold-remediation/": {
@@ -157,7 +162,7 @@
     },
     "/certifications/": {
       "label": "Certifications",
-      "built": false
+      "built": true
     },
     "/contact/": {
       "label": "Contact",

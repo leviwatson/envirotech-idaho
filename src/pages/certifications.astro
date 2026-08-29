@@ -1,0 +1,486 @@
+---
+/**
+ * /certifications/ — an objection-handling page, not a list of numbers.
+ *
+ * §4 calls credentials the strongest E-E-A-T signal on the site and the
+ * client's intake names them as the #1 customer objection. Eleven pages link
+ * here.
+ *
+ * The page's structure follows /our-containment-process/: explain the
+ * standard, then hand the reader the means to hold anyone to it, us included.
+ * A homeowner cannot evaluate "CMR0000023347"; they can click a .gov lookup.
+ *
+ * EVERY credential renders from src/data/credentials.ts. Nothing here asserts
+ * a credential whose `verified` flag is false — those render in their own
+ * section, described as not yet held or not yet confirmed. That distinction is
+ * the reason the rest of the page is worth believing.
+ */
+import Base from "../layouts/Base.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import SeamDivider from "../components/SeamDivider.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { buildGraph } from "../lib/schema";
+import { heldCredentials, pendingCredentials, isPlaceholder } from "../data/credentials";
+import { PHONE_DISPLAY, PHONE_HREF, EMAIL, DOMAIN } from "../data/site";
+
+const crumbs = [{ name: "Certifications", href: "/certifications/" }];
+const url = `https://${DOMAIN}/certifications/`;
+
+const faqs = [
+  {
+    question: "How do I check an Idaho contractor's registration?",
+    answer:
+      "Search the Idaho Division of Occupational and Professional Licenses register at dopl.idaho.gov/license-search/. You need the business name or the registration number. It will show whether a registration is active and whether any formal action has been taken. It is free, it takes about a minute, and it works for any contractor in the state.",
+  },
+  {
+    question: "What is the difference between a firm registration and an individual certification?",
+    answer:
+      "A firm registration says the business is permitted to operate. An individual certification says a specific person has been trained and tested to do a specific kind of work. A company can hold a valid registration while nobody on the crew holds the certification the job actually needs, which is why both are worth asking about separately.",
+  },
+  {
+    question: "Do you do the testing that verifies your own work?",
+    answer:
+      "No, deliberately. Laboratory testing is performed by an independent company, and final clearance on abatement is issued by an independent accredited lab rather than by us. Most companies in this trade clear their own work. It is legal and it is common, and it puts the company that wants to be paid in charge of saying the job passed.",
+  },
+  {
+    question: "Are you certified for lead paint work?",
+    answer:
+      "Not at present. Firm certification under the federal Renovation, Repair and Painting rule is required to disturb paint in pre-1978 housing, and we do not currently offer that work. If a project turns out to involve lead paint, we will tell you rather than proceed, and EPA's own firm search is the place to check any contractor who says they are certified.",
+  },
+  {
+    question: "Are you insured?",
+    answer:
+      "Yes, and you should ask for a certificate rather than take anyone's word for it, including ours. Call the number on this page and we will have our carrier send one directly to you. The coverage worth asking about specifically is pollution or environmental liability, which is separate from general liability and which many restoration contractors do not carry.",
+  },
+  {
+    question: "What should I do if a contractor will not give me their license number?",
+    answer:
+      "Treat it as an answer. Registration numbers are public records and a contractor who is registered has no reason to withhold one. The same goes for a certificate of insurance, or the name of the laboratory that will perform clearance testing. None of it is proprietary.",
+  },
+];
+
+const graph = buildGraph({ url, crumbs, faqs });
+---
+
+<Base
+  title="Licensed Mold & Asbestos Contractor | Enviro-Tech Idaho"
+  description="Every license and certification we hold, what each one permits, and the state and federal lookups you can use to check us — or any Idaho contractor."
+  graph={graph}
+>
+  <Breadcrumbs crumbs={crumbs} />
+
+  <section class="container cert">
+    <h1>Our Licenses, and How to Check Them Yourself</h1>
+    <p class="cert__lead">
+      Everything below is a public record. We have put the numbers on this page
+      alongside the government tools you can use to look them up, because a
+      credential you cannot verify is just a claim in a nicer font.
+    </p>
+    <p>
+      The last section applies to whoever you hire, not only to us. If you are
+      getting three quotes, ask all three the same questions.
+    </p>
+
+    <SeamDivider />
+
+    <h2>What we are licensed and certified to do</h2>
+    <p>
+      We are a registered Idaho construction contractor performing mold
+      remediation, asbestos abatement, water damage restoration, crawlspace
+      work, radon mitigation, demolition, and the reconstruction that follows
+      any of them. Asbestos and mold work is carried out under the certification
+      listed below.
+    </p>
+    <p>
+      We do not perform laboratory testing, and we do not certify our own work.
+      Both of those are limits on what our credentials cover, and they are
+      described further down rather than left out.
+    </p>
+
+    <h2>The credentials we hold</h2>
+    <p class="cert__note">
+      Each entry says what the credential is, who issues it, what it permits,
+      and where to check it.
+    </p>
+
+    <div class="creds">
+      {
+        heldCredentials.map((c) => (
+          <article class="cred">
+            <header class="cred__head">
+              <h3 class="cred__label">{c.label}</h3>
+              <span class="cred__level">
+                {c.level === "firm" ? "Firm registration" : "Individual certification"}
+              </span>
+            </header>
+            <p class="cred__number mono">{c.value}</p>
+            <dl class="cred__detail">
+              <div>
+                <dt>Issued by</dt>
+                <dd>
+                  {isPlaceholder(c.issuer)
+                    ? "Being confirmed — see the note below"
+                    : c.issuer}
+                </dd>
+              </div>
+              <div>
+                <dt>What it is</dt>
+                <dd>{c.whatItIs}</dd>
+              </div>
+              <div>
+                <dt>What it permits</dt>
+                <dd>{c.permits}</dd>
+              </div>
+              <div>
+                <dt>Verify it</dt>
+                <dd>
+                  {c.verifyUrl ? (
+                    <a href={c.verifyUrl} rel="noopener">{c.verifyUrl.replace("https://", "")}</a>
+                  ) : (
+                    "No public lookup published yet for this credential."
+                  )}
+                </dd>
+              </div>
+              {c.lastVerified && (
+                <div>
+                  <dt>Last verified</dt>
+                  <dd class="mono">{c.lastVerified}</dd>
+                </div>
+              )}
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="cert__caveat">
+      One point of honesty about the second entry. We are still confirming which
+      body issued that certification, so we have not published a lookup link for
+      it. Sending you to the wrong registry would be worse than sending you
+      nowhere. Call and ask and we will tell you where the paperwork came from.
+      Verification dates are not published on this page yet either, for the same
+      reason — nobody has recorded them, and a date we made up would defeat the
+      purpose of the page.
+    </p>
+
+    <SeamDivider />
+
+    <h2>How to check us, or anyone else</h2>
+    <p>
+      These are the authoritative sources. We have deliberately not linked any
+      of the license-lookup directories that rank well in search, because most
+      of them are advertising with a database attached.
+    </p>
+
+    <ol class="verify">
+      <li class="verify__step">
+        <h3>Idaho contractor registration</h3>
+        <p>
+          <a href="https://dopl.idaho.gov/license-search/" rel="noopener">
+            dopl.idaho.gov/license-search/
+          </a>
+        </p>
+        <p>
+          The Idaho Division of Occupational and Professional Licenses maintains
+          the register. Search the business name or the registration number. You
+          are looking for an active status and for any formal action recorded
+          against it. Ours is <span class="mono">RCE-8871958</span>.
+        </p>
+      </li>
+      <li class="verify__step">
+        <h3>Lead-safe firm certification</h3>
+        <p>
+          <a href="https://cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search" rel="noopener">
+            cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search
+          </a>
+        </p>
+        <p>
+          EPA administers the Renovation, Repair and Painting programme directly
+          in Idaho, so this federal search is the correct place to check any
+          firm claiming lead-safe certification. We are not listed, because we do
+          not currently offer lead paint work. If a contractor tells you they are
+          RRP certified, this is where that gets confirmed in about thirty
+          seconds.
+        </p>
+      </li>
+      <li class="verify__step">
+        <h3>Asbestos notification requirements</h3>
+        <p>
+          <a href="https://www.deq.idaho.gov/air-quality/compliance-assistance/" rel="noopener">
+            deq.idaho.gov/air-quality/compliance-assistance/
+          </a>
+        </p>
+        <p>
+          Idaho DEQ handles asbestos notification for major facilities, and EPA
+          Region 10 handles everything else, including ordinary commercial and
+          residential work. This page is where the notification requirements
+          live. It is not a contractor lookup, and we are not going to present it
+          as one.
+        </p>
+      </li>
+      <li class="verify__step">
+        <h3>Insurance</h3>
+        <p>
+          Ask for a certificate of insurance issued directly by the carrier
+          rather than a copy forwarded by the contractor. Call
+          <a href={PHONE_HREF}>{PHONE_DISPLAY}</a> or email
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a> and we will have ours sent to
+          you.
+        </p>
+      </li>
+    </ol>
+
+    <SeamDivider />
+
+    <h2>What we are not certified to do</h2>
+    <p>
+      A credentials page that only lists what a company has is doing half the
+      job. These are the limits.
+    </p>
+
+    <div class="creds">
+      {
+        pendingCredentials.map((c) => (
+          <article class="cred cred--pending">
+            <header class="cred__head">
+              <h3 class="cred__label">{c.label}</h3>
+              <span class="cred__level cred__level--pending">Not currently held</span>
+            </header>
+            <dl class="cred__detail">
+              <div>
+                <dt>What it is</dt>
+                <dd>{c.whatItIs}</dd>
+              </div>
+              <div>
+                <dt>What it permits</dt>
+                <dd>{c.permits}</dd>
+              </div>
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+
+    <h3 class="cert__sub">We do not perform the testing</h3>
+    <p>
+      Laboratory testing is done by an independent company. For diagnostic
+      testing you engage and pay them directly and we take no part in it and no
+      percentage of it. For clearance testing at the end of an abatement, we
+      engage an independent accredited lab and they issue the result.
+    </p>
+    <p>
+      That is a limit on our credentials and we would rather state it here than
+      have it discovered. It is also the strongest thing on this page: the
+      company being paid to remove a problem should not be the company
+      certifying it is gone.
+    </p>
+
+    <SeamDivider />
+
+    <h2>What to ask any contractor before you hire them</h2>
+    <p>
+      None of this is specific to us, and none of it should cause offence. A
+      contractor who is bothered by these questions has told you something
+      useful.
+    </p>
+
+    <ol class="asks">
+      <li>
+        <h3>What is your Idaho registration number?</h3>
+        <p>
+          Then look it up. It takes a minute and it is free. A refusal is the
+          answer.
+        </p>
+      </li>
+      <li>
+        <h3>Who specifically holds the certification for this work?</h3>
+        <p>
+          A firm registration is not a person's training. Ask which individual
+          on the crew is certified and for what.
+        </p>
+      </li>
+      <li>
+        <h3>Who is doing the clearance testing?</h3>
+        <p>
+          If the answer is the same company doing the removal, understand what
+          that means. Ask for the laboratory's name.
+        </p>
+      </li>
+      <li>
+        <h3>Can your carrier send me a certificate of insurance?</h3>
+        <p>
+          Directly from the carrier. Ask specifically whether pollution or
+          environmental liability is carried, which is separate from general
+          liability and which many restoration contractors do not have.
+        </p>
+      </li>
+      <li>
+        <h3>What will you document, and what will I be handed at the end?</h3>
+        <p>
+          A scope written before the work, photographs during it, and an
+          independent result at the end. If a contractor cannot describe the
+          file you will receive, there probably will not be one.
+        </p>
+      </li>
+    </ol>
+
+    <SeamDivider />
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faqs.map((f) => (
+          <div class="faq__item">
+            <h3 class="faq__q">{f.question}</h3>
+            <p class="faq__a">{f.answer}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <section class="band final">
+      <LeadForm id="request-inspection" heading="Request a free inspection" />
+    </section>
+  </section>
+</Base>
+
+<style>
+  .cert {
+    padding-block: var(--space-7) var(--space-8);
+  }
+  .cert__lead {
+    margin-block-start: var(--space-5);
+    font-size: var(--step-1);
+  }
+  .cert h2 {
+    margin-block: var(--space-7) var(--space-4);
+    font-size: var(--step-2);
+  }
+  .cert__sub {
+    margin-block: var(--space-6) var(--space-3);
+    font-size: var(--step-1);
+  }
+  .cert p + p {
+    margin-block-start: var(--space-4);
+  }
+  .cert__note {
+    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+    font-size: var(--step--1);
+  }
+
+  /* --- Credential cards -------------------------------------------------- */
+
+  .creds {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-5);
+  }
+  .cred {
+    padding: var(--space-5);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .cred--pending {
+    background: color-mix(in srgb, var(--rule) 18%, var(--surface));
+    border-style: dashed;
+  }
+  .cred__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .cred__label {
+    font-size: var(--step-1);
+  }
+  .cred__level {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--seal);
+  }
+  .cred__level--pending {
+    color: color-mix(in srgb, var(--ink) 60%, var(--surface));
+  }
+  .cred__number {
+    margin-block-start: var(--space-3);
+    font-size: var(--step-2);
+    color: var(--ink);
+  }
+  .cred__detail {
+    margin: var(--space-4) 0 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .cred__detail > div {
+    display: grid;
+    gap: 2px;
+  }
+  .cred__detail dt {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: color-mix(in srgb, var(--ink) 62%, var(--surface));
+  }
+  .cred__detail dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .cert__caveat {
+    margin-block-start: var(--space-5);
+    padding: var(--space-4);
+    border-inline-start: 3px solid var(--spark);
+    background: color-mix(in srgb, var(--spark) 8%, var(--surface));
+    max-width: var(--measure);
+  }
+
+  /* --- Verify / asks ----------------------------------------------------- */
+
+  .verify,
+  .asks {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    max-width: var(--measure);
+  }
+  .verify__step,
+  .asks li {
+    padding-block-end: var(--space-5);
+    border-block-end: 1px solid var(--rule);
+  }
+  .verify__step:last-child,
+  .asks li:last-child {
+    border-block-end: 0;
+    padding-block-end: 0;
+  }
+  .verify h3,
+  .asks h3 {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-2);
+  }
+  .verify p + p {
+    margin-block-start: var(--space-3);
+  }
+
+  .faq {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-5);
+  }
+  .faq__q {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-2);
+  }
+  .faq__a {
+    margin: 0;
+    max-width: var(--measure);
+  }
+  .final {
+    padding-block-start: var(--space-8);
+  }
+</style>

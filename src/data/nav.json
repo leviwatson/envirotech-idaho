@@ -62,7 +62,7 @@
       ]
     },
     { "label": "Our Process", "href": "/our-containment-process/", "built": true },
-    { "label": "Certifications", "href": "/certifications/", "built": false },
+    { "label": "Certifications", "href": "/certifications/", "built": true },
     { "label": "Contact", "href": "/contact/", "built": true }
   ],
 

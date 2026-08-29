@@ -80,6 +80,25 @@ credential line to the page without a real number behind it.
 | `{{WORKERS_COMP_STATUS}}` | Footer, `/certifications/`, `/commercial/` | Workers' comp carrier and policy status |
 | `{{WARRANTY_TERMS}}` | Service pages, `/faq/` | What is actually warranted, for how long, and what voids it |
 
+### ⚠ /certifications/ is live and three facts are missing from it
+
+The page renders entirely from `src/data/credentials.ts`, so filling these in
+updates the page, the footer, and the structured data at once.
+
+| Needed | Why it blocks the page specifically |
+|---|---|
+| `{{CMR_ISSUING_ORG}}` | This is now the page's weakest point. `/certifications/` promises the reader a verification route for every credential and cannot supply one for `CMR0000023347`, because nobody knows which body issued it. The page says so plainly rather than guessing — but that admission sits directly under the number. Highest-value single fact on this list. |
+| `lastVerified` dates | §4 wants a "last verified" date per credential. No date has ever been recorded, so the field is unset on every entry and the line does not render. Check each credential against its issuer, then add `lastVerified: "YYYY-MM-DD"`. |
+| `{{RADON_CERT}}` / `{{RADON_CERT_BODY}}` | `/radon-mitigation/` sells the service; `/certifications/` currently lists radon certification under "not currently held". If Cody holds NRPP or NRSB, add the number and the body. If he does not, that section is already accurate and the radon page needs revisiting. |
+
+**No verification link exists for Idaho asbestos contractor certification.**
+Researched and could not confirm one: Idaho DEQ handles asbestos NESHAP
+notification for major facilities and EPA Region 10 covers everything else, so
+DEQ's page is linked as the notification requirements rather than presented as
+a contractor lookup. If a state-level asbestos certification registry does
+exist, add it — but it must be a `.gov` source. Third-party license-lookup
+directories are not acceptable on this page at any point.
+
 ## Trust / affiliations
 
 | Token | Used on | Needed from client |
