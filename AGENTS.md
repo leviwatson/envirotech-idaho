@@ -353,7 +353,9 @@ Two things are exempt and run the full container:
 
 **No trailing rule on a final item.** The last step, the last timeline row, the last credential: `:last-child` clears the border. A rule below the final item closes a box that isn't there.
 
-**Divider placement is a rule, not a judgment call.** A service page gets exactly four, at the four thematic shifts:
+**Divider placement is a rule, not a judgment call.** Dividers mark thematic shifts and nothing else. Not before the final CTA, not between subsections, not to fill space. How a shift is identified depends on the page type, because their structures differ.
+
+**Service pages — four fixed positions.** Every service page has the same section order, so the positions are fixed in `src/layouts/ServicePage.astro` and an entry cannot choose its own:
 
 | Position | The shift it marks |
 |---|---|
@@ -362,11 +364,21 @@ Two things are exempt and run the full container:
 | Before the inspection/testing section | Scope gives way to commercial terms |
 | Before the FAQ | Terms give way to Q&A |
 
-Nowhere else. Not before the final CTA, not between subsections, not to fill space.
+**Problem pages — declared shifts.** A problem page's sections are an ordered array, not fixed fields; one page argues a timeline, another explains a material, and there is no shared order to pin positions to. So the entry declares where a movement begins:
 
-**Never place a divider immediately before or after a full-bleed band.** The band's own edge is already the break, and a rule stacked against it reads as a doubled line. The containment band sits directly before the scope section, so on any page that renders it the scope divider is suppressed and the page carries three. That suppression is automatic — see `seam` in `src/layouts/ServicePage.astro`. If a service ever drops the band, its fourth divider returns on its own.
+```yaml
+- heading: Why it has to be handled rather than explained away
+  shift: true
+```
 
-Placement lives in the layout, never in a collection entry. A page must not be able to choose its own divider positions.
+The layout renders a seam above any section marked `shift: true`, plus one before the FAQ. This is the one place a collection entry influences divider placement, and only because the structure it is describing is genuinely its own. It declares *where the argument turns*; it does not get to decide how or whether a divider renders.
+
+**Never place a divider immediately before or after a full-bleed band** — on either page type. The band's own edge is already the break, and a rule stacked against it reads as a doubled line. Enforcement is in the layout, not the entry, so it cannot be overridden:
+
+- `ServicePage.astro` — the containment band sits directly before the scope section, so the scope divider is suppressed on any page that renders the band, and those pages carry three rather than four. Drop the band and the fourth returns on its own.
+- `ProblemPage.astro` — `showSeam()` ignores `shift: true` when the preceding section is a band.
+
+The rule to carry into any new page type: a layout owns whether a divider renders, an entry may at most describe its own structure.
 
 **Structure encodes meaning.** Numbered markers are used for the 7-step process sequences, because those genuinely are ordered sequences. They are not used anywhere else. Credential numbers set in mono, presented like a document rather than a badge graphic.
 
