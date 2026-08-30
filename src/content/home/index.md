@@ -2,7 +2,7 @@
 title: "Mold, Asbestos & Water Damage in Boise | Enviro-Tech"
 h1: Mold, Asbestos, and Water Damage in the Treasure Valley
 metaDescription: "Containment-first mold remediation, asbestos abatement, and water damage restoration across Boise, Meridian, and Nampa. Free inspection, we answer 24/7."
-subhead: "A sealed, negative-pressure containment goes up before any material is disturbed. The inspection is free, someone answers any hour, and an independent company does the testing."
+subhead: "A sealed, negative-pressure containment goes up before any material is disturbed. The inspection is free, someone answers any hour, and an independent IEP (indoor environmental professional) does the testing."
 
 emergency:
   text: Water coming in right now? Start here.
@@ -62,9 +62,9 @@ areas:
 
 faqs:
   - question: Is the inspection really free?
-    answer: "Yes. Someone comes out, looks at what you have, takes moisture readings, and writes an estimate, and that visit costs nothing with no obligation. What is not free is laboratory testing — but that is not ours either. You engage an independent testing company and pay them directly."
+    answer: "Yes. Someone comes out, looks at what you have, takes moisture readings, and writes an estimate, and that visit costs nothing with no obligation. What is not free is laboratory testing — but that is not ours either. You engage an independent IEP and pay them directly."
   - question: Do you do the testing?
-    answer: "No, and that is deliberate. An independent company does the testing and issues the result to you. We are the company that would be paid to remove whatever is found, so we should not also be the company deciding whether you have a problem, or certifying that we fixed it. Where a job ends in clearance testing, we engage an independent company and they issue the result."
+    answer: "No, and that is deliberate. An independent IEP (indoor environmental professional) does the testing and issues the result to you. We are the company that would be paid to remove whatever is found, so we should not also be the company deciding whether you have a problem, or certifying that we fixed it. Where a job ends in clearance testing, we engage an independent IEP and they issue the result."
   - question: How fast can you get here?
     answer: "One to two days for non-emergency work, usually with a written estimate the same day as the visit. If water is actively coming in, someone answers the phone at any hour and you get a real arrival time on that call rather than a number from a webpage."
   - question: Which areas do you cover?
