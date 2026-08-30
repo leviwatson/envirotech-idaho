@@ -621,6 +621,62 @@ if (home) {
   if (!home.includes('class="callbar"')) fail("/", "mobile call bar missing");
 }
 
+// --- Placeholder content must never reach the live domain (§2.2) -----------
+
+/**
+ * The testimonial band ships layout scaffolding: six stub tiles whose quotes
+ * are all prefixed "[PLACEHOLDER]". That is fine on workers.dev, where the
+ * point is to judge a layout, and it is a manual-action risk on the live
+ * domain, where a fabricated testimonial is exactly what §2.2 forbids.
+ *
+ * So the rule is tied to the same switch that governs indexing. While
+ * STAGING_NOINDEX is true the stubs are allowed and announced loudly; the
+ * moment it is flipped for cutover, any "[PLACEHOLDER]" left in dist/ fails
+ * the build. The component removes itself at that point anyway — this exists
+ * so that a stub reaching production is impossible rather than merely
+ * unlikely.
+ */
+{
+  const site = await readFile("src/data/site.ts", "utf8");
+  const staging = /export const STAGING_NOINDEX = true/.test(site);
+
+  const hits = [];
+  for (const dir of await readdir("dist")) {
+    const h = await html(dir === "index.html" ? "" : dir);
+    if (h?.includes("[PLACEHOLDER]")) hits.push(dir === "index.html" ? "/" : `/${dir}/`);
+  }
+
+  if (hits.length && !staging) {
+    for (const page of hits) {
+      fail(page, "[PLACEHOLDER] content in a production build — §2.2 forbids fabricated testimonials");
+    }
+  } else if (hits.length) {
+    console.warn(
+      `  note: [PLACEHOLDER] testimonial stubs on ${hits.join(", ")} — allowed while STAGING_NOINDEX is true, ` +
+        "and a build failure the moment it is flipped",
+    );
+  }
+}
+
+// --- Review schema, sitewide (§2.2) ----------------------------------------
+
+/**
+ * aggregateRating is already rejected per page. Review is the other half of
+ * the same rule and was never checked: with zero reviews, either type in
+ * structured data is fabricated markup.
+ */
+{
+  for (const dir of await readdir("dist")) {
+    const h = await html(dir === "index.html" ? "" : dir);
+    if (!h) continue;
+    const page = dir === "index.html" ? "/" : `/${dir}/`;
+    const ld = [...h.matchAll(LDJSON)].map((m) => m[1]).join(" ");
+    if (/"@type"\s*:\s*"Review"/.test(ld)) {
+      fail(page, "Review schema — §2.2 forbids it while there are zero reviews");
+    }
+  }
+}
+
 // --- Report ----------------------------------------------------------------
 
 if (problems.length) {

@@ -147,7 +147,35 @@ directories are not acceptable on this page at any point.
 | Token | Used on | Needed from client |
 |---|---|---|
 | `{{GBP_URL}}` | Footer, `/reviews/`, `/contact/`, **and `sameAs` in structured data on all 34 pages** | Live GBP URL once the profile is claimed and verified. Add it to `SAME_AS` in `src/data/organization.ts` — it is an empty array today, so `sameAs` is omitted rather than emitted empty, and one edit populates every page |
-| `{{GBP_REVIEW_COUNT}}` | `/reviews/` | Real count, pulled from the live profile |
+| `{{GBP_REVIEW_COUNT}}` | `/reviews/`, and the homepage testimonial band's header line | Real count, pulled from the live profile. The band currently reads "Reviews pending" rather than a number, because a count is the one thing on it that cannot be a placeholder — a wrong number is a claim, where an obvious stub is not |
+| `{{TESTIMONIALS}}` | Homepage testimonial band (`src/data/testimonials.ts`) | Real quotes with permission to publish, each with a first name and city. Fills the `TESTIMONIALS` array; the placeholder array next to it then gets deleted |
+
+### ⚠ The homepage testimonial band is layout scaffolding
+
+`src/components/TestimonialBand.astro` renders six stub tiles between the hero
+and the services grid. **Every quote is prefixed `[PLACEHOLDER]`**, every
+attribution is "Sample Name", and the header reads "Reviews pending" rather
+than a count. It exists so the layout can be judged before any content exists.
+
+It cannot reach the live domain, by two independent mechanisms:
+
+1. **The component removes itself.** It renders real testimonials when
+   `TESTIMONIALS` has entries, the stubs only while `STAGING_NOINDEX` is true,
+   and nothing at all otherwise. Flip the flag for cutover and the band
+   disappears rather than shipping stubs.
+2. **The build fails.** `check-structure.mjs` rejects `[PLACEHOLDER]` anywhere
+   in `dist/` once `STAGING_NOINDEX` is false. While it is true the stubs are
+   allowed and the check prints a note naming the pages.
+
+Both were verified by forcing the stubs into a production build; the guard
+fails it. `Review` and `aggregateRating` schema are separately rejected on
+every page, so the band emits neither.
+
+**To go live with real reviews:** fill `TESTIMONIALS` in
+`src/data/testimonials.ts`, delete `PLACEHOLDER_TESTIMONIALS`, and the header
+switches itself from "Reviews pending" to "What customers say". **To go live
+without them:** do nothing — the band is already absent from a production
+build.
 
 **There are zero Google reviews today.** No testimonials get written, no
 `aggregateRating` or `Review` schema is emitted, and `/reviews/` ships as an

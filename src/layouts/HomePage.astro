@@ -17,6 +17,7 @@ import Base from "./Base.astro";
 import { buildGraph } from "../lib/schema";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
+import TestimonialBand from "../components/TestimonialBand.astro";
 import { renderProse } from "../lib/prose";
 import { isBuilt, labelFor } from "../lib/links";
 import { TRUST_STRIP } from "../data/service-defaults";
@@ -80,6 +81,12 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       <LeadForm id="inspection" heading="Get a free inspection" fields="short" />
     </div>
   </section>
+
+  {/* --- Testimonials. Full-bleed, between the hero and the grid. Renders
+         placeholder tiles on staging and nothing at all on the live domain
+         until real reviews exist (§2.2). No seam divider on either side — the
+         band's own edges are the break (§13). ---------------------------- */}
+  <TestimonialBand />
 
   <div class="container">
     {/* --- Services grid: the routing core ---------------------------- */}

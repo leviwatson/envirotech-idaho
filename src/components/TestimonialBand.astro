@@ -1,0 +1,241 @@
+---
+/**
+ * Testimonial band — full-bleed --ink, between the hero and the services grid.
+ *
+ * LAYOUT SCAFFOLDING TODAY. There are zero reviews (§2.2), so what renders on
+ * staging is the placeholder set from src/data/testimonials.ts: every quote
+ * prefixed "[PLACEHOLDER]", every attribution obviously not a person, and the
+ * header reading "Reviews pending" rather than a count. On the live domain the
+ * band removes itself entirely rather than ship stubs, and check-structure.mjs
+ * fails the build if the prefix reaches dist/ once STAGING_NOINDEX is false.
+ *
+ * No `Review` and no `aggregateRating` schema, here or anywhere. Fabricated
+ * review markup is a manual-action risk and the structure guard enforces it
+ * sitewide. The stars are decorative and carry aria-hidden with no text
+ * equivalent, deliberately — a screen-reader announcement of "five stars"
+ * would be asserting a rating that does not exist.
+ *
+ * Motion: §13 asks for minimal motion, and an auto-scrolling marquee is more
+ * than this site otherwise uses. It is CSS-only — no JS, per §14 — pauses on
+ * hover and on focus, and reduces to a plain scrollable row under
+ * prefers-reduced-motion. Keyboard and touch scroll either way, which is why
+ * the viewport is focusable and labelled rather than a bare overflow box.
+ */
+import { STAGING_NOINDEX } from "../data/site";
+import { TESTIMONIALS, PLACEHOLDER_TESTIMONIALS } from "../data/testimonials";
+
+const real = TESTIMONIALS.length > 0;
+// Real quotes if they exist; stubs only while this is staging; otherwise none.
+const items = real ? TESTIMONIALS : STAGING_NOINDEX ? PLACEHOLDER_TESTIMONIALS : [];
+
+/**
+ * The marquee translates the track by exactly -50%, so the track holds two
+ * copies of the list and the seam is invisible. The duplicate is aria-hidden:
+ * it is the same content twice and a screen reader should hear it once.
+ */
+const loop = [
+  { items, dup: false },
+  { items, dup: true },
+];
+
+const heading = real ? "What customers say" : "Reviews pending";
+---
+
+{
+  items.length > 0 && (
+    <section class="tband" aria-labelledby="tband-head">
+      <div class="container tband__head">
+        <h2 id="tband-head" class="tband__title">
+          {heading}
+        </h2>
+        {!real && (
+          <p class="tband__note">
+            Layout placeholder. Real reviews replace this once the Google
+            Business Profile is verified.
+          </p>
+        )}
+      </div>
+
+      <div class="tband__rail">
+        <div
+          class="tband__viewport"
+          tabindex="0"
+          role="group"
+          aria-label={`${heading} — scrollable row`}
+        >
+          <ul class="tband__track">
+            {loop.map((copy) =>
+              copy.items.map((t) => (
+                <li class="tcard" aria-hidden={copy.dup ? "true" : undefined}>
+                  {/* Decorative. No text alternative — see the note above. */}
+                  <span class="tcard__stars" aria-hidden="true">
+                    {[0, 1, 2, 3, 4].map(() => (
+                      <svg viewBox="0 0 20 19" class="tcard__star" focusable="false">
+                        <path d="M10 0l2.9 6.2 6.6.9-4.8 4.8 1.2 6.9L10 15.5 4.1 18.8l1.2-6.9L.5 7.1l6.6-.9z" />
+                      </svg>
+                    ))}
+                  </span>
+                  <blockquote class="tcard__quote">{t.quote}</blockquote>
+                  <p class="tcard__by">
+                    <span class="tcard__name">{t.name}</span>
+                    <span class="tcard__city">{t.city}</span>
+                  </p>
+                </li>
+              )),
+            )}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* --- Band. Full bleed by design, like the containment band (§13). ------ */
+
+  .tband {
+    background: var(--ink);
+    color: var(--surface);
+    padding-block: var(--space-7);
+    /* Sits between two light sections, so its own edges are the break. No
+       seam divider against it — §13 forbids stacking one on a band edge. */
+  }
+  .tband__head {
+    margin-block-end: var(--space-5);
+  }
+  .tband__title {
+    color: var(--surface);
+    font-size: var(--step-2);
+    margin: 0;
+  }
+  .tband__note {
+    margin-block-start: var(--space-2);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--surface) 62%, var(--ink));
+    max-width: var(--measure);
+  }
+
+  /* --- Rail. Holds the edge fades that say "this continues". ------------- */
+
+  .tband__rail {
+    position: relative;
+  }
+  /* Partial tiles show at both edges while the marquee runs; these keep the
+     cue when it is paused or reduced, without masking the scrollbar away. */
+  .tband__rail::before,
+  .tband__rail::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    width: clamp(1.5rem, 6vw, 4rem);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .tband__rail::before {
+    inset-inline-start: 0;
+    background: linear-gradient(to right, var(--ink), transparent);
+  }
+  .tband__rail::after {
+    inset-inline-end: 0;
+    background: linear-gradient(to left, var(--ink), transparent);
+  }
+
+  .tband__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Focusable so the row is reachable and scrollable by keyboard. */
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--surface) 30%, var(--ink)) transparent;
+  }
+  .tband__viewport:focus-visible {
+    outline: 2px solid var(--spark);
+    outline-offset: -2px;
+  }
+
+  /* --- Track. Two copies of the list; the animation moves it by half. ---- */
+
+  .tband__track {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2) var(--gutter);
+    display: flex;
+    gap: var(--space-4);
+    width: max-content;
+    animation: tband-marquee 80s linear infinite;
+  }
+  /* Pause for anyone reading, and for anyone tabbing through. */
+  .tband__viewport:hover .tband__track,
+  .tband__viewport:focus-within .tband__track,
+  .tband__track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes tband-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* --- Tile. Lifted off the band rather than outlined against it. -------- */
+
+  .tcard {
+    flex: 0 0 clamp(15rem, 72vw, 21rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: color-mix(in srgb, var(--surface) 9%, var(--ink));
+    border: 1px solid color-mix(in srgb, var(--surface) 16%, var(--ink));
+    border-radius: var(--radius);
+  }
+  .tcard__stars {
+    display: flex;
+    gap: 3px;
+  }
+  /* --spark is the thin-accent green (§13). --caution is emergency only and
+     never appears on this component. */
+  .tcard__star {
+    width: 14px;
+    height: 14px;
+    fill: var(--spark);
+  }
+  .tcard__quote {
+    margin: 0;
+    font-style: italic;
+    font-size: var(--step-0);
+    line-height: var(--leading-normal);
+    /* Two lines is the design target, so the tiles keep a common rhythm even
+       when a real quote runs shorter. Longer ones grow the row rather than
+       being clipped — truncating someone's words with an ellipsis is not a
+       thing to do to a real customer. */
+    min-height: calc(2em * var(--leading-normal));
+  }
+  .tcard__by {
+    margin: 0;
+    margin-block-start: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--surface) 62%, var(--ink));
+  }
+  .tcard__name {
+    font-weight: 600;
+  }
+
+  /* --- Reduced motion: a plain scrollable row, no animation at all. ------ */
+
+  @media (prefers-reduced-motion: reduce) {
+    .tband__track {
+      animation: none;
+      /* One copy is enough without the loop, and the duplicate would just be
+         the same six tiles again at the end of the scroll. */
+      width: auto;
+    }
+    .tcard[aria-hidden="true"] {
+      display: none;
+    }
+  }
+</style>
