@@ -455,11 +455,36 @@ checkSimilarity("service pages", serviceBodies, SERVICE_SIMILARITY_CAP);
 
     // The grid is the routing core, and it must only offer pages that exist.
     const built = d.services.tiles.filter((t) => navBuilt(t.href));
-    const rendered = count(h, /class="tile"/g);
+    const rendered = count(h, /class="tile tile--(primary|secondary)"/g);
     if (rendered !== built.length) {
       fail("/", `services grid: ${built.length} tiles target built pages but ${rendered} rendered`);
     }
     if (rendered === 0) fail("/", "services grid is empty — the homepage cannot route");
+
+    // Hierarchy is the point of the split: a promoted tile must actually
+    // render promoted, and the money pages must not all quietly fall into the
+    // secondary grid after an entry edit.
+    const wantPrimary = built.filter((t) => t.primary).length;
+    const gotPrimary = count(h, /class="tile tile--primary"/g);
+    if (gotPrimary !== wantPrimary) {
+      fail("/", `services grid: ${wantPrimary} tiles marked primary but ${gotPrimary} rendered as primary`);
+    }
+    if (wantPrimary === 0) fail("/", "no primary service tiles — the grid has no hierarchy (§10)");
+
+    // The three reassurance beats, unnumbered by §13.
+    const wantSteps = d.nextSteps?.steps?.length ?? 0;
+    const gotSteps = count(h, /class="steps__item"/g);
+    if (gotSteps !== wantSteps) {
+      fail("/", `nextSteps declares ${wantSteps} steps but ${gotSteps} rendered`);
+    }
+    const stepsBlock = h.match(/<section class="band steps"[\s\S]*?<\/section>/)?.[0] ?? "";
+    if (stepsBlock.includes("mono")) {
+      fail("/", "numbered mono markers in the what-happens steps — §13 reserves those for the 7-step sequences");
+    }
+
+    // §7 — the owner-operator wedge must not silently vanish from the page.
+    if (!h.includes("creds__owner")) fail("/", "owner note missing from the credentials strip");
+    if (!h.includes("Cody Mortensen")) fail("/", "owner note does not name Cody (§7)");
     for (const tile of d.services.tiles) {
       const live = navBuilt(tile.href);
       const present = h.includes(`href="${tile.href}"`);

@@ -30,6 +30,9 @@ const d = entry.data;
 
 // No dead links, same rule as everywhere. The grid grows on its own.
 const tiles = d.services.tiles.filter((t) => isBuilt(t.href));
+// §8's three money pages lead; everything else follows at smaller weight.
+const primaryTiles = tiles.filter((t) => t.primary);
+const secondaryTiles = tiles.filter((t) => !t.primary);
 const origin = `https://${DOMAIN}`;
 
 // Homepage carries no breadcrumb — it is the root of the trail.
@@ -44,15 +47,25 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       <h1>{d.h1}</h1>
       <p class="hero__subhead">{d.subhead}</p>
 
-      <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
-      <p class="hero__note">Free inspection. No obligation.</p>
-
-      {/* The one amber element here — emergency routing (§13). */}
+      {/* The one amber element here — emergency routing (§13). Above the call
+          button, because someone with water coming in now needs the emergency
+          page before they need the general number, and below the button it
+          sat past the point where they would have stopped reading. */}
       <a href={d.emergency.href} class="hero__emergency">
         <span class="hero__emergency-badge mono">24/7</span>
         <span>{d.emergency.text}</span>
       </a>
 
+      <a href={PHONE_HREF} class="hero__cta">Call {PHONE_DISPLAY}</a>
+      <p class="hero__note">Free inspection. No obligation.</p>
+    </div>
+
+    {/* Trust strip leads the form column rather than trailing the copy: it is
+        the answer to "why would I give these people my number", so it reads
+        immediately before the fields rather than after the CTA that competes
+        with them. On mobile the column stacks under the copy, so the order is
+        the same either way. */}
+    <div class="hero__form">
       <ul class="trust">
         {
           TRUST_STRIP.map((item) => (
@@ -63,10 +76,8 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
           ))
         }
       </ul>
-    </div>
 
-    <div class="hero__form">
-      <LeadForm id="inspection" heading="Get a free inspection" />
+      <LeadForm id="inspection" heading="Get a free inspection" fields="short" />
     </div>
   </section>
 
@@ -77,8 +88,8 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       {d.services.intro && <p class="band__intro" set:html={renderProse(d.services.intro)} />}
       <ul class="grid">
         {
-          tiles.map((tile) => (
-            <li class="tile">
+          primaryTiles.map((tile) => (
+            <li class="tile tile--primary">
               <a href={tile.href} class="tile__link">
                 <h3 class="tile__name">{labelFor(tile.href) ?? tile.href}</h3>
                 <p class="tile__line">{tile.line}</p>
@@ -87,6 +98,37 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
           ))
         }
       </ul>
+      {
+        secondaryTiles.length > 0 && (
+          <ul class="grid grid--secondary">
+            {secondaryTiles.map((tile) => (
+              <li class="tile tile--secondary">
+                <a href={tile.href} class="tile__link">
+                  <h3 class="tile__name">{labelFor(tile.href) ?? tile.href}</h3>
+                  <p class="tile__line">{tile.line}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    {/* --- What happens when you call. Compact, and deliberately unnumbered:
+           §13 reserves numbered mono markers for the two real 7-step process
+           sequences, and three reassurance beats are not one of those. ---- */}
+    <section class="band steps" data-next-steps>
+      <h2>{d.nextSteps.heading}</h2>
+      <ol class="steps__list">
+        {
+          d.nextSteps.steps.map((step) => (
+            <li class="steps__item">
+              <h3 class="steps__title">{step.title}</h3>
+              <p class="steps__line">{step.line}</p>
+            </li>
+          ))
+        }
+      </ol>
     </section>
 
     <SeamDivider />
@@ -115,6 +157,11 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
           <dd>Carried out by an independent company, never by us</dd>
         </div>
       </dl>
+      {/* §7 — the owner-operator wedge. A license number means more with a
+          person attached to it. */}
+      <div class="creds__owner">
+        {d.ownerNote.map((p) => <p set:html={renderProse(p)} />)}
+      </div>
     </section>
 
     <SeamDivider />
@@ -152,10 +199,15 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       </div>
     </section>
 
+    {/* Short set here too. Two forms on one page with different field counts
+        reads as a bug rather than as a decision, and this is still the
+        homepage — the reader who scrolled this far is more committed, not
+        differently qualified. */}
     <section class="band final">
       <LeadForm
         id="request-inspection"
         heading="Request a free inspection"
+        fields="short"
       />
     </section>
   </div>
@@ -309,6 +361,13 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
     text-decoration: none;
     color: var(--ink);
   }
+  /* The secondary grid keeps the same tracks so both rows share a column
+     edge, and separates from the primary row by weight rather than by a rule.
+     Six of these under three of those was previously one flat field of nine
+     in which the money pages competed with crawlspace drainage. */
+  .grid--secondary {
+    margin-block-start: var(--space-4);
+  }
   .tile__link:hover {
     border-color: var(--seal);
   }
@@ -319,6 +378,82 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
   .tile__line {
     margin-block-start: var(--space-2);
     font-size: var(--step-0);
+    max-width: none;
+  }
+
+  /* Hierarchy is carried by weight and surface, not by color: --seal stays the
+     one interactive green (§13) and --spark stays a thin accent, so a primary
+     tile earns its emphasis with a heavier hairline and a larger heading. */
+  .tile--primary .tile__link {
+    border-color: color-mix(in srgb, var(--seal) 40%, var(--rule));
+    border-block-start: 3px solid var(--seal);
+  }
+  .tile--primary .tile__name {
+    font-size: var(--step-2);
+  }
+  .tile--secondary .tile__link {
+    padding: var(--space-4);
+    background: transparent;
+  }
+  .tile--secondary .tile__name {
+    font-size: var(--step-0);
+  }
+  .tile--secondary .tile__line {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 74%, var(--surface));
+  }
+
+  /* --- What happens when you call ----------------------------------------
+     Compact and unnumbered. §13 gives numbered mono markers to the two real
+     7-step process sequences and to nothing else, so these are separated by
+     rules capped to the measure instead. */
+
+  .steps__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--measure);
+  }
+  @media (min-width: 760px) {
+    .steps__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      max-width: none;
+    }
+  }
+  .steps__item {
+    padding-block-end: var(--space-4);
+    border-block-end: 1px solid var(--rule);
+  }
+  /* No rule below the last item — it would close a box that is not there. */
+  .steps__item:last-child {
+    padding-block-end: 0;
+    border-block-end: 0;
+  }
+  @media (min-width: 760px) {
+    /* Side by side the separator becomes vertical, so the horizontal rules
+       come off entirely and the first item carries no leading edge. */
+    .steps__item {
+      padding-block-end: 0;
+      border-block-end: 0;
+      padding-inline-start: var(--space-4);
+      border-inline-start: 1px solid var(--rule);
+    }
+    .steps__item:first-child {
+      padding-inline-start: 0;
+      border-inline-start: 0;
+    }
+  }
+  .steps__title {
+    font-size: var(--step-0);
+    font-weight: 600;
+  }
+  .steps__line {
+    margin-block-start: var(--space-2);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--ink) 78%, var(--surface));
     max-width: none;
   }
 
@@ -376,6 +511,15 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
     margin: 0;
     font-size: var(--step-0);
     font-weight: 600;
+  }
+  /* Capped to the measure like any other prose in a band — the credential
+     grid above it is data and runs wider, this is body copy and should not. */
+  .creds__owner {
+    margin-block-start: var(--space-5);
+    max-width: var(--measure);
+  }
+  .creds__owner p + p {
+    margin-block-start: var(--space-3);
   }
 
   /* --- Areas / FAQ -------------------------------------------------------- */

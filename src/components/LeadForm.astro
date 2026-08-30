@@ -2,9 +2,24 @@
 /**
  * Lead form (§10 — above the fold on desktop, every money page).
  *
- * Six fields, two of them required. Anxious homeowners and realtors working a
- * closing deadline abandon long forms, so the field list stays short and the
- * phone number stays visible as the faster path.
+ * Two field sets off one component, chosen with `fields`:
+ *
+ *   "full"  (default) — name, phone, email, city, service, details. Every
+ *                       money page, where the reader has already committed to
+ *                       reading and a fuller brief means a better first call.
+ *   "short"           — name, phone, city, service. The homepage, where the
+ *                       reader is still deciding whether to engage at all and
+ *                       every optional field is a reason to stop.
+ *
+ * Name and phone are the only required fields in both, and the server-side
+ * validation mirrors exactly that — the dropped fields arrive empty, which the
+ * Worker already treats as unknown rather than invalid. Forking the component
+ * would have let the two drift on the §6 copy rules below, which is the one
+ * thing that must not happen.
+ *
+ * Anxious homeowners and realtors working a closing deadline abandon long
+ * forms, so neither set is long and the phone number stays visible throughout
+ * as the faster path.
  *
  * Copy rules that must not drift (§6):
  *  - The INSPECTION is free. TESTING is paid. Never "free testing", never
@@ -36,6 +51,8 @@ interface Props {
   id?: string;
   /** Renders the compact variant used in sidebars. */
   compact?: boolean;
+  /** Which field set to render. See the note at the top of this file. */
+  fields?: "full" | "short";
   class?: string;
 }
 
@@ -49,6 +66,7 @@ const {
   blurb = "We come out, look at what you are dealing with, and walk you through what it will take. The visit is free and there is no obligation attached to it.",
   id = "lead-form",
   compact = false,
+  fields = "full",
   class: className,
 } = Astro.props;
 
@@ -59,6 +77,9 @@ const sourcePath = Astro.url.pathname;
 // Unique per instance — a page can carry both a hero form and a footer form
 // without colliding label/`for` pairs.
 const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
+
+/** Email and details render only in the full set. */
+const full = fields === "full";
 ---
 
 <section class:list={["lead", compact && "lead--compact", className]} id={id}>
@@ -129,15 +150,17 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </span>
       </p>
 
-      <p class="field">
-        <label for={`${uid}-email`}>Email</label>
-        <input
-          type="email"
-          id={`${uid}-email`}
-          name="email"
-          autocomplete="email"
-        />
-      </p>
+      {full && (
+        <p class="field">
+          <label for={`${uid}-email`}>Email</label>
+          <input
+            type="email"
+            id={`${uid}-email`}
+            name="email"
+            autocomplete="email"
+          />
+        </p>
+      )}
 
       <p class="field">
         <label for={`${uid}-city`}>Where is the property?</label>
@@ -148,7 +171,10 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </select>
       </p>
 
-      <p class="field field--full">
+      {/* Spans in the full set, where a textarea follows it. In the short set
+          it pairs with the city field instead, so four fields sit as a tidy
+          2x2 rather than leaving a hole in the grid. */}
+      <p class:list={["field", full && "field--full"]}>
         <label for={`${uid}-service`}>What is going on?</label>
         <select id={`${uid}-service`} name="service">
           <option value="">Select one</option>
@@ -156,18 +182,20 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </select>
       </p>
 
-      <p class="field field--full">
-        <label for={`${uid}-details`}>Details</label>
-        <textarea
-          id={`${uid}-details`}
-          name="details"
-          rows={compact ? 3 : 4}
-          aria-describedby={`${uid}-details-hint`}></textarea>
-        <span class="hint" id={`${uid}-details-hint`}>
-          What you found, where in the house, and how long it has been there.
-          If a home inspector flagged it, say that.
-        </span>
-      </p>
+      {full && (
+        <p class="field field--full">
+          <label for={`${uid}-details`}>Details</label>
+          <textarea
+            id={`${uid}-details`}
+            name="details"
+            rows={compact ? 3 : 4}
+            aria-describedby={`${uid}-details-hint`}></textarea>
+          <span class="hint" id={`${uid}-details-hint`}>
+            What you found, where in the house, and how long it has been there.
+            If a home inspector flagged it, say that.
+          </span>
+        </p>
+      )}
     </div>
 
     <button type="submit" class="lead__submit">Request a free inspection</button>

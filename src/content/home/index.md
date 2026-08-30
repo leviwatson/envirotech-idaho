@@ -13,10 +13,13 @@ services:
   intro: "Pick the one that sounds like your situation. Each page covers what the work involves, how long it takes, and what it does not cover."
   tiles:
     - href: /mold-remediation/
+      primary: true
       line: "You can see growth, or you can smell it. Removal inside a containment, with the water source fixed so it does not come back."
     - href: /asbestos-abatement/
+      primary: true
       line: "A lab result came back positive, or a pre-1980 remodel is about to disturb something. Removal with third-party clearance at the end."
     - href: /water-damage-restoration/
+      primary: true
       line: "A pipe failed, an appliance let go, or water got in. Extraction, drying, and the documentation an insurer will want."
     - href: /crawlspace-drainage/
       line: "Standing water under the house, most springs. Finding where it comes from and building drainage that handles it."
@@ -31,6 +34,16 @@ services:
     - href: /emergency-water-damage/
       line: "Water is arriving now. What to do in the next ten minutes, and someone on the phone any hour."
 
+nextSteps:
+  heading: What happens when you call
+  steps:
+    - title: You call, or send the form
+      line: "Someone answers — any hour, including nights and weekends. Tell us what you are seeing and roughly where in the house it is."
+    - title: We come out and look, within one to two days
+      line: "Free, and there is no obligation on it. We take moisture readings, work out what is actually going on, and tell you plainly whether you have a problem worth spending money on."
+    - title: You get a written estimate before anything starts
+      line: "Written after someone has seen your house rather than quoted off a list, with the scope spelled out. Nothing begins until you have read it and said yes."
+
 containment:
   heading: Containment first, on every job
   paragraphs:
@@ -39,6 +52,10 @@ containment:
     - "So we wrote down exactly what one looks like, part by part, including how to check whether the one in your house was built properly. It applies to whoever you hire."
   linkText: See what a proper containment looks like
   href: /our-containment-process/
+
+ownerNote:
+  - "Cody Mortensen owns Enviro-Tech and does the inspections himself. When someone comes out to look at your house, it is the person whose name is on the registration above and who will be accountable for the work."
+  - "That is the practical difference between an owner-operator and a franchise: there is no branch manager between you and the person responsible, and nothing gets quoted by someone who has not stood in the room."
 
 areas:
   heading: Where we work

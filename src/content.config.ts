@@ -357,8 +357,43 @@ const home = defineCollection({
       services: z.object({
         heading: z.string(),
         intro: z.string().optional(),
-        tiles: z.array(z.object({ href: z.string(), line: z.string() })).min(1),
+        /**
+         * `primary` promotes a tile to the top row at full weight. The three
+         * money pages (§8) carry the search volume and the margin, and a flat
+         * grid of nine made them compete with crawlspace drainage for the
+         * same glance. Everything else renders secondary at smaller weight.
+         */
+        tiles: z
+          .array(
+            z.object({
+              href: z.string(),
+              line: z.string(),
+              primary: z.boolean().default(false),
+            }),
+          )
+          .min(1),
       }),
+
+      /**
+       * What happens between "I have a problem" and "someone is at my house".
+       * Reassurance about the next three moves, not a process explainer — the
+       * service pages own the actual sequence.
+       *
+       * Renders unnumbered. §13 reserves numbered mono markers for the two
+       * genuine 7-step process sequences, and three reassurance beats are not
+       * one of those.
+       */
+      nextSteps: z.object({
+        heading: z.string(),
+        steps: z.array(z.object({ title: z.string(), line: z.string() })).min(1),
+      }),
+
+      /**
+       * Two sentences putting the owner's name beside the credentials (§7).
+       * Owner-operator is the wedge against franchise competitors, and a
+       * license number means more with a person attached to it.
+       */
+      ownerNote: z.array(z.string()).min(1),
 
       /** Three sentences and a link. The argument lives on the other page. */
       containment: z.object({
