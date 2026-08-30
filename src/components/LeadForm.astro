@@ -265,15 +265,24 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   textarea {
     width: 100%;
     align-self: start;
-    height: 44px; /* tap target floor (§13); fixed so it cannot stretch */
-    padding: var(--space-3);
+    /* 44px is the §13 tap-target FLOOR, not a fixed height. It was fixed, and
+       with 12px of padding either side that left an 18px content box — shorter
+       than --step-0 at its 17.6px ceiling, so descenders clipped. A select
+       clips its own text rather than letting it overflow, which is where it
+       showed: the y in "Select a city" lost its tail.
+       align-self: start already stops these stretching in the grid, so a
+       minimum is safe here where a fixed height was not. */
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    line-height: var(--leading-snug);
     background: var(--paper);
     color: var(--ink);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
   }
   textarea {
-    height: auto; /* the one control that should size to its rows */
+    /* Multi-line, so it takes the looser body leading rather than the snug
+       single-line one the inputs use. Its height comes from its rows. */
     resize: vertical;
     line-height: var(--leading-normal);
   }
