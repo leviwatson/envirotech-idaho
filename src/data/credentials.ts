@@ -68,7 +68,7 @@ export const CREDENTIALS: Credential[] = [
     whatItIs:
       "Firm-level certification under the federal Renovation, Repair and Painting rule, required to disturb paint in housing or child-occupied facilities built before 1978. EPA administers the program directly in Idaho.",
     permits:
-      "Renovation work that disturbs lead-based paint in pre-1978 buildings. We do not currently offer lead paint work.",
+      "Renovation work that disturbs lead-based paint in pre-1978 buildings. The firm number is not published yet, so it renders sitewide as a visible pending mask rather than as a confirmed credential — including on /lead-paint-removal/, which describes the service.",
     verifyUrl: "https://cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search",
     verified: false,
   },

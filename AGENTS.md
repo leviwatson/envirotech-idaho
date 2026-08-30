@@ -25,7 +25,7 @@ These override anything else in this file.
 3. **No fear-mongering.** No "toxic black mold is killing your family." The audience is already scared; the brand's job is to be the calm expert in the room. Scare copy suppresses conversion here and invites quality scrutiny.
 4. **No medical claims.** Describe health *risks* in general, sourced terms. Never diagnose, never promise health outcomes.
 5. **Every page must be genuinely different.** No spun city pages. If a page can't justify 800+ words of real, specific content, don't build it.
-6. **`/lead-paint-removal/` is BLOCKED.** Do not build, link to, or reference lead paint services until the real EPA RRP firm certification number is supplied. See §5.
+6. **`/lead-paint-removal/` is built and live. The EPA RRP firm certification number is not.** The page ships, is linked in the primary nav, and describes the work. What remains outstanding is the credential: the firm number renders sitewide as the visible mask `NAT-F______-_`, marked *Pending verification*, and `verified: false` in `src/data/credentials.ts` keeps it out of structured data. Never replace the mask with a number that has not been supplied, and never set `verified: true` to make a page read better — `check-nav.mjs` fails the build on both. **Unresolved:** `/certifications/` still lists EPA RRP under "What we are not certified to do", so the site currently sells the service on one page and disclaims the certification on another. That has to be settled before DNS cutover. See §5 and PLACEHOLDERS.md.
 
 ---
 
@@ -65,7 +65,7 @@ Display these prominently — sitewide footer, plus a dedicated `/certifications
 |---|---|---|
 | Idaho Contractor Registration | `RCE-8871958` | Verified format, use it |
 | Asbestos / mold certification | `CMR0000023347` | **Issuing organization unknown — see §5** |
-| EPA RRP Firm Certification | `{{EPA_RRP_FIRM_NUMBER}}` | **BLOCKED — placeholder only** |
+| EPA RRP Firm Certification | `NAT-F______-_` | **Visible mask. Status unconfirmed — see §2.6** |
 | IICRC | `{{IICRC_CERT}}` | Placeholder |
 | Liability coverage | `{{LIABILITY_COVERAGE_AMOUNT}}` | Placeholder |
 | Workers' comp | `{{WORKERS_COMP_STATUS}}` | Placeholder |
@@ -81,7 +81,7 @@ Display these prominently — sitewide footer, plus a dedicated `/certifications
 Convention: `{{TOKEN_NAME}}` in content, tracked in `PLACEHOLDERS.md` at repo root.
 
 ```
-{{EPA_RRP_FIRM_NUMBER}}      BLOCKING for lead paint page
+{{EPA_RRP_FIRM_NUMBER}}      Lead paint page is built; the credential is not confirmed
 {{CMR_ISSUING_ORG}}          Which body issued CMR0000023347
 {{IICRC_CERT}}
 {{LIABILITY_COVERAGE_AMOUNT}}
@@ -188,7 +188,7 @@ Don't:
 | Reconstruction after remediation | Medium | Full-cycle differentiator vs abatement-only shops |
 | Hazardous material removal | Low | |
 
-**Blocked:** lead paint testing, encapsulation, and removal. Real EPA RRP firm number required first.
+**Live with an open credential:** lead paint encapsulation and removal. `/lead-paint-removal/` is built; the EPA RRP firm number is still outstanding and renders as a pending mask (§2.6). Lead paint *testing* stays out of scope regardless — we do not test (§6).
 
 **Unconfirmed scope:** sewage and biohazard. Do not advertise until `{{DOES_NOT_DO}}` is resolved.
 
@@ -217,6 +217,7 @@ Note on step 1: the inspection is ours, the testing is not. Copy describing that
 /crawlspace-drainage/
 /crawlspace-encapsulation/
 /reconstruction/
+/lead-paint-removal/                   EPA RRP number outstanding — see §2.6
 
 CITY PAGES — phase 1 (mold only)
 /mold-remediation-boise/

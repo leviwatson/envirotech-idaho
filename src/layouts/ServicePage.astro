@@ -31,6 +31,7 @@ import {
   SERVICE_AREAS,
 } from "../data/service-defaults";
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF, CITIES, DOMAIN } from "../data/site";
+import { CREDENTIALS, isPlaceholder, type Credential } from "../data/credentials";
 
 interface Props {
   entry: CollectionEntry<"services">;
@@ -70,6 +71,20 @@ const seam = {
   beforeTerms: true,
   beforeFaq: true,
 };
+
+/**
+ * Credential rows for the optional credentials section.
+ *
+ * Looked up by label against src/data/credentials.ts so the number has one
+ * source. An unfilled {{TOKEN}} row drops out entirely — the build guard
+ * rejects tokens in dist/, and a credential nobody can state is not one worth
+ * a row. A visible pending mask is allowed through and labelled as pending:
+ * the reader can see it is unfilled, and `verified: false` keeps it out of
+ * structured data, so nothing is asserted that is not in hand (§2.1).
+ */
+const credentialRows: Credential[] = (d.credentials?.show ?? [])
+  .map((label) => CREDENTIALS.find((c) => c.label === label))
+  .filter((c): c is Credential => Boolean(c) && !isPlaceholder(c.value));
 
 const photos = d.photos;
 // Containment falls back to the sitewide slot so a service that declares no
@@ -263,6 +278,36 @@ const graph = buildGraph({
         )
       }
     </section>
+
+    {/* --- Credentials. Only where a named certification governs whether
+           the work may be performed at all. Numbers come from
+           src/data/credentials.ts and are set in mono, presented like a
+           document rather than a badge (§13). ------------------------------ */}
+    {
+      d.credentials && credentialRows.length > 0 && (
+        <section class="band">
+          <h2>{d.credentials.heading}</h2>
+          {d.credentials.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
+          <dl class="cred-list">
+            {credentialRows.map((c) => (
+              <div class="cred">
+                <dt class="cred__label">
+                  {c.label}
+                  {!c.verified && <span class="cred__pending">Pending verification</span>}
+                </dt>
+                <dd class="cred__value mono">
+                  {c.value}
+                  {!isPlaceholder(c.issuer) && (
+                    <span class="cred__issuer">Issued by {c.issuer}</span>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          {d.credentials.note && <p class="band__intro" set:html={renderProse(d.credentials.note)} />}
+        </section>
+      )
+    }
 
     {/* --- Before / after ----------------------------------------------- */}
     {
@@ -643,6 +688,62 @@ const graph = buildGraph({
   .scope__excl-head {
     margin-block: var(--space-6) var(--space-4);
     font-size: var(--step-1);
+  }
+
+  /* --- Credentials -------------------------------------------------------
+     Numbers set in mono and presented like a document, not a badge (§13).
+     The list carries the measure cap so the copy above and the row rules
+     share one edge, and the last row clears its rule. */
+
+  .cred-list {
+    margin: var(--space-5) 0 0;
+    max-width: var(--measure);
+  }
+  .cred {
+    display: grid;
+    gap: var(--space-1);
+    padding-block-end: var(--space-3);
+    margin-block-end: var(--space-3);
+    border-block-end: 1px solid var(--rule);
+  }
+  .cred:last-child {
+    border-block-end: 0;
+    padding-block-end: 0;
+    margin-block-end: 0;
+  }
+  .cred__label {
+    font-size: var(--step--1);
+    color: var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  /* States that the value below is not yet confirmed, so the row cannot be
+     read as an assertion that the credential is in hand (§2.1). */
+  .cred__pending {
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--seal);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.15em 0.5em;
+  }
+  .cred__value {
+    font-size: var(--step-1);
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .cred__issuer {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    color: var(--ink);
+    opacity: 0.72;
   }
 
   /* --- Timeline ----------------------------------------------------------- */

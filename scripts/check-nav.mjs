@@ -53,10 +53,49 @@ for (const entry of entries) {
   labels.set(entry.label, entry.href);
 }
 
-// §2.6 — lead paint must not be linked or referenced anywhere.
-for (const entry of entries) {
-  if (entry.href.includes("lead-paint")) {
-    problems.push(`${entry.href} is blocked by §2.6 until the real EPA RRP firm number lands`);
+/**
+ * §2.6 — /lead-paint-removal/ is built and linked. What stays blocked is the
+ * NUMBER, not the page, so this guards the thing that is still capable of
+ * going wrong: EPA RRP firm certification is unverified, and it must not
+ * quietly become a claim.
+ *
+ * Two conditions, both of which have to hold while `verified` is false:
+ *
+ *   1. The value in credentials.ts stays a visible mask. Underscores are what
+ *      make it legible to a reader as unfilled. A value with no underscores
+ *      while unverified means somebody typed a number in, which is the exact
+ *      §2.1 failure this repo exists to prevent.
+ *   2. The mask never reaches structured data. A human can see NAT-F______-_
+ *      is blank; a parser cannot, and would read it as an asserted credential.
+ */
+{
+  const src = await readFile(new URL("../src/data/credentials.ts", import.meta.url), "utf8");
+  const block = src.match(/label:\s*"EPA RRP Firm Certification"[\s\S]*?\n\s{2}\},/);
+  if (!block) {
+    problems.push("credentials.ts: EPA RRP Firm Certification entry not found — §2.6 guard cannot run");
+  } else {
+    const value = block[0].match(/value:\s*"([^"]*)"/)?.[1] ?? "";
+    const verified = /verified:\s*true/.test(block[0]);
+    if (!verified && !value.includes("_")) {
+      problems.push(
+        `credentials.ts: EPA RRP value "${value}" has no pending mask while verified is false — ` +
+          "either it is a real number (set verified: true and record the issuer) or it is invented (§2.1, §2.6)",
+      );
+    }
+    if (verified && value.includes("_")) {
+      problems.push("credentials.ts: EPA RRP is marked verified but the value is still a mask");
+    }
+  }
+
+  for (const entry of entries.filter((e) => e.built)) {
+    const file = path.join("dist", entry.href, "index.html");
+    if (!existsSync(file)) continue;
+    const html = await readFile(file, "utf8");
+    for (const [, ld] of html.matchAll(/type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+      if (ld.includes("NAT-F")) {
+        problems.push(`${entry.href}: EPA RRP mask is in structured data — a mask is not a credential (§2.1)`);
+      }
+    }
   }
 }
 

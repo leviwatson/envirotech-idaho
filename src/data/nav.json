@@ -10,8 +10,9 @@
     "`primary` is the header nav. `secondary` holds the rest of §9 so the URLs",
     "are declared once and are ready for the footer, sitemap, and link map.",
     "",
-    "/lead-paint-removal/ is deliberately absent. §2.6 blocks building, linking",
-    "to, or referencing it until the real EPA RRP firm number is supplied.",
+    "/lead-paint-removal/ is built and linked. The EPA RRP firm number is",
+    "still outstanding and renders as a visible pending mask, never a guess",
+    "(§2.6, PLACEHOLDERS.md).",
     "",
     "Guarded by scripts/check-nav.mjs: any built:true URL missing from dist/",
     "fails the build."
@@ -29,7 +30,8 @@
         { "label": "Crawlspace Encapsulation", "href": "/crawlspace-encapsulation/", "built": true },
         { "label": "Radon Mitigation", "href": "/radon-mitigation/", "built": true },
         { "label": "Demolition", "href": "/demolition/", "built": true },
-        { "label": "Home Remodeling", "href": "/remodeling/", "built": true }
+        { "label": "Home Remodeling", "href": "/remodeling/", "built": true },
+        { "label": "Lead Paint Removal", "href": "/lead-paint-removal/", "built": true }
       ]
     },
     { "label": "Service Areas", "href": "/service-areas/", "built": false },

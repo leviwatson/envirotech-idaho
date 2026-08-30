@@ -80,6 +80,25 @@ const services = defineCollection({
       /** Overrides the sitewide containment copy when a service needs its own. */
       containment: section.partial().optional(),
 
+      /**
+       * Optional credentials block, for a service where a specific named
+       * certification governs whether the work may legally be performed at
+       * all. Most services need none — the sitewide footer covers it.
+       *
+       * `show` lists LABELS from src/data/credentials.ts. A number is never
+       * typed into an entry: the layout looks the credential up, so the value
+       * has exactly one source, and a pending mask cannot be quietly retyped
+       * as a real number here (§2.1, §4).
+       */
+      credentials: z
+        .object({
+          heading: z.string(),
+          paragraphs: z.array(z.string()).min(1),
+          show: z.array(z.string()).min(1),
+          note: z.string().optional(),
+        })
+        .optional(),
+
       scope: z.object({
         heading: z.string(),
         intro: z.string().optional(),

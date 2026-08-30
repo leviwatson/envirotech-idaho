@@ -16,11 +16,45 @@ for the pattern.
 
 | Token | Blocks | Needed from client |
 |---|---|---|
-| `{{EPA_RRP_FIRM_NUMBER}}` | The entire `/lead-paint-removal/` page, plus lead paint testing and encapsulation. Not built, not linked, not referenced until this lands. **Also blocks DNS cutover** — see below. | EPA RRP **firm** certification number (not an individual renovator card), its expiration date, and confirmation the firm is certified at all |
+| `{{EPA_RRP_FIRM_NUMBER}}` | Nothing structural any more — `/lead-paint-removal/` is built and linked. What it blocks is the *claim*: the number renders sitewide as a visible mask and cannot be asserted until this lands. **Blocks DNS cutover** — see below. | EPA RRP **firm** certification number (not an individual renovator card), its expiration date, and confirmation the firm is certified at all |
 
-### ⚠ EPA RRP row is live in the footer as a format mask
+### ⚠ /lead-paint-removal/ is live and the certification behind it is unconfirmed
 
-The footer "Licensed & Certified" block now renders a third row:
+The page is built, linked in the primary nav, and describes lead paint work as
+a service Enviro-Tech performs. The EPA RRP firm number is still outstanding.
+
+Its credentials section renders the mask below with a **"Pending verification"**
+marker, and the page copy says plainly that the digits are not published yet
+and points the reader at EPA's own firm search rather than at anything we hand
+them. `verified: false` in `src/data/credentials.ts` keeps the mask out of
+structured data on every page — `check-nav.mjs` fails the build if it ever
+reaches a JSON-LD block, and fails it again if the value stops being a mask
+while `verified` is still false.
+
+**Two things still contradict each other and only the client can settle it.**
+`/certifications/` lists EPA RRP under the heading *"What we are not certified
+to do"* with the badge **"Not currently held"**, because that is what
+`verified: false` means there. The site therefore sells lead paint removal on
+one page and states it is not certified for it on another. That was accurate
+while the page did not exist. It is not a state to launch in.
+
+Resolve before cutover, in this order:
+
+1. **Ask whether the firm actually holds EPA RRP certification**, which is a
+   different question from whether anyone has found the number. §4 has the
+   status as unconfirmed rather than merely missing.
+2. **If it is held** → put the real number in `credentials.ts`, set
+   `verified: true`, record `lastVerified`, and the credential moves itself out
+   of the "not certified" section on `/certifications/` and into structured
+   data. No other file changes.
+3. **If it is not held, or cannot be confirmed** → `/lead-paint-removal/` comes
+   down or is rewritten to describe work the firm may lawfully perform, and the
+   EPA RRP row comes out of the footer. Certification is a legal precondition
+   for the work under 40 CFR Part 745, not a trust badge.
+
+### The footer row
+
+The footer "Licensed & Certified" block renders a third row:
 
 ```
 EPA RRP Firm Certification
@@ -42,11 +76,13 @@ rather than a copy problem, which is exactly what §2.1 exists to prevent.
 
 Before DNS cutover (build order step 12), one of these has to happen:
 
-- **The firm is certified** → replace `NAT-F______-_` with the real number,
-  pair it with "U.S. EPA" as the issuer per §4, and unblock
-  `/lead-paint-removal/`.
-- **The firm is not certified, or it cannot be confirmed** → delete the row
-  from the `credentials` array in `src/components/Footer.astro`.
+- **The firm is certified** → replace `NAT-F______-_` with the real number in
+  `src/data/credentials.ts` and set `verified: true`. The footer, the
+  `/lead-paint-removal/` credentials section, `/certifications/`, and the
+  structured data all read from that one entry.
+- **The firm is not certified, or it cannot be confirmed** → delete the entry
+  from `CREDENTIALS` in `src/data/credentials.ts` and take
+  `/lead-paint-removal/` down with it.
 
 ## Credentials
 
@@ -252,6 +288,15 @@ One further slot from the problem pages:
 | `PHOTO_DEMO_1` | **16:9** | `/demolition/` hero | An interior strip-out mid-job with protection in place on what is staying. The contrast between the stripped area and the protected area is the whole argument for selective demolition. |
 
 `/demolition/` reuses `PHOTO_ASBESTOS_1` for its process slot.
+
+**Shot list — /lead-paint-removal/ (2 new slots):**
+
+| Slot | Ratio | Where it appears | What to shoot |
+|---|---|---|---|
+| `PHOTO_LEAD_1` | **16:9** | Hero | Interior prep on an older home with protection down and the work area sealed. Pre-1978 housing stock — a North End or Bench interior reads correctly here in a way a new build does not. |
+| `PHOTO_LEAD_2` | **3:2** | Process list, after step 04 (Lead-safe work practices) | A painted component — a window sash or a section of trim — removed whole and wrapped inside the containment. The point of the photo is that it was taken out rather than sanded in place, so get the wrapping in frame. |
+
+Reuses `PHOTO_CONTAINMENT_1` on the containment band.
 
 **Shot list — /remodeling/ (3 new slots):**
 
