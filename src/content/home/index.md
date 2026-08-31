@@ -2,7 +2,7 @@
 title: "Mold, Asbestos & Water Damage in Boise | Enviro-Tech"
 h1: Mold, Asbestos, and Water Damage in the Treasure Valley
 metaDescription: "Containment-first mold remediation, asbestos abatement, and water damage restoration across Boise, Meridian, and Nampa. Free inspection, we answer 24/7."
-subhead: "A sealed, negative-pressure containment goes up before any material is disturbed. The inspection is free, someone answers any hour, and an independent IEP (indoor environmental professional) does the testing."
+subhead: "A sealed, negative-pressure containment goes up before any material is disturbed — on every job, whatever its size."
 
 emergency:
   text: Water coming in right now? Start here.

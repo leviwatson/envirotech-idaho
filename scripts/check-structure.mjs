@@ -621,6 +621,43 @@ if (home) {
   if (!home.includes('class="callbar"')) fail("/", "mobile call bar missing");
 }
 
+// --- Credential values must never truncate ---------------------------------
+
+/**
+ * A half-rendered license number reads as a broken page at best, and as a
+ * different number at worst. Wrapping is fine and shrinking is fine; hiding
+ * characters is not.
+ *
+ * So no truncation property may apply to the elements that carry credential
+ * values — the hero trust strip and the credential rows in the footer, on
+ * /certifications/, and on a service page's credentials section. This greps
+ * the emitted CSS rather than the source, because that is what the browser
+ * actually applies.
+ */
+{
+  const TRUNCATORS = /text-overflow\s*:\s*ellipsis|white-space\s*:\s*nowrap|-webkit-line-clamp/;
+  const CARRIERS = ["trust__detail", "cred__value", "creds__list"];
+
+  const cssDir = path.join("dist", "_astro");
+  const files = existsSync(cssDir)
+    ? (await readdir(cssDir)).filter((f) => f.endsWith(".css"))
+    : [];
+
+  for (const file of files) {
+    const css = await readFile(path.join(cssDir, file), "utf8");
+    // Rule blocks, roughly: everything up to each closing brace.
+    for (const [, selector, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      if (!CARRIERS.some((c) => selector.includes(c))) continue;
+      if (TRUNCATORS.test(body)) {
+        problems.push(
+          `dist/_astro/${file}: a truncation property applies to "${selector.trim().slice(0, 60)}" — ` +
+            "credential values must wrap or shrink, never clip",
+        );
+      }
+    }
+  }
+}
+
 // --- Placeholder content must never reach the live domain (§2.2) -----------
 
 /**

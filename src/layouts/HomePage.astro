@@ -61,25 +61,25 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       <p class="hero__note">Free inspection. No obligation.</p>
     </div>
 
-    {/* Trust strip leads the form column rather than trailing the copy: it is
-        the answer to "why would I give these people my number", so it reads
-        immediately before the fields rather than after the CTA that competes
-        with them. On mobile the column stacks under the copy, so the order is
-        the same either way. */}
     <div class="hero__form">
-      <ul class="trust">
-        {
-          TRUST_STRIP.map((item) => (
-            <li class="trust__item">
-              <span class="trust__label">{item.label}</span>
-              <span class="trust__detail">{item.detail}</span>
-            </li>
-          ))
-        }
-      </ul>
-
       <LeadForm id="inspection" heading="Get a free inspection" fields="short" />
     </div>
+
+    {/* Full-bleed across both hero columns, as its own row. It was briefly
+        inside the form column, where 21rem could not hold three items and the
+        third clipped mid-sentence. Spanning the grid gives all three room at
+        a readable width and closes the hero, so the shorter copy column ends
+        against a rule rather than trailing off into open space. */}
+    <ul class="trust">
+      {
+        TRUST_STRIP.map((item) => (
+          <li class="trust__item">
+            <span class="trust__label">{item.label}</span>
+            <span class="trust__detail">{item.detail}</span>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   {/* --- Testimonials. Full-bleed, between the hero and the grid. Renders
@@ -235,6 +235,10 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
       gap: 0 var(--space-7);
     }
+    /* Row two, spanning both columns. */
+    .hero .trust {
+      grid-column: 1 / -1;
+    }
   }
   .hero__subhead {
     margin-block-start: var(--space-4);
@@ -294,32 +298,12 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
     letter-spacing: 0.04em;
   }
 
-  .trust {
-    list-style: none;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-4);
-    max-width: none;
-  }
-  @media (min-width: 560px) {
-    .trust {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  .trust__item {
-    display: grid;
-    gap: 2px;
-    padding-inline-start: var(--space-3);
-    border-inline-start: 2px solid var(--spark);
-  }
-  .trust__label {
-    font-weight: 600;
-    font-size: var(--step--1);
-  }
-  .trust__detail {
-    font-size: var(--step--1);
-    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  /* Placement only — the strip's own rules are shared, in global.css.
+     Here it is a full-width row closing the hero, so it carries a rule above
+     it and the copy column ends against something rather than trailing off. */
+  .hero .trust {
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--rule);
   }
 
   /* --- Bands -------------------------------------------------------------- */

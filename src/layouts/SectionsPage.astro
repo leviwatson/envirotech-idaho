@@ -292,33 +292,8 @@ const graph = buildGraph({
     }
   }
 
-  .trust {
-    list-style: none;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-4);
-    max-width: none;
-  }
-  @media (min-width: 560px) {
-    .trust {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  .trust__item {
-    display: grid;
-    gap: 2px;
-    padding-inline-start: var(--space-3);
-    border-inline-start: 2px solid var(--spark);
-  }
-  .trust__label {
-    font-weight: 600;
-    font-size: var(--step--1);
-  }
-  .trust__detail {
-    font-size: var(--step--1);
-    color: color-mix(in srgb, var(--ink) 66%, var(--surface));
-  }
+  /* Trust strip rules are shared — see global.css. */
+
 
   .hero__cta {
     display: inline-flex;

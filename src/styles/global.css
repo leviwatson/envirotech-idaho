@@ -258,6 +258,78 @@ a:hover {
 
 /* --- Layout helpers ---------------------------------------------------- */
 
+/**
+ * Hero column mechanics, shared.
+ *
+ * The homepage and every service page build the same two-column hero, and the
+ * rules that keep those columns independent had been fixed on one of them and
+ * not the other. They live here now so a hero cannot drift again.
+ *
+ * Both properties matter. `align-items: start` stops a short column stretching
+ * to match a tall one. `align-content: start` stops the grid distributing
+ * surplus height across the row tracks themselves — the failure that opened a
+ * gap under the hero copy once before, and which align-items cannot fix
+ * because it is the tracks growing, not the items.
+ */
+.hero {
+  align-items: start;
+  align-content: start;
+}
+
+/**
+ * Trust strip — the three-credential row that sits under a hero.
+ *
+ * Four layouts render it and each carried its own copy of these rules, which
+ * is exactly how the breakpoint and the wrapping behaviour drifted apart. The
+ * rules live here once. Page-specific PLACEMENT stays with the page (spanning
+ * a hero grid, a rule above it); everything governing how the credentials
+ * themselves behave is shared, because the constraint is about the values
+ * rather than about any one page.
+ */
+.trust {
+  list-style: none;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  max-width: none;
+}
+/* Stacks below 600px rather than compressing into three columns. Three
+   credentials in a third of a phone screen is the width at which the values
+   start fighting each other for room. */
+@media (min-width: 600px) {
+  .trust {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.trust__item {
+  display: grid;
+  gap: 2px;
+  /* Grid items default to min-width:auto, which lets a long value push its
+     track wider than its share and overflow rather than wrap. */
+  min-width: 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--spark); /* thin accent only (§13) */
+}
+.trust__label {
+  font-weight: 600;
+  font-size: var(--step--1);
+}
+/**
+ * A credential value must never truncate. A half-rendered license number
+ * reads as a broken page at best and as a different number at worst, so this
+ * wraps: no ellipsis, no clamp, no nowrap. Breaking a long token across two
+ * lines is still legible; hiding half of it is not.
+ *
+ * Enforced by check-structure.mjs, which greps the emitted CSS for truncation
+ * properties applying to this element.
+ */
+.trust__detail {
+  font-size: var(--step--1);
+  color: color-mix(in srgb, var(--ink) 66%, var(--surface));
+  overflow-wrap: break-word;
+}
+
 .container {
   width: 100%;
   max-width: var(--container);
