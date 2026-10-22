@@ -19,19 +19,23 @@ These are live on staging as written. Each needs a yes/no from Cody before
 customer or a buyer's agent can hold the company to.
 
 - [ ] **Independent lab clearance report: every job, or only when the buyer requires it?**
-  The pages disagree. `/mold-remediation/` says clearance testing happens
-  "where the job calls for it". `/mold-found-during-home-inspection/` reads as
-  if every job ends with an independent lab clearance report. Whichever is
-  true, make both pages say it.
+  Both mold pages now take the hedged position: clearance testing by an
+  independent lab *when the buyer or the job calls for it*
+  (`/mold-remediation/` scope list, `/mold-found-during-home-inspection/`
+  throughout). If Cody confirms it runs on every mold job, the hedge can be
+  lifted and the stronger claim restored. AGENTS.md already records it as
+  confirmed for **asbestos** final clearance.
 - [ ] **Moisture readings and chain-of-custody paperwork: does he provide these?**
   Both are promised in the documentation list and the FAQ on
   `/mold-found-during-home-inspection/`. Moisture readings are also a scope
   item on `/mold-remediation/`.
-- [ ] **"Third-party clearance" in the trust strip.** `TRUST_STRIP` in
-  `src/data/service-defaults.ts` ("An independent lab signs off, not us")
-  renders on every service page and every city page, including asbestos,
-  radon, and demolition. If clearance is not on every job, this needs
-  rewording or removing.
+- [ ] **"Third-party clearance" in the trust strip: removed pending confirmation.**
+  `TRUST_STRIP` in `src/data/service-defaults.ts` now carries two items
+  (licensed, 24/7). It renders on every service, city, problem, and audience
+  page and the homepage, so it cannot make a claim that only holds for some
+  services. If Cody confirms clearance on every job, restore
+  `{ label: "Third-party clearance", detail: "An independent lab signs off, not us" }`.
+  The strip lays out one column per item, so no CSS change is needed either way.
 - [ ] **Radon mitigation: does he actually offer it?** `/radon-mitigation/` is
   live and linked from the nav, and its certification is already flagged
   unverified under Credentials below. If he does not offer it, unpublish the

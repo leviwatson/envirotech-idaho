@@ -11,7 +11,9 @@
 export const TRUST_STRIP = [
   { label: "Licensed & certified", detail: "Idaho registration RCE-8871958" },
   { label: "Available 24/7", detail: "Someone answers, any hour" },
-  { label: "Third-party clearance", detail: "An independent lab signs off, not us" },
+  // "Third-party clearance" is held back until Cody confirms clearance testing
+  // runs on every job rather than only when the buyer or the job requires it.
+  // See "Confirm with Cody before DNS cutover" in PLACEHOLDERS.md.
 ] as const;
 
 /** §6 pillar 1. The single most concrete thing the business does. */

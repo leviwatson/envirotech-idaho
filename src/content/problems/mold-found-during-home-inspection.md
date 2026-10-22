@@ -2,9 +2,9 @@
 slug: mold-found-during-home-inspection
 title: "Mold Found During a Home Inspection | Enviro-Tech Idaho"
 h1: Mold Found During a Home Inspection
-metaDescription: "Mold flagged on an inspection report in Boise or the Treasure Valley? Most jobs run 3-4 days, with independent lab clearance a buyer's agent will accept."
+metaDescription: "Mold flagged on an inspection report in Boise or the Treasure Valley? Most jobs run 3-4 days, with the documentation a buyer's agent will want to see."
 question: What should I do if mold is found during a home inspection?
-subhead: "On site in one to two days, most jobs done in three to four, and you leave with clearance paperwork an underwriter and a buyer's agent will both accept."
+subhead: "On site in one to two days, most jobs done in three to four, and you leave with documentation an underwriter and a buyer's agent will both accept."
 
 photos:
   hero:
@@ -29,18 +29,18 @@ sections:
       - figure: 3–4 days
         label: Typical mold job, start to finish
       - figure: Final day
-        label: Machines running to clear the air before clearance
+        label: Machines running to clear the air
       - figure: Under a week
-        label: Commonly, from first call to a clearance result in hand
+        label: Commonly, from first call to finished, documented work
     paragraphs:
       - "Escrow is the clock that matters here. Most Treasure Valley closings run thirty to forty-five days, and a mold finding almost always surfaces during the inspection period, which is the tightest stretch of it."
-      - "For non-emergency work we are on site within one to two days of the call. A typical mold job runs three to four days, and the last of those is machines: air scrubbers running inside the containment and drying equipment on the structure. That day is what makes the clearance test pass, so it is not padding and it does not get skipped."
+      - "For non-emergency work we are on site within one to two days of the call. A typical mold job runs three to four days, and the last of those is machines: air scrubbers running inside the containment and drying equipment on the structure. That day is what lets a clearance test pass when one is called for, so it is not padding and it does not get skipped."
       - "The useful thing about those numbers is that you can give them to the other side. Not that it is being handled, but a date. A deal survives a problem with a date attached far better than it survives an open question."
 
   - heading: If you are the agent on this deal
     paragraphs:
       - "We work to closing dates. Tell us the date and you get a straight answer about whether it is achievable before you commit your client to anything. If it is not, you will hear that while there is still time to structure around it."
-      - "You get documentation the other side can accept: a written scope before the work starts, photographs throughout, an independent laboratory clearance report at the end, and our completion certificate, which carries a 2-year guarantee against mold regrowth in the treated areas, transferable with the house. That is the package a buyer's agent asks for, and it is considerably easier to hand over than to argue about."
+      - "You get documentation the other side can accept: a written scope before the work starts, photographs throughout, and our completion certificate, which carries a 2-year guarantee against mold regrowth in the treated areas, transferable with the house. When the buyer or the job calls for it, you also get an independent laboratory clearance report. That is the package a buyer's agent asks for, and it is considerably easier to hand over than to argue about."
       - "If it helps, we will speak to the agent on the other side directly. A lot of these transactions stall because two clients are relaying technical information neither was ever meant to interpret. We are happy to be the ones explaining what was found and what was done. [How we work with realtors](/for-realtors/) covers referrals and repeat transactions."
 
   - heading: Why it has to be handled rather than explained away
@@ -69,48 +69,48 @@ sections:
     paragraphs:
       - "A negative-pressure containment goes up before any work starts. Every job, regardless of size. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so nothing airborne leaves the work area."
       - "In a house that is still being lived in during escrow, that is the difference between a contained repair and a whole-home problem. The pressure inside the containment is lower than the pressure in the rest of the house, so air moves in and never out. What gets disturbed during removal goes into the filter stack, not into the hallway or the return ducts."
-      - "It also matters to the clearance test at the end. A job worked without containment can spread spores into rooms that were fine when the inspector wrote the report, and those rooms are what the buyer's own testing may look at next."
+      - "It also matters to any clearance test at the end. A job worked without containment can spread spores into rooms that were fine when the inspector wrote the report, and those rooms are what the buyer's own testing may look at next."
 
-  - heading: What clearance documentation actually looks like
+  - heading: What the documentation actually looks like
     paragraphs:
       - "This is the part that closes the deal, so it is worth being specific about what you end up holding."
     items:
       - A written scope of work before anything starts, describing what comes out and why
       - Moisture readings from the affected material and the structure around it
       - Photographs of the containment in place, the removal in progress, and the finished work
-      - An independent laboratory clearance report showing sample locations, methods, and results
-      - Chain-of-custody paperwork recording who handled the samples and when
+      - When the buyer or the job calls for it, an independent laboratory clearance report showing sample locations, methods, and results
+      - Chain-of-custody paperwork for any clearance samples, recording who handled them and when
       - Our completion certificate for the work
       - A final invoice that matches the scope it was quoted against
     outro:
-      - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples, and we do not interpret them in our favor. The company that gets paid to remove the mold should not also be the company certifying it is gone, and a buyer's agent understands that distinction immediately."
+      - "When clearance testing is part of the job, the laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples, and we do not interpret them in our favor. The company that gets paid to remove the mold should not also be the company certifying it is gone, and a buyer's agent understands that distinction immediately."
       - "If you want to see what the package looks like before committing to anything, ask and we will send a sample from a completed job with the address and owner details removed. Paperwork is easier to evaluate when you can read it than when it has been described to you."
     photo:
       name: PHOTO_CLEARANCE_DOC_1
       ratio: 3/2
-      caption: "A clearance package: scope, moisture logs, chain of custody, and the independent lab result."
+      caption: "A documentation package: scope, moisture logs, and, where testing was required, the independent lab result."
 
   - heading: Who typically pays
     shift: true
     paragraphs:
       - "It gets negotiated, and it gets negotiated far more calmly when there is a written scope to negotiate against rather than a guess."
-      - "The common shapes are these. The seller completes the work before closing. The seller issues a credit and the buyer handles it afterward. The price is adjusted. Or funds are held in escrow until the clearance report lands. Which one fits depends on how much time is left and on which side needs certainty more."
+      - "The common shapes are these. The seller completes the work before closing. The seller issues a credit and the buyer handles it afterward. The price is adjusted. Or funds are held in escrow until the work is finished and documented. Which one fits depends on how much time is left and on which side needs certainty more."
       - "If the water came from something sudden, such as a supply line that failed or an appliance that let go, there may be an insurance claim behind it. We bill the insurer directly and work with the adjuster, and we document the scope so it holds up. Long-term seepage and deferred maintenance are commonly not covered. The policy decides that, not us."
       - "Every job has its own scope, its own complexity, and its own method, so one price list would be wrong more often than it was right. That is why the inspection is free and the estimate is written after someone has actually seen what you are dealing with. Both sides can work from that written figure, which is what makes the negotiation short."
 
 faqs:
   - question: Can we still close on time?
-    answer: "Usually, yes. We are on site within one to two days for non-emergency work and a typical job runs three to four days, so from first call to a clearance result is commonly inside a week. Tell us the closing date at the inspection and you will get a straight answer about whether it is achievable rather than an optimistic one."
+    answer: "Usually, yes. We are on site within one to two days for non-emergency work and a typical job runs three to four days, so from first call to finished, documented work is commonly inside a week. Tell us the closing date at the inspection and you will get a straight answer about whether it is achievable rather than an optimistic one."
   - question: Does the buyer's lender require remediation before funding?
     answer: "Often, and the underwriter decides what satisfies the condition. It varies by lender and by file, so nobody can promise you a specific requirement in advance. What is consistent is the kind of evidence that clears it: an independent laboratory clearance report tied to a documented scope of work."
   - question: Can the seller just clean it themselves before the buyer comes back?
     answer: "They can, and it usually costs more than it saves. Cleaning removes the visible evidence without removing the affected material or correcting the moisture, and it produces no scope, no photographs, and nothing an independent party signed. The buyer's agent asks for documentation and there is none, so the work is done again with less time on the clock."
   - question: Who pays for the remediation?
-    answer: "That is negotiated between the parties. It commonly lands as the seller completing the work before closing, a seller credit, a price adjustment, or funds held in escrow until clearance comes back. The free inspection produces a written number, which is what makes that conversation short."
+    answer: "That is negotiated between the parties. It commonly lands as the seller completing the work before closing, a seller credit, a price adjustment, or funds held in escrow until the work is complete. The free inspection produces a written number, which is what makes that conversation short."
   - question: What documentation will my agent need?
-    answer: "A written scope of work, moisture readings, photographs of the containment and the removal, an independent lab clearance report with sample locations and results, chain-of-custody paperwork for those samples, and our completion certificate. Ask and we will send you a sample package from a completed job with the identifying details removed."
+    answer: "A written scope of work, moisture readings, photographs of the containment and the removal, and our completion certificate. When the buyer or the job calls for clearance testing, it also includes the independent lab's clearance report with sample locations and results, and chain-of-custody paperwork for those samples. Ask and we will send you a sample package from a completed job with the identifying details removed."
   - question: What if the buyer wants their own independent test?
-    answer: "Good. We would rather they did. We do not process our own clearance samples and we do not interpret them in our favor, so an independent result from a lab the buyer chose is the same kind of evidence we would have handed them anyway. The company that gets paid to remove the mold should not be the company certifying it is gone."
+    answer: "Good. We would rather they did. We do not process our own clearance samples and we do not interpret them in our favor, so an independent result from a lab the buyer chose is the same kind of evidence we arrange when a job calls for testing. The company that gets paid to remove the mold should not be the company certifying it is gone."
 
 relatedServices:
   - /mold-remediation/

@@ -294,12 +294,14 @@ a:hover {
   gap: var(--space-4);
   max-width: none;
 }
-/* Stacks below 600px rather than compressing into three columns. Three
+/* Stacks below 600px rather than compressing into columns. Three
    credentials in a third of a phone screen is the width at which the values
-   start fighting each other for room. */
+   start fighting each other for room. Above that, one equal column per item,
+   so the strip stays full width whether it carries two items or three. */
 @media (min-width: 600px) {
   .trust {
-    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
   }
 }
 .trust__item {
