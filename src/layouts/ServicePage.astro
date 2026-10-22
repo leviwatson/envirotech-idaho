@@ -114,7 +114,7 @@ const graph = buildGraph({
 });
 ---
 
-<Base title={d.title} description={d.metaDescription} graph={graph}>
+<Base title={d.title} description={d.metaDescription} graph={graph} noindex={d.noindex}>
   <Breadcrumbs crumbs={[{ name: labelFor(Astro.url.pathname) ?? d.h1, href: Astro.url.pathname }]} />
 
   {/* --- Hero ---------------------------------------------------------- */}

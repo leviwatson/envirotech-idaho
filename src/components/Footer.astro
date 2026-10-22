@@ -13,7 +13,7 @@
  */
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL, CITIES } from "../data/site";
 import { isBuilt } from "../lib/links";
-import { visibleCredentials, isPlaceholder } from "../data/credentials";
+import { visibleCredentials, isPlaceholder, monthYear } from "../data/credentials";
 
 const YEAR = new Date().getFullYear();
 
@@ -57,7 +57,12 @@ const credentials = visibleCredentials;
               <dt class="cred__label">{c.label}</dt>
               <dd class="cred__value mono">
                 {c.value}
+                {!c.verified && <span class="cred__issuer">Pending confirmation</span>}
+                {c.holder && <span class="cred__issuer">Held by {c.holder}</span>}
                 {!isPlaceholder(c.issuer) && <span class="cred__issuer">Issued by {c.issuer}</span>}
+                {c.currentThrough && (
+                  <span class="cred__issuer">Current through {monthYear(c.currentThrough)}</span>
+                )}
               </dd>
             </div>
           ))

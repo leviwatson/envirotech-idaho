@@ -8,9 +8,17 @@
  * through its collection entry when it genuinely needs its own version.
  */
 
+import { credential, monthYear } from "./credentials";
+
+// Number and date come from credentials.ts, so the strip cannot drift from the
+// footer and /certifications/. Renewal is tracked in PLACEHOLDERS.md.
+const AHERA = credential("AHERA Asbestos Abatement Contractor/Supervisor");
+
 export const TRUST_STRIP = [
-  // Individual certification. Expires 2027-06-16; renewal tracked in PLACEHOLDERS.md.
-  { label: "AHERA-certified asbestos supervisor", detail: "IHR cert #7593-02" },
+  {
+    label: "AHERA-certified asbestos supervisor",
+    detail: `IHR cert #${AHERA.value}, current through ${monthYear(AHERA.currentThrough!)}`,
+  },
   // Pending Cody's confirmation that someone genuinely answers at any hour.
   { label: "Available 24/7", detail: "Someone answers, any hour" },
   // "Third-party clearance" is held back until Cody confirms clearance testing

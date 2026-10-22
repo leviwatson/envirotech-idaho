@@ -19,7 +19,7 @@
  *                   without visible reviews is a manual-action risk
  */
 import { BUSINESS_NAME, PHONE_DISPLAY, EMAIL, DOMAIN, FOUNDED, CITIES } from "./site";
-import { schemaCredentials } from "./credentials";
+import { schemaCredentials, personCredentials, isPlaceholder, type Credential } from "./credentials";
 
 const ORIGIN = `https://${DOMAIN}`;
 
@@ -32,6 +32,27 @@ export const BUSINESS_ID = `${ORIGIN}/#business`;
  * Empty means the property is omitted rather than emitted empty.
  */
 export const SAME_AS: string[] = [];
+
+const credentialNode = (c: Credential) => ({
+  "@type": "EducationalOccupationalCredential",
+  name: c.label,
+  identifier: c.value,
+  credentialCategory: "certification",
+  ...(!isPlaceholder(c.issuer) ? { recognizedBy: { "@type": "Organization", name: c.issuer } } : {}),
+  ...(c.currentThrough ? { expires: c.currentThrough } : {}),
+});
+
+/**
+ * Individual certifications sit on the person who holds them. Asserting them
+ * on the business would tell a parser the company holds them, which for an
+ * individual EPA RRP renovator certification would read as firm certification.
+ */
+const people = () =>
+  [...personCredentials()].map(([name, creds]) => ({
+    "@type": "Person",
+    name,
+    hasCredential: creds.map(credentialNode),
+  }));
 
 export const businessNode = () => ({
   "@type": "HomeAndConstructionBusiness",
@@ -53,10 +74,7 @@ export const businessNode = () => ({
       closes: "23:59",
     },
   ],
-  hasCredential: schemaCredentials.map((c) => ({
-    "@type": "EducationalOccupationalCredential",
-    name: c.label,
-    identifier: c.value,
-  })),
+  hasCredential: schemaCredentials.map(credentialNode),
+  ...(people().length ? { employee: people() } : {}),
   ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
 });

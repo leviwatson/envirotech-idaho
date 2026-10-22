@@ -58,39 +58,39 @@ customer or a buyer's agent can hold the company to.
 |---|---|---|
 | `{{EPA_RRP_FIRM_NUMBER}}` | Nothing structural any more — `/lead-paint-removal/` is built and linked. What it blocks is the *claim*: the number renders sitewide as a visible mask and cannot be asserted until this lands. **Blocks DNS cutover** — see below. | EPA RRP **firm** certification number (not an individual renovator card), its expiration date, and confirmation the firm is certified at all |
 
-### ⚠ /lead-paint-removal/ is live and the certification behind it is unconfirmed
+### ⚠ /lead-paint-removal/ is hidden until it is rewritten and the firm cert is confirmed
 
-The page is built, linked in the primary nav, and describes lead paint work as
-a service Enviro-Tech performs. The EPA RRP firm number is still outstanding.
+**Current state (hidden, not deleted).** The page still builds and the URL
+still resolves, but it is out of the nav (`"built": false` in `nav.json`, which
+also drops it from the homepage grid and every related-links list), removed
+from `link-map.json`, excluded from the sitemap (`astro.config.mjs`), and
+renders `noindex` (`noindex: true` in its entry).
 
-Its credentials section renders the mask below with a **"Pending verification"**
-marker, and the page copy says plainly that the digits are not published yet
-and points the reader at EPA's own firm search rather than at anything we hand
-them. `verified: false` in `src/data/credentials.ts` keeps the mask out of
-structured data on every page — `check-nav.mjs` fails the build if it ever
-reaches a JSON-LD block, and fails it again if the value stops being a mask
-while `verified` is still false.
+**What is confirmed.** Cody Mortensen holds an **individual** EPA RRP Certified
+Renovator certification (#R-I-18955-25-00009, Industrial Hygiene Resources,
+Ltd., current through 2030-04-24). It is in `credentials.ts` and on
+`/certifications/`, the footer, and structured data (on Cody's `Person` node,
+not the business). **The firm certification is not confirmed.** It stays a
+visible `NAT-F______-_` mask with `verified: false`, labelled "Pending
+confirmation", and nothing on the site may imply the firm holds it.
 
-**Two things still contradict each other and only the client can settle it.**
-`/certifications/` lists EPA RRP under the heading *"What we are not certified
-to do"* with the badge **"Not currently held"**, because that is what
-`verified: false` means there. The site therefore sells lead paint removal on
-one page and states it is not certified for it on another. That was accurate
-while the page did not exist. It is not a state to launch in.
+**Before restoring the page, all of these must be true:**
 
-Resolve before cutover, in this order:
-
-1. **Ask whether the firm actually holds EPA RRP certification**, which is a
-   different question from whether anyone has found the number. §4 has the
-   status as unconfirmed rather than merely missing.
-2. **If it is held** → put the real number in `credentials.ts`, set
-   `verified: true`, record `lastVerified`, and the credential moves itself out
-   of the "not certified" section on `/certifications/` and into structured
-   data. No other file changes.
-3. **If it is not held, or cannot be confirmed** → `/lead-paint-removal/` comes
-   down or is rewritten to describe work the firm may lawfully perform, and the
-   EPA RRP row comes out of the footer. Certification is a legal precondition
-   for the work under 40 CFR Part 745, not a trust badge.
+1. **EPA RRP firm certification is confirmed.** Put the real `NAT-F…` number in
+   `credentials.ts`, set `verified: true`, and record `lastVerified`. The RRP
+   rule requires the firm to be certified, not only the renovator. Certification
+   is a legal precondition for the work under 40 CFR Part 745, not a trust badge.
+2. **The page is rewritten as lead-safe renovation (RRP), not removal or
+   abatement.** Lead abatement is a separate federal discipline with its own
+   certification, which nobody has confirmed. That means a new title, H1, meta
+   description, `serviceType`, and slug (for example
+   `/lead-safe-renovation/`), with the copy describing renovation work done
+   under lead-safe practices. Add a redirect from `/lead-paint-removal/`.
+   Update the credentials block's `show` list to include
+   `EPA RRP Certified Renovator`.
+3. Then flip `built: true` in `nav.json`, restore the `link-map.json` entry and
+   keywords under the new slug, remove the sitemap exclusion, and drop
+   `noindex: true`.
 
 ### The footer row
 
@@ -107,9 +107,11 @@ mask, not a number** — it is deliberately not a `{{TOKEN}}`, because the
 rows and the row would not render at all. The build guard therefore passes.
 
 **This must not reach the production domain unverified.** The mask invents no
-number, but the row itself asserts that Enviro-Tech holds EPA RRP firm
-certification, and §4 has that status as unconfirmed rather than merely
-missing. EPA RRP firm certification is a federal requirement under 40 CFR
+number, and the row now carries a **"Pending confirmation"** marker beside it
+(any `verified: false` credential gets one). The row still names the
+credential, though, and §4 has its status as unconfirmed rather than merely
+missing. The individual Certified Renovator row above it is confirmed and is
+a different credential; it does not stand in for the firm's. EPA RRP firm certification is a federal requirement under 40 CFR
 Part 745 for disturbing lead paint in pre-1978 housing; of every credential in
 the §4 table this is the one where an unfounded claim is a regulatory problem
 rather than a copy problem, which is exactly what §2.1 exists to prevent.
@@ -128,15 +130,15 @@ Before DNS cutover (build order step 12), one of these has to happen:
 
 ### Renewal dates
 
-| Credential | Holder | Number | Expires | Action |
+| Credential | Holder | Number | Current through | Action |
 |---|---|---|---|---|
-| AHERA asbestos supervisor | Individual (confirm who) | IHR cert #7593-02 | **2027-06-16** | Renew before expiry, then update the trust strip in `src/data/service-defaults.ts`. An expired AHERA certification shown site-wide is a misrepresentation, so take it off the strip on 2027-06-16 if it has not been renewed. Set a calendar reminder for **2027-04-16** (two months ahead). |
+| AHERA Asbestos Abatement Contractor/Supervisor (annual refresher) | Cody Mortensen | 7593-02, Industrial Hygiene Resources, Ltd. | **2027-06-16** | Set a reminder for **2027-04-16**. After renewal, update `value` and `currentThrough` in `src/data/credentials.ts`: the trust strip, footer, `/certifications/`, and structured data all read from it. If it lapses, set `verified: false` on 2027-06-16. The trust strip names this cert on every page, so an expired one there is a misrepresentation. |
+| EPA RRP Certified Renovator (individual) | Cody Mortensen | R-I-18955-25-00009, Industrial Hygiene Resources, Ltd. | **2030-04-24** | Set a reminder for **2030-02-24**. Update `currentThrough` on renewal. |
 
-The AHERA certification currently appears **only in the trust strip**. It is not
-yet in `src/data/credentials.ts`, so the footer, `/certifications/`, and
-structured data do not list it. Adding it there needs the issuer's full name
-(only "IHR" is known), a `.gov` or issuer verification route, and the holder's
-name.
+Both are individual certifications. They render with "Held by Cody Mortensen"
+in the footer and on `/certifications/`, and in structured data they sit on a
+`Person` node (`employee` of the business), never on the business itself.
+Neither has a public verification lookup recorded yet (`verifyUrl: null`).
 
 ### ⚠ Radon certification is unverified and /radon-mitigation/ is live
 
@@ -177,7 +179,7 @@ updates the page, the footer, and the structured data at once.
 |---|---|
 | `{{CMR_ISSUING_ORG}}` | This is now the page's weakest point. `/certifications/` promises the reader a verification route for every credential and cannot supply one for `CMR0000023347`, because nobody knows which body issued it. The page says so plainly rather than guessing — but that admission sits directly under the number. Highest-value single fact on this list. |
 | `lastVerified` dates | §4 wants a "last verified" date per credential. No date has ever been recorded, so the field is unset on every entry and the line does not render. Check each credential against its issuer, then add `lastVerified: "YYYY-MM-DD"`. |
-| `{{RADON_CERT}}` / `{{RADON_CERT_BODY}}` | `/radon-mitigation/` sells the service; `/certifications/` currently lists radon certification under "not currently held". If Cody holds NRPP or NRSB, add the number and the body. If he does not, that section is already accurate and the radon page needs revisiting. |
+| `{{RADON_CERT}}` / `{{RADON_CERT_BODY}}` | `/radon-mitigation/` sells the service; `/certifications/` currently lists radon certification under "Pending confirmation". If Cody holds NRPP or NRSB, add the number and the body. If he does not, that section is already accurate and the radon page needs revisiting. |
 
 **No verification link exists for Idaho asbestos contractor certification.**
 Researched and could not confirm one: Idaho DEQ handles asbestos NESHAP

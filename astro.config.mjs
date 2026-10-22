@@ -17,7 +17,9 @@ export default defineConfig({
       // Conversion confirmations and anything noindexed stay out of the
       // sitemap — a sitemap is a list of pages we want indexed, not a
       // directory of every route that exists.
-      filter: (page) => !['/thank-you/'].includes(new URL(page).pathname),
+      // /lead-paint-removal/ is hidden pending a rewrite and EPA firm
+      // certification (PLACEHOLDERS.md); it is noindex and out of the nav too.
+      filter: (page) => !['/thank-you/', '/lead-paint-removal/'].includes(new URL(page).pathname),
     }),
   ],
 });

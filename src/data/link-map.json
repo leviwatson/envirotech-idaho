@@ -30,8 +30,6 @@
     "remodeling": "/remodeling/",
     "demolition": "/demolition/",
     "radon mitigation": "/radon-mitigation/",
-    "lead paint removal": "/lead-paint-removal/",
-    "lead paint": "/lead-paint-removal/",
     "containment process": "/our-containment-process/",
     "realtors": "/for-realtors/",
     "builders": "/for-builders/",
@@ -76,10 +74,6 @@
     },
     "/crawlspace-encapsulation/": {
       "label": "Crawlspace Encapsulation",
-      "built": true
-    },
-    "/lead-paint-removal/": {
-      "label": "Lead Paint Removal",
       "built": true
     },
     "/radon-mitigation/": {

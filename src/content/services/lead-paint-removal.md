@@ -4,6 +4,8 @@ title: "Lead Paint Removal Boise & Treasure Valley | Enviro-Tech"
 h1: Lead Paint Removal in Boise and the Treasure Valley
 metaDescription: "Lead-safe removal and encapsulation for pre-1978 Boise, Nampa, and Caldwell homes. Contained, dust-controlled work with independent clearance testing."
 priority: medium
+# Hidden until rewritten as lead-safe renovation (RRP) with the firm cert confirmed. See PLACEHOLDERS.md.
+noindex: true
 serviceType: Lead Paint Removal
 subhead: "Lead paint that nobody disturbs behaves very differently from lead paint somebody sanded. Almost every problem we are called to started as a renovation."
 

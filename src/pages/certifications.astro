@@ -20,7 +20,9 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
 import { buildGraph } from "../lib/schema";
-import { heldCredentials, pendingCredentials, isPlaceholder } from "../data/credentials";
+import { heldCredentials, pendingCredentials, isPlaceholder, credential, monthYear } from "../data/credentials";
+
+const RENOVATOR = credential("EPA RRP Certified Renovator");
 import { PHONE_DISPLAY, PHONE_HREF, EMAIL, DOMAIN } from "../data/site";
 
 const crumbs = [{ name: "Certifications", href: "/certifications/" }];
@@ -45,7 +47,7 @@ const faqs = [
   {
     question: "Are you certified for lead paint work?",
     answer:
-      "Not at present. Firm certification under the federal Renovation, Repair and Painting rule is required to disturb paint in pre-1978 housing, and we do not currently offer that work. If a project turns out to involve lead paint, we will tell you rather than proceed, and EPA's own firm search is the place to check any contractor who says they are certified.",
+      `Partly, and the difference matters. ${RENOVATOR.holder} holds an individual EPA RRP Certified Renovator certification, #${RENOVATOR.value}, current through ${monthYear(RENOVATOR.currentThrough!)}. The federal Renovation, Repair and Painting rule also requires the company itself to hold EPA firm certification before taking on renovation work that disturbs paint in pre-1978 housing, and our firm certification is pending confirmation. If a project turns out to involve lead paint, we will tell you where that stands before anything proceeds. EPA's own firm search is the place to check any contractor who says their firm is certified.`,
   },
   {
     question: "Are you insured?",
@@ -88,7 +90,7 @@ const graph = buildGraph({ url, crumbs, faqs });
       We are a registered Idaho construction contractor performing mold
       remediation, asbestos abatement, water damage restoration, crawlspace
       work, radon mitigation, demolition, and the reconstruction that follows
-      any of them. Asbestos and mold work is carried out under the certification
+      any of them. Asbestos and mold work is carried out under the certifications
       listed below.
     </p>
     <p>
@@ -141,6 +143,18 @@ const graph = buildGraph({ url, crumbs, faqs });
                   )}
                 </dd>
               </div>
+              {c.holder && (
+                <div>
+                  <dt>Held by</dt>
+                  <dd>{c.holder}</dd>
+                </div>
+              )}
+              {c.currentThrough && (
+                <div>
+                  <dt>Current through</dt>
+                  <dd class="mono">{c.currentThrough}</dd>
+                </div>
+              )}
               {c.lastVerified && (
                 <div>
                   <dt>Last verified</dt>
@@ -154,7 +168,7 @@ const graph = buildGraph({ url, crumbs, faqs });
     </div>
 
     <p class="cert__caveat">
-      One point of honesty about the second entry. We are still confirming which
+      One point of honesty about the Asbestos / Mold Certification entry. We are still confirming which
       body issued that certification, so we have not published a lookup link for
       it. Sending you to the wrong registry would be worse than sending you
       nowhere. Call and ask and we will tell you where the paperwork came from.
@@ -197,10 +211,12 @@ const graph = buildGraph({ url, crumbs, faqs });
         <p>
           EPA administers the Renovation, Repair and Painting programme directly
           in Idaho, so this federal search is the correct place to check any
-          firm claiming lead-safe certification. We are not listed, because we do
-          not currently offer lead paint work. If a contractor tells you they are
-          RRP certified, this is where that gets confirmed in about thirty
-          seconds.
+          firm claiming lead-safe certification. Our firm is not listed yet,
+          because our firm certification is pending confirmation. An individual
+          Certified Renovator certification, like the one listed above, is a
+          separate credential and does not appear in this search. If a
+          contractor tells you their firm is RRP certified, this is where that
+          gets confirmed in about thirty seconds.
         </p>
       </li>
       <li class="verify__step">
@@ -232,10 +248,11 @@ const graph = buildGraph({ url, crumbs, faqs });
 
     <SeamDivider />
 
-    <h2>What we are not certified to do</h2>
+    <h2>What we do not claim yet</h2>
     <p>
       A credentials page that only lists what a company has is doing half the
-      job. These are the limits.
+      job. These are pending confirmation, so we do not claim them anywhere on
+      this site.
     </p>
 
     <div class="creds">
@@ -244,7 +261,7 @@ const graph = buildGraph({ url, crumbs, faqs });
           <article class="cred cred--pending">
             <header class="cred__head">
               <h3 class="cred__label">{c.label}</h3>
-              <span class="cred__level cred__level--pending">Not currently held</span>
+              <span class="cred__level cred__level--pending">Pending confirmation</span>
             </header>
             <dl class="cred__detail">
               <div>

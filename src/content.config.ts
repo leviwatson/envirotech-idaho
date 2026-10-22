@@ -51,6 +51,11 @@ const services = defineCollection({
       h1: z.string(),
       metaDescription: z.string().min(140).max(158),
       priority: z.enum(["primary", "high", "medium", "low"]),
+      /**
+       * Hidden service: still builds and resolves, but renders noindex. Pair it
+       * with built:false in nav.json and the sitemap filter in astro.config.mjs.
+       */
+      noindex: z.boolean().default(false),
 
       /** One sentence under the H1. */
       subhead: z.string(),
