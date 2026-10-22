@@ -34,7 +34,7 @@ photos:
       src: ../../assets/photos/asbestos-abatement-slab-before-1.webp
       alt: "Concrete slab after flooring removal, wet and covered in residue, before cleanup"
       ratio: 4/3
-      caption: Before
+      caption: "Before: slab wet down during flooring removal"
     after:
       name: PHOTO_ASBESTOS_AFTER_1
       src: ../../assets/photos/asbestos-abatement-slab-after-1.webp
