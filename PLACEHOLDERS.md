@@ -18,6 +18,11 @@ These are live on staging as written. Each needs a yes/no from Cody before
 `envirotechidaho.com` points at the site, because each one is a claim a
 customer or a buyer's agent can hold the company to.
 
+- [ ] **Permission to publish the third-party air-sample photo.**
+  `mold-testing-air-sample-nampa-1.webp` on `/mold-inspection-testing/`
+  shows the independent testing company's pump and cassette. Confirm the
+  photo is ours to use (who took it) and that the tester is fine with
+  their equipment appearing on the site.
 - [ ] **Independent lab clearance report: every job, or only when the buyer requires it?**
   Both mold pages now take the hedged position: clearance testing by an
   independent lab *when the buyer or the job calls for it*
@@ -297,6 +302,7 @@ exceed it at the 1600px JPEG fallback; re-export the source slightly softer.
 | Problem pages (dark band) | 7 | black-mold IMG_6660, insurance IMG_6653, musty IMG_3559, water-stain IMG_9427\*, before-remodel IMG_3842, popcorn IMG_6405, vermiculite IMG_5944 |
 | `/commercial/` | hero, band | IMG_6255, IMG_6256 |
 | `/for-builders/`, `/for-property-managers/`, `/for-realtors/` | band | IMG_9434\*, IMG_8820, IMG_5676 |
+| `/mold-inspection-testing/` | process (`PHOTO_LAB_SAMPLE_1`) | MSG_2026-10-08_air-sample (Nampa, GPS-confirmed; third-party tester's air sample, sent by text 2026-10-22). Background softened, pump kept sharp. |
 
 \* Blurred before export: room number (9441), desk paperwork (5901), whiteboard
 writing (9427), chalkboard teacher name (9434). Asbestos waste bags were
@@ -309,7 +315,7 @@ caption or alt text mentions fire.
 | Slot | Page(s) | Why / what to shoot |
 |---|---|---|
 | `PHOTO_CONTAINMENT_3` | `/our-containment-process/` | Open machine showing two pre-filters ahead of the HEPA. |
-| `PHOTO_LAB_SAMPLE_1` | `/for-builders/` hero, `/asbestos-testing-before-remodel/` hero, `/asbestos-testing/` and `/mold-inspection-testing/` process | Bagged, labelled samples beside a chain-of-custody form (redact the address). |
+| `PHOTO_LAB_SAMPLE_1` | `/for-builders/` hero, `/asbestos-testing-before-remodel/` hero, `/asbestos-testing/` process (`/mold-inspection-testing/` is filled) | Bagged, labelled samples beside a chain-of-custody form (redact the address). |
 | `PHOTO_CLEARANCE_DOC_1` | `/mold-found-during-home-inspection/`, `/for-realtors/`, `/for-property-managers/` hero, `/does-homeowners-insurance-cover-mold/` hero | A documentation package on a table, names and addresses redacted. |
 | `PHOTO_CRAWLSPACE_1` | `/black-mold-in-crawl-space/` hero, `/crawlspace-drainage/` process | Standing water under a house, barrier floated clear of the soil. |
 | `PHOTO_ENCAPSULATION_1`, encapsulation `PHOTO_HERO` | `/crawlspace-encapsulation/` | Finished liner up the piers and stem wall, seams sealed. |
@@ -320,7 +326,7 @@ caption or alt text mentions fire.
 | `PHOTO_REMODEL_1` | `/remodeling/` hero | A finished remodel. |
 | `PHOTO_RADON_1`, `PHOTO_RADON_2` | `/radon-mitigation/` | **Waiting on Cody**: is IMG_7746 a radon suction pit or a sump? |
 | `PHOTO_VERMICULITE_1` | `/vermiculite-insulation/` hero | **Waiting on Cody**: is `2-Apr 10…mrA3.jpg` (Twin Falls) vermiculite? |
-| `PHOTO_CITY_MERIDIAN`, `_NAMPA`, `_EAGLE` | city pages (hidden) | No GPS-confirmed photo from those cities. |
+| `PHOTO_CITY_MERIDIAN`, `_NAMPA`, `_EAGLE` | city pages (hidden) | No GPS-confirmed photo from those cities. The one Nampa photo (the air sample) is on `/mold-inspection-testing/`; the Nampa page caption is about crawlspace water, which it does not show. |
 
 Photos rejected in round 2 for privacy: IMG_6257 (student work on the walls
 and a worker on a ladder) and IMG_0094 (lead paint warning sign overlapping the

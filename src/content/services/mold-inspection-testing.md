@@ -22,9 +22,11 @@ photos:
     caption: "If a result comes back positive, this is what the work looks like: sealed containment before anything is disturbed."
   process:
     name: PHOTO_LAB_SAMPLE_1
+    src: ../../assets/photos/mold-testing-air-sample-nampa-1.webp
+    alt: "Air-sampling pump with a spore-trap cassette on a tripod in a bathroom opened to the studs"
     ratio: 3/2
     afterStep: 4
-    caption: "Samples logged against a chain-of-custody form — collected and processed by the testing company, not by us."
+    caption: "An air sample running in an opened-up bathroom. The testing company sets it up and collects it; their lab reads it."
 
 intro:
   heading: Two jobs, two companies
