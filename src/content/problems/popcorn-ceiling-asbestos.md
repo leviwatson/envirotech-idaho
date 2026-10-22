@@ -37,9 +37,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/asbestos-abatement-inline-decon-1.webp
+      alt: "Decontamination unit at a containment entry with an asbestos DANGER sign"
       ratio: 3/2
       tone: dark
-      caption: "Sealed containment with a decon chamber at the entry, ducted to an exterior opening."
+      caption: "Sealed containment with a decon chamber at the entry."
     paragraphs:
       - "A positive result is not an emergency and it does not mean the ceiling has to come down. Intact material that is not being disturbed can often stay, and covering a textured ceiling with new drywall is a legitimate option that avoids disturbing anything."
       - "If removal is the answer, it happens inside a negative-pressure containment with a decontamination chamber at the entry and air monitoring during the work, and the clearance testing at the end is carried out by an independent company we engage rather than by us."

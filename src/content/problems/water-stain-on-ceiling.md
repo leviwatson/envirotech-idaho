@@ -37,6 +37,8 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-scrubber-duct-window-2.webp
+      alt: "Air scrubber with a flexible duct running up to a sealed window, walls covered in plastic"
       ratio: 3/2
       tone: dark
       caption: "Sealed enclosure with HEPA filtration, ducted to an exterior opening."

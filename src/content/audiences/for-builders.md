@@ -36,9 +36,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-ducts-sealed-windows-1.webp
+      alt: "Room with flexible ducts running to windows sealed in plastic and red tape, floor down to concrete"
       ratio: 3/2
       tone: dark
-      caption: "Containment with a decon chamber, ducted to an exterior opening — an exclusive work area while it runs."
+      caption: "Containment ducted to an exterior opening — an exclusive work area while it runs."
     paragraphs:
       - "The scheduling property that matters to you is that abatement is exclusive. A negative-pressure containment goes up around the affected area, air is monitored while the work runs, and nobody else works in that space until an independent company has cleared it."
       - "So it takes a slot rather than sharing one. That is the single most common planning mistake we see — a GC assuming abatement can overlap with another trade in the same area, and losing days when it cannot."

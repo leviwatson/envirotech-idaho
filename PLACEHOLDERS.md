@@ -271,75 +271,60 @@ exceed it at the 1600px JPEG fallback; re-export the source slightly softer.
 
 ### Filled
 
-| Slot | Page | File | Photo |
-|---|---|---|---|
-| `PHOTO_CONTAINMENT_HERO` | `/our-containment-process/` | `negative-pressure-containment-sealed-room-1` | IMG_6785, sealed room, poly floor, scrubber |
-| `PHOTO_CONTAINMENT_1` | `/our-containment-process/` | `negative-pressure-containment-poly-barrier-1` | IMG_8901, floor-to-ceiling poly in a kitchen |
-| `PHOTO_CONTAINMENT_2` | `/our-containment-process/` | `negative-pressure-containment-taped-seams-1` | IMG_0824, red-taped ceiling seam |
-| `PHOTO_CONTAINMENT_4` | `/our-containment-process/` | `negative-pressure-containment-exhaust-duct-window-1` | IMG_3710, duct through a sealed window |
-| `PHOTO_CONTAINMENT_6` | `/our-containment-process/` | `asbestos-abatement-decon-chamber-1` | IMG_0093, decon chamber with asbestos sign |
-| `PHOTO_CONTAINMENT_7` | `/our-containment-process/` | `negative-pressure-containment-hvac-return-sealed-1` | IMG_1328, taped return grille |
-| `PHOTO_CONTAINMENT_5` | `/our-containment-process/` | `negative-pressure-containment-poly-drawn-inward-1` | IMG_8176, doorway poly drawn inward toward the work area |
-| `PHOTO_HERO` | `/mold-found-during-home-inspection/` only | `negative-pressure-containment-zip-wall-kitchen-1` | IMG_3469, enclosure beside kitchen ovens |
-| `PHOTO_CONTAINMENT_1` | `/mold-found-during-home-inspection/` only | `negative-pressure-containment-basement-air-scrubber-1` | IMG_3711, basement zip-wall and scrubber |
-| `PHOTO_CITY_BOISE` | `/mold-remediation-boise/` | `negative-pressure-containment-zip-wall-boise-1` | `6-Mar 09…uLw6.jpg`, GPS Boise |
-| `PHOTO_CITY_CALDWELL` | `/mold-remediation-caldwell/` | `water-damage-restoration-subfloor-drying-caldwell-1` | IMG_9633, GPS Caldwell |
+**Round 1 (signature pages):**
 
-Slot names are per page, not per photo: `PHOTO_HERO` and `PHOTO_CONTAINMENT_1`
-appear on many pages and are filled independently in each page's entry. Every
-page not listed above still has them empty, including every service page
-(which take `PHOTO_CONTAINMENT_1` from `src/data/service-defaults.ts`).
-
-### Still empty: /our-containment-process/
-
-| Slot | Ratio | What to shoot |
+| Slot | Page | Photo |
 |---|---|---|
-| `PHOTO_CONTAINMENT_3` | **3:2** | The filter stack: two pre-filters ahead of the HEPA. Open machine so the staging is visible. The caption makes that claim, so a closed machine does not fill it. |
+| `PHOTO_CONTAINMENT_HERO`, `_1`, `_2`, `_4`, `_5`, `_6`, `_7` | `/our-containment-process/` | IMG_6785, 8901, 0824, 3710, 8176, 0093, 1328 |
+| `PHOTO_HERO`, `PHOTO_CONTAINMENT_1` | `/mold-found-during-home-inspection/` | IMG_3469, IMG_3711 |
+| `PHOTO_CITY_BOISE` | `/mold-remediation-boise/` | `6-Mar 09…uLw6.jpg`, GPS Boise |
+| `PHOTO_CITY_CALDWELL` | `/mold-remediation-caldwell/` | IMG_9633, GPS Caldwell |
 
-### Still empty: /mold-remediation/ and the service pages
+**Round 2 (37 slots, no photo used twice):**
 
-| Slot | Ratio | Where it appears | What to shoot |
-|---|---|---|---|
-| `PHOTO_HERO` | **16:9** | Hero, under the call button (every service page) | The crew working, or a containment in place. Wide crop; renders at most 560px across. |
-| `PHOTO_INTRO_1` | **3:4 portrait** | Beside the intro, sticky on desktop | Shot vertically. Moisture meter against framing or drywall. |
-| `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band (every service page) | Poly sheeting with taped seams, negative air machine, ducting to an exterior opening. |
-| `PHOTO_PROCESS_1` | **3:2** | `/mold-remediation/`, after step 04 | Affected material bagged inside the containment, before it crosses the barrier. |
-| `PHOTO_BEFORE_1` / `PHOTO_AFTER_1` | **4:3** | `/mold-remediation/` before/after | Same angle and framing both times. Section is hidden until both exist. |
-| `PHOTO_ASBESTOS_1` | **3:2** | `/asbestos-abatement/`, `/demolition/` | Double-bagged, labelled asbestos waste inside the containment, label readable. |
-| `PHOTO_ASBESTOS_BEFORE_1` / `_AFTER_1` | **4:3** | `/asbestos-abatement/`, `/popcorn-ceiling-asbestos/` | A popcorn ceiling before and after, same camera position. Candidate pair on file (IMG_6414 → IMG_6444, school slab) was not approved. |
-| `PHOTO_LAB_SAMPLE_1` | **3:2** | `/mold-inspection-testing/`, `/asbestos-testing/`, two problem/audience pages | Bagged, labelled samples beside a chain-of-custody form. |
-| `PHOTO_CRAWLSPACE_1` | **3:2** | `/crawlspace-drainage/`, `/black-mold-in-crawl-space/` | Standing water in a crawlspace, barrier floated clear of the soil. |
-| `PHOTO_ENCAPSULATION_1` | **3:2** | `/crawlspace-encapsulation/` | Finished liner up the piers and stem wall, seams sealed. |
-| `PHOTO_RECONSTRUCTION_1` | **3:2** | `/reconstruction/` | Drywall going back into a space opened for remediation. |
-| `PHOTO_BEFORE_AFTER_1` / `_2` | **4:3** | `/reconstruction/` | Matched pair. |
-| `PHOTO_WATER_DRYING_1` | **3:2** | `/water-damage-restoration/`, after step 05 | Air movers against affected surfaces with a dehumidifier in frame. |
-| `PHOTO_RADON_1` | **16:9** | `/radon-mitigation/` hero | Finished sub-slab system: riser, inline fan, discharge above the roofline, manometer in frame. |
-| `PHOTO_RADON_2` | **3:2** | `/radon-mitigation/` process | The suction point cut and sealed into the slab. |
-| `PHOTO_DEMO_1` | **16:9** | `/demolition/`, `/remodeling/` | Interior strip-out with protection on what is staying. |
-| `PHOTO_LEAD_1` | **16:9** | `/lead-paint-removal/` hero | Interior prep on a pre-1978 home, work area sealed. |
-| `PHOTO_LEAD_2` | **3:2** | `/lead-paint-removal/` process | A painted component removed whole and wrapped inside the containment. |
-| `PHOTO_REMODEL_1` | **16:9** | `/remodeling/` hero | A finished remodel in an older Treasure Valley home. |
-| `PHOTO_REMODEL_BEFORE_1` / `_AFTER_1` | **4:3** | `/remodeling/` | Matched pair. |
-
-### Still empty: problem and audience pages
-
-| Slot | Ratio | Page(s) | What to shoot |
-|---|---|---|---|
-| `PHOTO_CLEARANCE_DOC_1` | **3:2** | `/mold-found-during-home-inspection/`, `/for-realtors/`, `/for-property-managers/`, `/does-homeowners-insurance-cover-mold/` | A clearance package on a table: scope, moisture log, chain-of-custody form, the independent lab's clearance report, and our completion certificate. Redact addresses and owner names. |
-| `PHOTO_VERMICULITE_1` | **16:9** | `/vermiculite-insulation/` | Loose-fill vermiculite in an attic, granules identifiable. Candidate on file (`2-Apr 10…mrA3.jpg`, Twin Falls) needs Cody to confirm it is vermiculite. |
-| `PHOTO_CONTAINMENT_HERO` | **16:9** | `/commercial/` | A commercial containment, wide. |
-
-### Still empty: city pages (slot hidden until filled)
-
-| Slot | Page | Status |
+| Page | Slots filled | Photos |
 |---|---|---|
-| `PHOTO_CITY_MERIDIAN` | `/mold-remediation-meridian/` | No GPS-confirmed Meridian photo exists. |
-| `PHOTO_CITY_NAMPA` | `/mold-remediation-nampa/` | No GPS-confirmed Nampa photo exists. |
-| `PHOTO_CITY_EAGLE` | `/mold-remediation-eagle/` | None. Four photos (job-34) geocode to unincorporated Boise County near Avimor, not Eagle; they cannot carry an Eagle claim. |
+| `/mold-remediation/` | hero, containment | IMG_5945, IMG_6656 |
+| `/mold-inspection-testing/` | hero, containment | IMG_3844, IMG_6655 |
+| `/asbestos-abatement/` | hero, containment, process, before/after | IMG_9441\*, IMG_5901\*, IMG_9438, IMG_6414 → IMG_6444 |
+| `/asbestos-testing/` | hero, containment | IMG_3845, IMG_9424 |
+| `/crawlspace-drainage/` | hero, containment | IMG_0949, IMG_8268 |
+| `/crawlspace-encapsulation/` | containment | IMG_8174 |
+| `/demolition/` | hero, process, containment | IMG_0088, IMG_9439, IMG_6787 |
+| `/reconstruction/` | hero, containment, process | IMG_4809, IMG_6786, IMG_4779 |
+| `/remodeling/` | containment, process | IMG_0089, IMG_9400 |
+| `/water-damage-restoration/` | hero, containment, drying | IMG_2201, IMG_5942, IMG_2193 |
+| Problem pages (dark band) | 7 | black-mold IMG_6660, insurance IMG_6653, musty IMG_3559, water-stain IMG_9427\*, before-remodel IMG_3842, popcorn IMG_6405, vermiculite IMG_5944 |
+| `/commercial/` | hero, band | IMG_6255, IMG_6256 |
+| `/for-builders/`, `/for-property-managers/`, `/for-realtors/` | band | IMG_9434\*, IMG_8820, IMG_5676 |
 
-One job photo per city, **actually taken in that city**, confirmed by GPS or by
-Cody. Only 40 of the 201 photos supplied so far carry GPS. Turning on location
-for the camera on the next Meridian, Nampa, and Eagle jobs is the fastest fix.
+\* Blurred before export: room number (9441), desk paperwork (5901), whiteboard
+writing (9427), chalkboard teacher name (9434). Asbestos waste bags were
+checked at full size and carry no printed labels; captions say "bagged", never
+"labeled". No lead signage appears in any photo, and no reconstruction
+caption or alt text mentions fire.
+
+### Still empty
+
+| Slot | Page(s) | Why / what to shoot |
+|---|---|---|
+| `PHOTO_CONTAINMENT_3` | `/our-containment-process/` | Open machine showing two pre-filters ahead of the HEPA. |
+| `PHOTO_LAB_SAMPLE_1` | `/for-builders/` hero, `/asbestos-testing-before-remodel/` hero, `/asbestos-testing/` and `/mold-inspection-testing/` process | Bagged, labelled samples beside a chain-of-custody form (redact the address). |
+| `PHOTO_CLEARANCE_DOC_1` | `/mold-found-during-home-inspection/`, `/for-realtors/`, `/for-property-managers/` hero, `/does-homeowners-insurance-cover-mold/` hero | A documentation package on a table, names and addresses redacted. |
+| `PHOTO_CRAWLSPACE_1` | `/black-mold-in-crawl-space/` hero, `/crawlspace-drainage/` process | Standing water under a house, barrier floated clear of the soil. |
+| `PHOTO_ENCAPSULATION_1`, encapsulation `PHOTO_HERO` | `/crawlspace-encapsulation/` | Finished liner up the piers and stem wall, seams sealed. |
+| `PHOTO_INTRO_1` | `/mold-remediation/`, `/water-damage-restoration/` | Portrait: moisture meter against framing or drywall. |
+| `PHOTO_PROCESS_1` | `/mold-remediation/` | Bagged material inside a **mold** containment. The bagged shots on file are from abatement jobs. |
+| `PHOTO_BEFORE_1`/`_AFTER_1`, `PHOTO_BEFORE_AFTER_1`/`_2`, `PHOTO_REMODEL_BEFORE_1`/`_AFTER_1` | mold remediation, reconstruction, remodeling | Matched pairs from those job types. Sections stay hidden until both halves exist. |
+| `PHOTO_ASBESTOS_BEFORE_1` | `/popcorn-ceiling-asbestos/` hero | A textured ceiling before removal. |
+| `PHOTO_REMODEL_1` | `/remodeling/` hero | A finished remodel. |
+| `PHOTO_RADON_1`, `PHOTO_RADON_2` | `/radon-mitigation/` | **Waiting on Cody**: is IMG_7746 a radon suction pit or a sump? |
+| `PHOTO_VERMICULITE_1` | `/vermiculite-insulation/` hero | **Waiting on Cody**: is `2-Apr 10…mrA3.jpg` (Twin Falls) vermiculite? |
+| `PHOTO_CITY_MERIDIAN`, `_NAMPA`, `_EAGLE` | city pages (hidden) | No GPS-confirmed photo from those cities. |
+
+Photos rejected in round 2 for privacy: IMG_6257 (student work on the walls
+and a worker on a ladder) and IMG_0094 (lead paint warning sign overlapping the
+asbestos sign).
 
 ### Still needed beyond the slots
 

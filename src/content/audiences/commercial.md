@@ -9,8 +9,10 @@ subhead: "The constraint on commercial work is almost never the remediation. It 
 photos:
   hero:
     name: PHOTO_CONTAINMENT_HERO
+    src: ../../assets/photos/commercial-stacked-air-machines-1.webp
+    alt: "Stacked negative-air machines with several lay-flat ducts running to sealed windows in a large building"
     ratio: 16/9
-    caption: "A containment built inside an operating building — sealed, monitored, and ducted to the outside."
+    caption: "A containment inside a large building: several machines, ducted to the outside."
 
 sections:
   - heading: Closing is usually not on the table
@@ -36,9 +38,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/commercial-ducts-to-windows-1.webp
+      alt: "Lay-flat exhaust ducts running between wall studs to plastic-sealed windows"
       ratio: 3/2
       tone: dark
-      caption: "Negative-pressure containment with a decon chamber, ducted to an exterior opening."
+      caption: "Negative-pressure containment, ducted to an exterior opening."
     paragraphs:
       - "A negative-pressure containment goes up before any material is disturbed. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so air moves into the work area and never out of it. In an occupied commercial building that mechanism is doing more work than it does anywhere else, because the people it is protecting are on the other side of the sheeting during the shift."
       - "On asbestos work, air is monitored while the removal is happening rather than only at the end. That is the part that matters to a building manager: it is evidence gathered during the work, in real time, rather than a verdict delivered afterward when it is too late to correct anything."

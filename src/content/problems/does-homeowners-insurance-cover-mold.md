@@ -44,6 +44,8 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/mold-remediation-pass-through-sealed-1.webp
+      alt: "Kitchen pass-through sealed with plastic sheeting and tape"
       ratio: 3/2
       tone: dark
       caption: "Containment and documentation are what we control. The coverage decision is not ours."

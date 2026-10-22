@@ -41,9 +41,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/mold-remediation-air-scrubber-stained-subfloor-1.webp
+      alt: "Air scrubber and duct inside a work area over a stained, stripped subfloor"
       ratio: 3/2
       tone: dark
-      caption: "Negative-pressure containment: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening."
+      caption: "Air scrubber running inside the work area, over a stained subfloor."
     paragraphs:
       - "Removing growth disturbs it, and disturbing it is what puts material into the air. In a crawlspace that matters more than almost anywhere, because the air under a house travels up into the rooms above rather than staying put."
       - "So a negative-pressure containment goes up first. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so nothing airborne leaves the work area. The pressure inside is lower than the pressure in the house above, so air can only move inward."

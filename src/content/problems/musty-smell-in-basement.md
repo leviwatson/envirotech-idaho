@@ -36,6 +36,8 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-two-ducts-window-1.webp
+      alt: "Two lay-flat exhaust ducts leaving through a window sealed in plastic"
       ratio: 3/2
       tone: dark
       caption: "Sealed enclosure with HEPA filtration ducted to an exterior opening."

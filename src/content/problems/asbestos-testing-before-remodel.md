@@ -42,9 +42,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/asbestos-testing-scrubber-window-duct-1.webp
+      alt: "Air scrubber in a home with its duct running out through a sealed window"
       ratio: 3/2
       tone: dark
-      caption: "Containment with a decon chamber, ducted to an exterior opening."
+      caption: "Containment ducted to an exterior opening."
     paragraphs:
       - "It is a defined, contained piece of work that happens between other trades. A negative-pressure containment goes up around the affected area, the material is removed wet and double-bagged inside the enclosure, air is monitored during the work, and an independent company we engage performs the clearance testing at the end."
       - "The important scheduling point is that it is exclusive. Nobody else works in that space while it is happening, which is precisely why it needs its own slot rather than being squeezed alongside another trade."

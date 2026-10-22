@@ -32,6 +32,8 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-zip-wall-living-room-1.webp
+      alt: "Zip-pole plastic enclosure set up in a furnished living and dining room"
       ratio: 3/2
       tone: dark
       caption: "Sealed enclosure under negative pressure — the reason a tenant can usually stay in place."

@@ -10,10 +10,13 @@ subhead: "Water under a house is a plumbing problem, a grading problem, or a gro
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/crawlspace-drainage-pipe-lava-rock-1.webp
+    alt: "Drain pipe running down into a bed of lava rock in a crawlspace"
     ratio: 16/9
-    alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/crawlspace-access-hatch-protected-1.webp
+    alt: "Crawlspace hatch opened through floor protection, with plastic sheeting sealed at the doorway"
     ratio: 3/2
     tone: dark
     caption: "Where growth has already taken hold, removal happens inside a sealed containment before drainage work begins."

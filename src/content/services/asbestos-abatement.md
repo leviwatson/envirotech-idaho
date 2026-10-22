@@ -10,26 +10,35 @@ subhead: "An independent accredited lab performs the final clearance testing, no
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/asbestos-abatement-hallway-containment-1.webp
+    alt: "Long hallway with the lower walls sealed in plastic and red tape after the flooring was removed"
     ratio: 16/9
-    alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/asbestos-abatement-decon-chamber-entry-2.webp
+    alt: "Containment entry with a three-stage decontamination chamber and an asbestos DANGER sign"
     ratio: 3/2
     tone: dark
-    caption: "Negative-pressure containment with a decontamination chamber at the entry, ducted to an exterior opening."
+    caption: "Negative-pressure containment with a decontamination chamber at the entry."
   process:
     name: PHOTO_ASBESTOS_1
+    src: ../../assets/photos/asbestos-abatement-bagged-waste-1.webp
+    alt: "Bagged removed material gathered inside the work area before it leaves"
     ratio: 3/2
     afterStep: 3
-    caption: "Removed material double-bagged and labeled inside the containment, before anything crosses the barrier."
+    caption: "Removed material bagged inside the containment, before anything crosses the barrier."
   beforeAfter:
     heading: Before and after
     before:
       name: PHOTO_ASBESTOS_BEFORE_1
+      src: ../../assets/photos/asbestos-abatement-slab-before-1.webp
+      alt: "Concrete slab after flooring removal, wet and covered in residue, before cleanup"
       ratio: 4/3
       caption: Before
     after:
       name: PHOTO_ASBESTOS_AFTER_1
+      src: ../../assets/photos/asbestos-abatement-slab-after-1.webp
+      alt: "The same concrete slab after cleanup, dry and clear of residue"
       ratio: 4/3
       caption: After
 

@@ -42,9 +42,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-zip-door-corner-1.webp
+      alt: "Containment corner with a zippered plastic door and a plastic-covered floor"
       ratio: 3/2
       tone: dark
-      caption: "Negative-pressure containment with a decon chamber at the entry."
+      caption: "Negative-pressure containment with a zippered entry."
     paragraphs:
       - "Removal becomes necessary when the attic has to be used, when insulation is being upgraded, when the material is entering the living space, or when a sale or lender requires it. It is not a job that gets done on a weekend."
       - "The work happens inside a negative-pressure containment with a decontamination chamber and air monitoring throughout, and the clearance testing at the end is carried out by an independent company we engage rather than by us."

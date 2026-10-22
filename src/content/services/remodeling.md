@@ -14,11 +14,15 @@ photos:
     caption: "A finished remodel in an older Treasure Valley home."
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/remodeling-gutted-room-sealed-window-1.webp
+    alt: "Room opened to the wall boards with a window sealed in plastic and red tape"
     ratio: 3/2
     tone: dark
     caption: "Where a remodel turns up asbestos-containing material, it comes out inside a containment before the build continues."
   process:
     name: PHOTO_DEMO_1
+    src: ../../assets/photos/remodeling-protected-walls-floor-removal-1.webp
+    alt: "Room with the lower walls protected in plastic while the flooring is taken out"
     ratio: 3/2
     afterStep: 4
     caption: "Selective demolition with protection in place on everything that is staying."

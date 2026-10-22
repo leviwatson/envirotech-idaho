@@ -10,13 +10,16 @@ subhead: "Test before demolition, not after. We do not do the testing — an ind
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/asbestos-testing-black-mastic-floor-1.webp
+    alt: "Black mastic adhesive exposed on a floor after the tile came up, with a floor machine and work light"
     ratio: 16/9
-    alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/asbestos-testing-poly-walls-slab-1.webp
+    alt: "Room with walls sealed in plastic and red tape, flooring removed to bare concrete, duct overhead"
     ratio: 3/2
     tone: dark
-    caption: "If a sample comes back positive, this is what removal looks like: sealed containment with a decon chamber at the entry."
+    caption: "If a sample comes back positive, this is what removal looks like: the work area sealed off before anything is disturbed."
   process:
     name: PHOTO_LAB_SAMPLE_1
     ratio: 3/2

@@ -10,18 +10,23 @@ subhead: "The company that took the drywall out puts it back. One scope, one cre
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/reconstruction-roof-trusses-1.webp
+    alt: "New roof trusses set over a house being rebuilt, walls framed beneath them"
     ratio: 16/9
-    alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/reconstruction-poly-cabinet-enclosure-1.webp
+    alt: "Plastic sheeting sealed around a run of kitchenette cabinets, edges taped"
     ratio: 3/2
     tone: dark
-    caption: "The removal that comes first: sealed containment, HEPA filtration, and a documented scope the rebuild is priced against."
+    caption: "The removal that comes first: the work area sealed off, and a documented scope the rebuild is priced against."
   process:
     name: PHOTO_RECONSTRUCTION_1
+    src: ../../assets/photos/reconstruction-framing-tarps-1.webp
+    alt: "Wall framing standing under tarps while a house is rebuilt"
     ratio: 3/2
     afterStep: 4
-    caption: "Rebuild in progress, on the same scope the removal was documented against."
+    caption: "Rebuild in progress."
   beforeAfter:
     heading: Before and after
     before:

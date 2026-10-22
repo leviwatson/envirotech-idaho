@@ -10,13 +10,24 @@ subhead: "Anyone can take a wall out. The question worth asking a demolition con
 photos:
   hero:
     name: PHOTO_DEMO_1
+    src: ../../assets/photos/demolition-gutted-room-sealed-windows-1.webp
+    alt: "Room stripped to the studs and wall boards, with both windows sealed in plastic and red tape"
     ratio: 16/9
-    caption: "Interior strip-out on a Treasure Valley property, with the affected area contained."
+    caption: "Interior strip-out, with the openings sealed and the work area contained."
+  containment:
+    name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/demolition-poly-enclosure-1.webp
+    alt: "Plastic enclosure built around a corner of a room, edges taped to the wall and floor"
+    ratio: 3/2
+    tone: dark
+    caption: "Containment goes up before any material comes out: sheeting taped to the structure, floor protected."
   process:
     name: PHOTO_ASBESTOS_1
+    src: ../../assets/photos/demolition-bagged-material-1.webp
+    alt: "Bagged material piled inside the work area beside a section of floor tile still to come up"
     ratio: 3/2
     afterStep: 2
-    caption: "Material bagged and labeled inside the containment, before anything crosses the barrier."
+    caption: "Material bagged inside the containment, before anything crosses the barrier."
 
 intro:
   heading: Demolition is where hazardous material gets found

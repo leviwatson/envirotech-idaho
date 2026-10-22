@@ -10,10 +10,13 @@ subhead: "We do not test. An independent company does that, you engage them dire
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/mold-inspection-air-scrubber-poly-wall-1.webp
+    alt: "Air scrubber with its duct passing through a plastic containment wall, flooring removed"
     ratio: 16/9
-    alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/mold-remediation-zip-door-stairwell-1.webp
+    alt: "Zippered plastic door sealing a stairwell down to a basement work area"
     ratio: 3/2
     tone: dark
     caption: "If a result comes back positive, this is what the work looks like: sealed containment before anything is disturbed."

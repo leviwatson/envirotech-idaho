@@ -128,23 +128,28 @@ faqs:
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/water-damage-air-mover-subfloor-1.webp
+    alt: "Air mover drying a stripped subfloor after the flooring was removed"
     ratio: 16/9
-    alt: ""
-    caption: "Drying equipment set on a Treasure Valley water loss — air movers on the affected surfaces, dehumidification pulling the moisture back out of the air."
+    caption: "An air mover on the affected subfloor, drying the structure after the wet flooring came out."
   intro:
     name: PHOTO_INTRO_1
     ratio: 3/4
     caption: "Moisture mapping defines the affected area. Where the water is visible rarely matches where it went."
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/water-damage-containment-taped-seams-1.webp
+    alt: "Inside a containment: plastic sheeting on the walls with black tape sealing the ceiling seams"
     ratio: 3/2
     tone: dark
-    caption: "Where a water loss turns into removal, containment goes up first: sealed poly, taped seams, HEPA ducted to an exterior opening."
+    caption: "Where a water loss turns into removal, containment goes up first: sealed poly and taped seams."
   process:
     name: PHOTO_WATER_DRYING_1
+    src: ../../assets/photos/water-damage-dehumidifier-1.webp
+    alt: "Commercial dehumidifier running between surfaces sealed in plastic on a stripped floor"
     ratio: 3/2
     afterStep: 5
-    caption: "Air movers and commercial dehumidification set to the affected volume, running continuously until the structure reads dry."
+    caption: "Commercial dehumidification running inside the work area until the structure reads dry."
 
 relatedProblems:
   - /water-stain-on-ceiling/

@@ -51,6 +51,8 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-zip-wall-stair-landing-1.webp
+      alt: "Neat zip-pole plastic enclosure at a stair landing"
       ratio: 16/9
       maxWidth: 560px
       tone: dark

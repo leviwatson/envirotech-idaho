@@ -107,9 +107,10 @@ faqs:
 photos:
   hero:
     name: PHOTO_HERO
+    src: ../../assets/photos/mold-remediation-containment-room-1.webp
+    alt: "Containment room with plastic sheeting sealed across the walls and floor, edges taped"
     ratio: 16/9
-    alt: ""
-    caption: "Negative-pressure containment on a Treasure Valley job — sealed poly, taped seams, HEPA ducted to an exterior opening."
+    caption: "Negative-pressure containment: poly sealed across walls and floor, seams taped."
 
   intro:
     name: PHOTO_INTRO_1
@@ -117,9 +118,11 @@ photos:
     caption: "Moisture mapping runs before anything comes apart — the reading decides how far the removal goes."
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/mold-remediation-air-scrubber-window-duct-1.webp
+    alt: "Air scrubber in a basement room with its duct running out through a plastic-sealed window"
     ratio: 3/2
     tone: dark
-    caption: "Negative-pressure containment on a Treasure Valley job: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening."
+    caption: "Negative-pressure containment: HEPA air scrubber ducted out through a sealed window."
   process:
     name: PHOTO_PROCESS_1
     ratio: 3/2

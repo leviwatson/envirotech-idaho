@@ -14,6 +14,8 @@ photos:
     alt: ""
   containment:
     name: PHOTO_CONTAINMENT_1
+    src: ../../assets/photos/crawlspace-encapsulation-duct-hatch-1.webp
+    alt: "Lay-flat duct running down through a crawlspace hatch cut into a plastic-covered floor"
     ratio: 3/2
     tone: dark
     caption: "Where growth is already on the joists, it is removed inside a sealed containment before any liner goes down."
