@@ -9,7 +9,9 @@
  */
 
 export const TRUST_STRIP = [
-  { label: "Licensed & certified", detail: "Idaho registration RCE-8871958" },
+  // Individual certification. Expires 2027-06-16; renewal tracked in PLACEHOLDERS.md.
+  { label: "AHERA-certified asbestos supervisor", detail: "IHR cert #7593-02" },
+  // Pending Cody's confirmation that someone genuinely answers at any hour.
   { label: "Available 24/7", detail: "Someone answers, any hour" },
   // "Third-party clearance" is held back until Cody confirms clearance testing
   // runs on every job rather than only when the buyer or the job requires it.

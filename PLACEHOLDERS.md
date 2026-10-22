@@ -36,6 +36,10 @@ customer or a buyer's agent can hold the company to.
   services. If Cody confirms clearance on every job, restore
   `{ label: "Third-party clearance", detail: "An independent lab signs off, not us" }`.
   The strip lays out one column per item, so no CSS change is needed either way.
+- [ ] **"Available 24/7" in the trust strip: does someone actually answer at any hour?**
+  It renders on every page that carries the strip, beside the phone number,
+  and the hero and CTA bar repeat it ("Someone answers 24/7"). If the phone
+  goes to voicemail overnight, this is the claim a customer tests first.
 - [ ] **Radon mitigation: does he actually offer it?** `/radon-mitigation/` is
   live and linked from the nav, and its certification is already flagged
   unverified under Credentials below. If he does not offer it, unpublish the
@@ -121,6 +125,18 @@ Before DNS cutover (build order step 12), one of these has to happen:
   `/lead-paint-removal/` down with it.
 
 ## Credentials
+
+### Renewal dates
+
+| Credential | Holder | Number | Expires | Action |
+|---|---|---|---|---|
+| AHERA asbestos supervisor | Individual (confirm who) | IHR cert #7593-02 | **2027-06-16** | Renew before expiry, then update the trust strip in `src/data/service-defaults.ts`. An expired AHERA certification shown site-wide is a misrepresentation, so take it off the strip on 2027-06-16 if it has not been renewed. Set a calendar reminder for **2027-04-16** (two months ahead). |
+
+The AHERA certification currently appears **only in the trust strip**. It is not
+yet in `src/data/credentials.ts`, so the footer, `/certifications/`, and
+structured data do not list it. Adding it there needs the issuer's full name
+(only "IHR" is known), a `.gov` or issuer verification route, and the holder's
+name.
 
 ### ⚠ Radon certification is unverified and /radon-mitigation/ is live
 
