@@ -55,6 +55,7 @@ scope:
     - Reconstruction of what came out, including drywall, texture, paint, insulation, and vapor barrier
     - Photo documentation and a scope written so an adjuster can evaluate it
     - Independent clearance testing where the job calls for it, carried out by a company we engage and never by us
+    - A completion certificate with a 2-year guarantee against mold regrowth in the treated interior areas, transferable with the house
   excludesHeading: Three things we will not do
   excludes:
     - "We do not paint over it. Primer and paint hide the material and change nothing about the moisture, so the growth continues behind a finish that now has to come off twice."
@@ -94,6 +95,8 @@ faqs:
     answer: "Sometimes, and we will tell you when. Small growth on a hard, non-porous surface that is already dry may only need cleaning. On porous material like drywall, framing, or subfloor, bleach wets material that already has a moisture problem and leaves the growth below the surface. If your situation is the first kind, we would rather say so at the free inspection than sell you a containment you do not need."
   - question: How do you know the mold is actually gone?
     answer: "Two ways. We verify visually and with moisture readings that the structure is dry and clean. Then, where the job calls for it, an independent accredited lab performs clearance testing. We do not collect and process those samples ourselves and we do not interpret them in our own favor. The company doing the work should not be the company certifying the work is done."
+  - question: Is the work guaranteed?
+    answer: "Yes. Every mold remediation job ends with our completion certificate, which carries a 2-year guarantee of no mold regrowth in the treated interior areas. The guarantee is transferable with the house, so it passes to the buyer if you sell. It is void if the treated areas are later modified, or if a new or existing moisture source is found in or around them. That second condition is why we trace the water before we remove anything: growth comes back wherever water keeps arriving. The guarantee applies to mold remediation only."
   - question: Will homeowners insurance cover mold remediation?
     answer: "It depends on where the water came from. Sudden and accidental damage, such as a supply line that burst, is commonly covered. Long-term seepage and deferred maintenance commonly are not. Your policy language decides it, not us. What we control is the documentation: we photograph conditions before anything is touched, record moisture as it changes, and write a scope specific enough to be evaluated on facts rather than argued over. The distinction insurers draw is [sudden damage versus long-term seepage](/does-homeowners-insurance-cover-mold/), and it is usually decided by where the water came from rather than how bad the growth looks."
   - question: What does mold remediation cost in Idaho?

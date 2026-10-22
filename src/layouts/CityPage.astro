@@ -71,7 +71,7 @@ const graph = buildGraph({
         <p class="hero__note">Free inspection. Someone answers 24/7.</p>
 
         {
-          d.photo && (
+          d.photo?.src && (
             <PhotoSlot
               name={d.photo.name}
               ratio={d.photo.ratio}

@@ -240,7 +240,7 @@ const graph = buildGraph({
          Renders unless the entry opts out with showContainment: false. --- */}
   {rendersContainmentBand && (
   <section class="containment">
-    <div class="container containment__inner">
+    <div class:list={["container containment__inner", !containmentPhoto.src && "containment__inner--text"]}>
       <div class="containment__copy">
         <h2>{containment.heading}</h2>
         {containment.paragraphs?.map((p) => <p set:html={renderProse(p)} />)}
@@ -311,7 +311,8 @@ const graph = buildGraph({
 
     {/* --- Before / after ----------------------------------------------- */}
     {
-      photos?.beforeAfter && (
+      // A pair or nothing: half a before/after makes no claim at all.
+      photos?.beforeAfter?.before.src && photos.beforeAfter.after.src && (
         <section class="band">
           <h2>{photos.beforeAfter.heading}</h2>
           <div class="ba">
@@ -571,6 +572,9 @@ const graph = buildGraph({
   @media (min-width: 900px) {
     .containment__inner {
       grid-template-columns: 1.1fr 1fr;
+    }
+    .containment__inner--text {
+      grid-template-columns: minmax(0, 46rem);
     }
   }
   .containment h2 {

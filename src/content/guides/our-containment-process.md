@@ -7,8 +7,10 @@ subhead: "A containment is not a plastic curtain. It is a sealed enclosure held 
 
 hero:
   name: PHOTO_CONTAINMENT_HERO
+  src: ../../assets/photos/negative-pressure-containment-sealed-room-1.webp
+  alt: "Sealed containment room with poly sheeting across the floor, a taped-off sliding door, and an air scrubber with its duct"
   ratio: 16/9
-  caption: "A finished containment on a Treasure Valley job: sealed enclosure, filtration running, ducted to an exterior opening."
+  caption: "A finished containment: poly down, openings sealed, filtration in place."
 
 premise:
   heading: The whole thing rests on one idea
@@ -28,15 +30,19 @@ build:
       without: "A draped sheet moves every time a door opens elsewhere in the house, and each movement pushes air out of the work area rather than pulling it in."
       photo:
         name: PHOTO_CONTAINMENT_1
+        src: ../../assets/photos/negative-pressure-containment-poly-barrier-1.webp
+        alt: "Floor-to-ceiling plastic sheeting sealing off the kitchen and dining area of a finished home"
         ratio: 3/2
         caption: "Sheeting run floor to ceiling and sealed to the surrounding surfaces."
 
     - name: Taped seams
       what: "Every join between sheets, and every edge against a wall, floor, or ceiling, taped rather than overlapped."
       why: "A seam is the weakest point of any enclosure, and an overlap is not a seal — it is two pieces of plastic resting against each other with a path between them. Tape turns a lot of separate sheets into one surface. This is the slowest, most tedious part of the build and it is the first thing to disappear when a crew is in a hurry."
-      without: "Air short-circuits through the seams instead of through the filter. The machine runs, the gauge reads less than it should, and the containment quietly underperforms while looking finished."
+      without: "Air short-circuits through the seams instead of through the filter. The machine runs, the sheeting hangs slack instead of drawing in, and the containment quietly underperforms while looking finished."
       photo:
         name: PHOTO_CONTAINMENT_2
+        src: ../../assets/photos/negative-pressure-containment-taped-seams-1.webp
+        alt: "Red tape sealing poly sheeting along the ceiling corner of a containment, held up by zip poles"
         ratio: 3/2
         caption: "Seams taped rather than overlapped, so separate sheets behave as one surface."
 
@@ -55,17 +61,21 @@ build:
       without: "Filtered air returning to the house means no pressure difference, which means no containment. You have an expensive air purifier and an enclosure that is doing nothing."
       photo:
         name: PHOTO_CONTAINMENT_4
+        src: ../../assets/photos/negative-pressure-containment-exhaust-duct-window-1.webp
+        alt: "Exhaust duct leaving through a window sealed with plastic sheeting and red-taped edges"
         ratio: 3/2
         caption: "Exhaust ducted out through an exterior opening and sealed where it passes through."
 
-    - name: A gauge that proves it
-      what: "A manometer reading the pressure difference between the work area and the space outside it."
-      why: "Everything above is an argument that the enclosure should be negative. The gauge is the evidence that it is. It is also the only part of a containment a homeowner can verify without knowing anything about the trade: there is a number, and it is either there or it is not."
+    - name: Negative pressure you can see
+      what: "Sheeting drawn inward toward the work area, held there by the air the machine is pulling out."
+      why: "Everything above is an argument that the enclosure should be negative. The plastic is where you can see that it is. With the machine running, the barrier pulls in toward the work area and stays there, and a zipper door draws inward as it is opened. It is the part of a containment a homeowner can check without knowing anything about the trade: look at which way the plastic is leaning."
       without: "Nobody knows whether the containment is working, including the crew. The setup looks right and might not be, and the first evidence either way arrives with the clearance test, when the work is already finished."
       photo:
         name: PHOTO_CONTAINMENT_5
+        src: ../../assets/photos/negative-pressure-containment-poly-drawn-inward-1.webp
+        alt: "Plastic sheeting sealed across a doorway, drawn inward into the opening toward the work area"
         ratio: 3/2
-        caption: "A manometer reading the differential — the part of a containment you can actually check."
+        caption: "Sheeting drawn in toward the work area: negative pressure you can see from the doorway."
 
     - name: The decontamination chamber
       what: "A small sealed vestibule at the entry, so nobody steps straight from the work area into your house."
@@ -73,6 +83,8 @@ build:
       without: "The work area is contained and the route out of it is not, so material walks into finished rooms all day. This is the most common way a technically correct containment still contaminates a house."
       photo:
         name: PHOTO_CONTAINMENT_6
+        src: ../../assets/photos/asbestos-abatement-decon-chamber-1.webp
+        alt: "Decontamination chamber entry in white sheeting with an asbestos DANGER warning sign"
         ratio: 3/2
         caption: "A decon chamber at the entry — because people, not plastic, are the leak."
 
@@ -82,6 +94,8 @@ build:
       without: "Material enters the duct system and gets distributed to rooms that were never part of the job. That is a whole-house problem created by a single-room repair, and it is expensive and slow to undo."
       photo:
         name: PHOTO_CONTAINMENT_7
+        src: ../../assets/photos/negative-pressure-containment-hvac-return-sealed-1.webp
+        alt: "Return-air grille sealed off with red tape inside a containment corner"
         ratio: 3/2
         caption: "Returns and supplies sealed before work begins — the duct system is the fastest route to the rest of the house."
 
@@ -89,8 +103,8 @@ checklist:
   heading: How to tell whether yours was done properly
   intro: "You do not need to know this trade to check the work. Five questions, and you can ask all of them without any technical vocabulary. They apply to whoever you hire, including us."
   items:
-    - ask: Ask to see the pressure reading
-      detail: "There should be a gauge, and it should show a number. If nobody can produce one, nobody knows whether the containment is negative. This is the single most useful question on the list, because it is the only one with an objective answer."
+    - ask: Look at which way the plastic leans
+      detail: "With the machine running, the sheeting should be drawn in toward the work area, not hanging loose or bowing out into your house. If the barrier billows outward when a door opens elsewhere, the containment is not negative. It is the quickest check on the list, and you can do it from the hallway."
     - ask: Ask where the duct goes
       detail: "Follow it. It should leave the building — a window, a vent, a door with a sealed panel. If the machine exhausts into another room, into a hallway, or into the crawlspace, there is no pressure differential and the enclosure is decorative."
     - ask: Look at the seams
@@ -114,7 +128,7 @@ sections:
 
   - heading: What it costs you in time
     paragraphs:
-      - "Setup is measured in hours, not days. On a typical residential job the enclosure goes up in a morning and comes down in under an hour at the end."
+      - "Setup takes hours, not days. On a typical residential job the enclosure goes up in a morning and comes down in under an hour at the end."
       - "The larger time cost is at the other end. Air scrubbers run inside the containment after removal is finished, and that final stretch — often the last day of a three to four day job — is machines running and nobody doing anything visible. It looks like padding and it is not. It is the part that makes clearance testing pass, and cutting it short is how a job that was done properly fails its own verification."
       - "During all of it, the rest of your house stays usable. That is the practical benefit of a containment beyond the technical one: the work is confined to a defined area, so a bathroom repair does not take your kitchen out of service."
 
@@ -130,7 +144,7 @@ faqs:
   - question: Can I stay in the house while the work happens?
     answer: "Usually, and the containment is the reason. The work area is sealed and held at lower pressure, so the rest of the property stays usable. The exceptions are jobs that take out the only bathroom, work inside the HVAC system, and enclosures large enough to cover most of the floor plan. You will know which one you have at the estimate rather than on day two."
   - question: How can I tell if the containment is actually working?
-    answer: "Ask to see the pressure reading on the manometer, and follow the exhaust duct to confirm it leaves the building. Those two checks need no technical knowledge and they cover the two ways a containment most commonly fails. The checklist above covers three more."
+    answer: "Look at the sheeting, which should be drawn inward toward the work area while the machine runs, and follow the exhaust duct to confirm it leaves the building. Those two checks need no technical knowledge and they cover the two ways a containment most commonly fails. The checklist above covers three more."
   - question: Is plastic sheeting over a doorway a containment?
     answer: "No. Sheeting with nothing running behind it is a curtain — it looks like containment and does nothing, because there is no pressure differential to make air travel the right way. The enclosure is what makes negative pressure possible; the negative pressure is what does the work."
   - question: Does the containment prove the job worked?

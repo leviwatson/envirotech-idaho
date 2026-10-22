@@ -60,8 +60,8 @@ const html = async (slug) => {
 const count = (h, re) => (h.match(re) ?? []).length;
 
 const SEAM = /<div class="seam"/g;
-const BAND_SERVICE = /class="container containment__inner"/g;
-const BAND_SECTIONS = /class="container band-full__inner"/g;
+const BAND_SERVICE = /class="container containment__inner[ "]/g;
+const BAND_SECTIONS = /class="container band-full__inner[ "]/g;
 const FORM = /class="lead__form"/g;
 const H1 = /<h1[\s>]/g;
 const LDJSON = /type="application\/ld\+json">([\s\S]*?)<\/script>/g;
@@ -253,17 +253,20 @@ for (const { file, data } of await loadCollection("src/content/guides")) {
 
   checkCommon(page, h, { forms: 1, schemaTypes: ["BreadcrumbList", "FAQPage"] });
 
-  // The walkthrough IS the page: every element must render with its photo.
+  // The walkthrough IS the page: every element must render.
   const wantElements = data.build?.elements?.length ?? 0;
-  const gotElements = count(h, /class="container element"/g);
+  const gotElements = count(h, /class="container element[ "]/g);
   if (gotElements !== wantElements) {
     fail(page, `build declares ${wantElements} elements but ${gotElements} rendered`);
   }
 
-  const wantPhotos = wantElements + (data.hero ? 1 : 0);
+  // Unfilled slots render nothing, so only photos with a src should appear —
+  // and every one of those must, or a supplied photo has gone missing.
+  const filledElements = (data.build?.elements ?? []).filter((el) => el.photo?.src).length;
+  const wantPhotos = filledElements + (data.hero?.src ? 1 : 0);
   const gotPhotos = count(h, /data-photo=/g);
   if (gotPhotos !== wantPhotos) {
-    fail(page, `expected ${wantPhotos} photo slots (${wantElements} elements + hero), found ${gotPhotos}`);
+    fail(page, `expected ${wantPhotos} filled photo(s) (${filledElements} elements + hero), found ${gotPhotos}`);
   }
 
   // Each element must carry all three parts, or it is not making its argument.

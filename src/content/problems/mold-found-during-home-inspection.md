@@ -10,7 +10,8 @@ photos:
   hero:
     name: PHOTO_HERO
     ratio: 16/9
-    alt: ""
+    src: ../../assets/photos/negative-pressure-containment-zip-wall-kitchen-1.webp
+    alt: "Freestanding plastic containment enclosure set up beside the kitchen ovens and living room sofa"
     caption: "Containment goes up before any material is disturbed, so the rest of the house stays usable while the work runs."
 
 sections:
@@ -39,7 +40,7 @@ sections:
   - heading: If you are the agent on this deal
     paragraphs:
       - "We work to closing dates. Tell us the date and you get a straight answer about whether it is achievable before you commit your client to anything. If it is not, you will hear that while there is still time to structure around it."
-      - "You get documentation the other side can accept: a written scope before the work starts, photographs throughout, and an independent laboratory clearance report at the end. That is the package a buyer's agent asks for, and it is considerably easier to hand over than to argue about."
+      - "You get documentation the other side can accept: a written scope before the work starts, photographs throughout, an independent laboratory clearance report at the end, and our completion certificate, which carries a 2-year guarantee against mold regrowth in the treated areas, transferable with the house. That is the package a buyer's agent asks for, and it is considerably easier to hand over than to argue about."
       - "If it helps, we will speak to the agent on the other side directly. A lot of these transactions stall because two clients are relaying technical information neither was ever meant to interpret. We are happy to be the ones explaining what was found and what was done. [How we work with realtors](/for-realtors/) covers referrals and repeat transactions."
 
   - heading: Why it has to be handled rather than explained away
@@ -60,9 +61,11 @@ sections:
     band: true
     photo:
       name: PHOTO_CONTAINMENT_1
+      src: ../../assets/photos/negative-pressure-containment-basement-air-scrubber-1.webp
+      alt: "Basement room with a zip-wall containment and an air scrubber running a flexible duct across the carpet"
       ratio: 3/2
       tone: dark
-      caption: "Negative-pressure containment: poly sheeting, taped seams, and HEPA filtration ducted to an exterior opening."
+      caption: "A zip-wall enclosure in a finished basement, with an air scrubber and its flexible duct run across the floor."
     paragraphs:
       - "A negative-pressure containment goes up before any work starts. Every job, regardless of size. Two pre-filters plus HEPA, ducted to an exterior opening, pulling a vacuum so nothing airborne leaves the work area."
       - "In a house that is still being lived in during escrow, that is the difference between a contained repair and a whole-home problem. The pressure inside the containment is lower than the pressure in the rest of the house, so air moves in and never out. What gets disturbed during removal goes into the filter stack, not into the hallway or the return ducts."
@@ -77,6 +80,7 @@ sections:
       - Photographs of the containment in place, the removal in progress, and the finished work
       - An independent laboratory clearance report showing sample locations, methods, and results
       - Chain-of-custody paperwork recording who handled the samples and when
+      - Our completion certificate for the work
       - A final invoice that matches the scope it was quoted against
     outro:
       - "The laboratory is the part that carries weight with the other side. We do not collect and process our own clearance samples, and we do not interpret them in our favor. The company that gets paid to remove the mold should not also be the company certifying it is gone, and a buyer's agent understands that distinction immediately."
@@ -104,7 +108,7 @@ faqs:
   - question: Who pays for the remediation?
     answer: "That is negotiated between the parties. It commonly lands as the seller completing the work before closing, a seller credit, a price adjustment, or funds held in escrow until clearance comes back. The free inspection produces a written number, which is what makes that conversation short."
   - question: What documentation will my agent need?
-    answer: "A written scope of work, moisture readings, photographs of the containment and the removal, an independent lab clearance report with sample locations and results, and chain-of-custody paperwork for those samples. Ask and we will send you a sample package from a completed job with the identifying details removed."
+    answer: "A written scope of work, moisture readings, photographs of the containment and the removal, an independent lab clearance report with sample locations and results, chain-of-custody paperwork for those samples, and our completion certificate. Ask and we will send you a sample package from a completed job with the identifying details removed."
   - question: What if the buyer wants their own independent test?
     answer: "Good. We would rather they did. We do not process our own clearance samples and we do not interpret them in our favor, so an independent result from a lab the buyer chose is the same kind of evidence we would have handed them anyway. The company that gets paid to remove the mold should not be the company certifying it is gone."
 

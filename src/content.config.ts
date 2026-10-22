@@ -131,8 +131,8 @@ const services = defineCollection({
       /**
        * Photo slots. Every service page gets the same set, so adding
        * photography to a new service is data, not markup. A slot with no
-       * `src` renders a skeleton at its ratio — the space is reserved from
-       * the day the page ships, so nothing reflows when photos land.
+       * `src` renders nothing, so a page never shows an empty box; adding
+       * the `src` is all it takes to make the photo appear.
        */
       photos: z
         .object({

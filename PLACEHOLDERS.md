@@ -12,6 +12,38 @@ for the pattern.
 
 ---
 
+## Confirm with Cody before DNS cutover
+
+These are live on staging as written. Each needs a yes/no from Cody before
+`envirotechidaho.com` points at the site, because each one is a claim a
+customer or a buyer's agent can hold the company to.
+
+- [ ] **Independent lab clearance report: every job, or only when the buyer requires it?**
+  The pages disagree. `/mold-remediation/` says clearance testing happens
+  "where the job calls for it". `/mold-found-during-home-inspection/` reads as
+  if every job ends with an independent lab clearance report. Whichever is
+  true, make both pages say it.
+- [ ] **Moisture readings and chain-of-custody paperwork: does he provide these?**
+  Both are promised in the documentation list and the FAQ on
+  `/mold-found-during-home-inspection/`. Moisture readings are also a scope
+  item on `/mold-remediation/`.
+- [ ] **"Third-party clearance" in the trust strip.** `TRUST_STRIP` in
+  `src/data/service-defaults.ts` ("An independent lab signs off, not us")
+  renders on every service page and every city page, including asbestos,
+  radon, and demolition. If clearance is not on every job, this needs
+  rewording or removing.
+- [ ] **Radon mitigation: does he actually offer it?** `/radon-mitigation/` is
+  live and linked from the nav, and its certification is already flagged
+  unverified under Credentials below. If he does not offer it, unpublish the
+  page and remove it from `nav.json` and `link-map.json`.
+- [ ] **OK to show crew faces?** Every photo with a visible face was held back
+  (manifest privacy flags: IMG_0072, IMG_2241, IMG_2245, IMG_3467, IMG_3712,
+  `5-Mar 09…6iYo.jpg`, video IMG_3282). Several are the strongest
+  crew-in-containment shots available. Also confirm whether everyone pictured
+  has agreed.
+
+---
+
 ## Blocking
 
 | Token | Blocks | Needed from client |
@@ -114,7 +146,7 @@ credential line to the page without a real number behind it.
 | `{{IICRC_CERT}}` | Footer, `/certifications/` | IICRC certification number(s), which designations (WRT, AMRT, ASD…), and who holds them |
 | `{{LIABILITY_COVERAGE_AMOUNT}}` | Footer, `/certifications/`, `/for-realtors/` | General liability coverage limit and carrier |
 | `{{WORKERS_COMP_STATUS}}` | Footer, `/certifications/`, `/commercial/` | Workers' comp carrier and policy status |
-| `{{WARRANTY_TERMS}}` | Service pages, `/faq/` | What is actually warranted, for how long, and what voids it |
+| ~~`{{WARRANTY_TERMS}}`~~ **Filled** | `/mold-remediation/` (scope list + FAQ), `/mold-found-during-home-inspection/` | From Cody's completion letter: 2-year guarantee of no mold regrowth on treated interior areas, transferable with the house. Void if the treated areas are modified, or if a new or existing moisture source is found in or around them. **Mold remediation only.** Do not attach it to asbestos, lead, demolition, or any other service, and do not put it in shared blocks (trust strip, service defaults, footer). |
 
 ### ⚠ /certifications/ is live and three facts are missing from it
 
@@ -189,161 +221,111 @@ to be started now, in parallel with the build.
 
 ## Photography
 
-All photography is client-supplied. No stock imagery of containments — the
-containment work is the differentiator and stock photos of someone else's job
-site undercut the entire positioning.
+All photography is client-supplied. No stock imagery of containments: the
+containment work is the differentiator, and stock photos of someone else's job
+site undercut the entire positioning. No photo is reused on a page whose claim
+it cannot support (a city page gets a photo actually taken in that city).
 
-Slots are placed and reserved. Each renders a skeleton at its exact aspect
-ratio, so dropping real photography in causes no reflow. The slot name is
-carried as `data-photo` rather than a `{{TOKEN}}`, because these have to be
-able to ship to a live page while the photos are still outstanding — the build
-guard rejects `{{` in `dist/`.
+**An unfilled slot renders nothing.** No skeleton, no caption, no grey box.
+Where a slot sits in a two-column layout, the layout drops to a single text
+column instead of leaving an empty half. A before/after section renders only
+when **both** halves are filled. Filling a slot is data only: add `src:` and
+`alt:` to the slot in the page's `.md` file and the photo appears.
 
-**Shot list for Cody — /mold-remediation/ (6 photos):**
+The slot name is carried as `data-photo` rather than a `{{TOKEN}}`, because the
+build guard rejects `{{` in `dist/`.
 
-| Slot | Ratio | Where it appears | What to shoot |
-|---|---|---|---|
-| `PHOTO_HERO` | **16:9** | Hero, under the call button | The crew working, or a containment in place. This is the first image on the page — it should look like competence, not damage. Wide crop; it renders at most 560px across. |
-| `PHOTO_INTRO_1` | **3:4 portrait** | Beside "What mold remediation actually is", sticky on desktop | Shot vertically. Moisture meter against framing or drywall, or a hand-held reading. Portrait suits the tall column — do not send a cropped landscape. |
-| `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band | The signature shot: poly sheeting with taped seams, negative air machine, ducting to an exterior opening. A visible manometer reading is a bonus. |
-| `PHOTO_PROCESS_1` | **3:2** | Inside the process list, after step 04 (Removal) | Affected material bagged inside the containment, before it crosses the barrier. |
-| `PHOTO_CLEARANCE_DOC_1` | **3:2** | `/mold-found-during-home-inspection/`, documentation section | A clearance package on a table: the lab report, chain-of-custody form, moisture log, scope of work. Shot flat or at a slight angle. Redact addresses and owner names before sending. This is the proof that page is selling. |
-| `PHOTO_BEFORE_1` | **4:3** | "Before and after", left | Before. Must be the same angle and framing as the after shot. |
-| `PHOTO_AFTER_1` | **4:3** | "Before and after", right | After. Same camera position as the before shot — a mismatched pair reads as a different house. |
-
-Shoot wider than the crop. Landscape throughout except `PHOTO_INTRO_1`, which
-is portrait. Note the city for each job so alt text can be truthfully local
-(§11).
+**How photos are added.** Source files live in `src/assets/photos/`, named
+`{service}-{subject}-{city}-{n}.webp` (city only when the job's GPS confirms
+it). Each is a hand-cropped 1600px WebP with an 800px variant beside it, with
+**all EXIF/GPS metadata stripped**: the originals carry customer locations.
+Astro generates AVIF/WebP/JPEG at 400/800/1200/1600 from the 1600px source.
+Source of truth for what each photo shows, where it was taken, and its privacy
+flag: `~/Desktop/Photos/Enviro-Tech/Job Photos/manifest.csv`.
 
 **Weight cap: 200KB per image after optimization**, enforced by
-`npm run check:images` — the build fails on anything larger. Send full-size
-originals; Astro generates AVIF and WebP at 400/800/1200/1600 and the page
-serves the smallest candidate that fits the slot. Nothing needs pre-resizing,
-but anything dropped straight into `public/` bypasses that and must already be
-under the cap.
+`npm run check:images`; the build fails on anything larger. A busy photo can
+exceed it at the 1600px JPEG fallback; re-export the source slightly softer.
 
-**Shot list — /asbestos-abatement/ (3 new, 2 reused):**
+### Filled
 
-| Slot | Ratio | Where it appears | What to shoot |
+| Slot | Page | File | Photo |
 |---|---|---|---|
-| `PHOTO_ASBESTOS_1` | **3:2** | Process list, after step 03 (Removal) | Double-bagged, labelled asbestos waste inside the containment, before it crosses the barrier. The printed warning label should be readable. |
-| `PHOTO_ASBESTOS_BEFORE_1` | **4:3** | "Before and after", left | A popcorn ceiling before removal. Same camera position as the after shot. |
-| `PHOTO_ASBESTOS_AFTER_1` | **4:3** | "Before and after", right | The same ceiling finished. A mismatched pair reads as a different house. |
+| `PHOTO_CONTAINMENT_HERO` | `/our-containment-process/` | `negative-pressure-containment-sealed-room-1` | IMG_6785, sealed room, poly floor, scrubber |
+| `PHOTO_CONTAINMENT_1` | `/our-containment-process/` | `negative-pressure-containment-poly-barrier-1` | IMG_8901, floor-to-ceiling poly in a kitchen |
+| `PHOTO_CONTAINMENT_2` | `/our-containment-process/` | `negative-pressure-containment-taped-seams-1` | IMG_0824, red-taped ceiling seam |
+| `PHOTO_CONTAINMENT_4` | `/our-containment-process/` | `negative-pressure-containment-exhaust-duct-window-1` | IMG_3710, duct through a sealed window |
+| `PHOTO_CONTAINMENT_6` | `/our-containment-process/` | `asbestos-abatement-decon-chamber-1` | IMG_0093, decon chamber with asbestos sign |
+| `PHOTO_CONTAINMENT_7` | `/our-containment-process/` | `negative-pressure-containment-hvac-return-sealed-1` | IMG_1328, taped return grille |
+| `PHOTO_CONTAINMENT_5` | `/our-containment-process/` | `negative-pressure-containment-poly-drawn-inward-1` | IMG_8176, doorway poly drawn inward toward the work area |
+| `PHOTO_HERO` | `/mold-found-during-home-inspection/` only | `negative-pressure-containment-zip-wall-kitchen-1` | IMG_3469, enclosure beside kitchen ovens |
+| `PHOTO_CONTAINMENT_1` | `/mold-found-during-home-inspection/` only | `negative-pressure-containment-basement-air-scrubber-1` | IMG_3711, basement zip-wall and scrubber |
+| `PHOTO_CITY_BOISE` | `/mold-remediation-boise/` | `negative-pressure-containment-zip-wall-boise-1` | `6-Mar 09…uLw6.jpg`, GPS Boise |
+| `PHOTO_CITY_CALDWELL` | `/mold-remediation-caldwell/` | `water-damage-restoration-subfloor-drying-caldwell-1` | IMG_9633, GPS Caldwell |
 
-Reuses `PHOTO_HERO` and `PHOTO_CONTAINMENT_1`. The containment shot appears on
-this page captioned for asbestos — a decon chamber visible in frame would let
-one photo carry both pages honestly.
+Slot names are per page, not per photo: `PHOTO_HERO` and `PHOTO_CONTAINMENT_1`
+appear on many pages and are filled independently in each page's entry. Every
+page not listed above still has them empty, including every service page
+(which take `PHOTO_CONTAINMENT_1` from `src/data/service-defaults.ts`).
 
-**Shot list — the five service pages added after abatement (4 new):**
-
-| Slot | Ratio | Where it appears | What to shoot |
-|---|---|---|---|
-| `PHOTO_LAB_SAMPLE_1` | **3:2** | `/mold-inspection-testing/`, `/asbestos-testing/` | Bagged, labelled samples beside a chain-of-custody form. One photo serves both testing pages. |
-| `PHOTO_CRAWLSPACE_1` | **3:2** | `/crawlspace-drainage/` | Standing water in a crawlspace with the vapor barrier floated clear of the soil. The condition, not the repair — this is the photo that makes a homeowner recognise their own house. |
-| `PHOTO_ENCAPSULATION_1` | **3:2** | `/crawlspace-encapsulation/` | Finished liner run up the piers and stem wall with seams sealed. The vertical surfaces are the part that distinguishes encapsulation from loose sheeting, so get them in frame. |
-| `PHOTO_RECONSTRUCTION_1` | **3:2** | `/reconstruction/` | Rebuild in progress — drywall going back into a space that was opened for remediation. |
-
-`/reconstruction/` also uses `PHOTO_BEFORE_AFTER_1` and `PHOTO_BEFORE_AFTER_2`
-as its before/after pair. All five pages reuse `PHOTO_HERO` and
-`PHOTO_CONTAINMENT_1`.
-
-**Shot list — /water-damage-restoration/ (1 new):**
-
-| Slot | Ratio | Where it appears | What to shoot |
-|---|---|---|---|
-| `PHOTO_WATER_DRYING_1` | **3:2** | Process list, after step 05 (Structural drying) | Air movers set against the affected surfaces with a dehumidifier in frame. The equipment in a room mid-dry, not a stack of it on a truck — this is the photo that shows why the last two days of the job exist. |
-
-Reuses `PHOTO_HERO`, `PHOTO_INTRO_1`, and `PHOTO_CONTAINMENT_1`. No
-before/after pair on this page: a dried wall photographs identically to a wet
-one, so a pair would be making a claim the image cannot support. If a water
-before/after is wanted later, shoot the removal — open wall cavity versus
-finished rebuild — rather than the drying.
-
-**Shot list — /our-containment-process/ (8 slots, the biggest single ask).**
-
-This is the signature page (§10) and it is mostly photographs. All eight can
-come from **one well-documented job**: an hour on a single site, shooting each
-element as it goes up. That one hour produces the most linkable asset on the
-site.
+### Still empty: /our-containment-process/
 
 | Slot | Ratio | What to shoot |
 |---|---|---|
-| `PHOTO_CONTAINMENT_HERO` | **16:9** | A finished containment, wide. Enclosure, machine running, duct visible if possible. Establishing shot. |
-| `PHOTO_CONTAINMENT_1` | **3:2** | The barrier: sheeting floor to ceiling, sealed to the surrounding surfaces. |
-| `PHOTO_CONTAINMENT_2` | **3:2** | Taped seams, close in. The tape has to be legible — this shot is the difference between an enclosure and a stack of sheets. |
-| `PHOTO_CONTAINMENT_3` | **3:2** | The filter stack: two pre-filters ahead of the HEPA. Open machine if that shows the staging. |
-| `PHOTO_CONTAINMENT_4` | **3:2** | Exhaust duct leaving the building through a window or vent, sealed where it passes through. |
-| `PHOTO_CONTAINMENT_5` | **3:2** | **The manometer, with a readable number.** The single most valuable image on the site — it is the only thing that *proves* the pressure differential rather than asserting it. Get the display in focus. |
-| `PHOTO_CONTAINMENT_6` | **3:2** | The decontamination chamber at the entry. |
-| `PHOTO_CONTAINMENT_7` | **3:2** | A sealed HVAC return or supply register inside the work area. |
+| `PHOTO_CONTAINMENT_3` | **3:2** | The filter stack: two pre-filters ahead of the HEPA. Open machine so the staging is visible. The caption makes that claim, so a closed machine does not fill it. |
 
-Every one of these appears on the page with copy explaining what it is, why it
-is there, and what goes wrong without it — so the photographs are load-bearing
-rather than decorative. Until they land the page ships with skeletons at the
-correct ratios and nothing reflows when they arrive.
-
-**Shot list — the five city pages (5 slots, lower priority).**
-
-| Slot | Ratio | Page |
-|---|---|---|
-| `PHOTO_CITY_BOISE` | **16:9** | `/mold-remediation-boise/` |
-| `PHOTO_CITY_MERIDIAN` | **16:9** | `/mold-remediation-meridian/` |
-| `PHOTO_CITY_NAMPA` | **16:9** | `/mold-remediation-nampa/` |
-| `PHOTO_CITY_CALDWELL` | **16:9** | `/mold-remediation-caldwell/` |
-| `PHOTO_CITY_EAGLE` | **16:9** | `/mold-remediation-eagle/` |
-
-One job photo per city, **actually taken in that city**. That is the only
-requirement, and it is the whole point: §11 allows alt text naming the city
-only where it is truthful, so a shared photo cannot carry a local claim. A
-containment in a Nampa crawlspace on the Nampa page is worth more than a
-better photograph from somewhere else.
-
-Lower priority than the containment set. The pages ship with skeletons at the
-right ratio and nothing reflows when the photos arrive.
-
-One further slot from the problem pages:
-
-| Slot | Ratio | Page | What to shoot |
-|---|---|---|---|
-| `PHOTO_VERMICULITE_1` | **16:9** | `/vermiculite-insulation/` | Loose-fill vermiculite in an attic — the granules close enough to be identifiable. This photo does the work the copy cannot: people arrive at that page trying to identify what they are looking at. |
-
-**Shot list — the two new service pages (3 new slots):**
-
-| Slot | Ratio | Page | What to shoot |
-|---|---|---|---|
-| `PHOTO_RADON_1` | **16:9** | `/radon-mitigation/` hero | A finished sub-slab system: riser, inline fan, and the discharge above the roofline. Get the manometer in frame if you can — same logic as the containment gauge, it is the part a homeowner can actually read. |
-| `PHOTO_RADON_2` | **3:2** | `/radon-mitigation/` process | The suction point cut and sealed into the slab, before the riser goes in. This is the step that decides whether a system performs, and nobody ever sees it. |
-| `PHOTO_DEMO_1` | **16:9** | `/demolition/` hero | An interior strip-out mid-job with protection in place on what is staying. The contrast between the stripped area and the protected area is the whole argument for selective demolition. |
-
-`/demolition/` reuses `PHOTO_ASBESTOS_1` for its process slot.
-
-**Shot list — /lead-paint-removal/ (2 new slots):**
+### Still empty: /mold-remediation/ and the service pages
 
 | Slot | Ratio | Where it appears | What to shoot |
 |---|---|---|---|
-| `PHOTO_LEAD_1` | **16:9** | Hero | Interior prep on an older home with protection down and the work area sealed. Pre-1978 housing stock — a North End or Bench interior reads correctly here in a way a new build does not. |
-| `PHOTO_LEAD_2` | **3:2** | Process list, after step 04 (Lead-safe work practices) | A painted component — a window sash or a section of trim — removed whole and wrapped inside the containment. The point of the photo is that it was taken out rather than sanded in place, so get the wrapping in frame. |
+| `PHOTO_HERO` | **16:9** | Hero, under the call button (every service page) | The crew working, or a containment in place. Wide crop; renders at most 560px across. |
+| `PHOTO_INTRO_1` | **3:4 portrait** | Beside the intro, sticky on desktop | Shot vertically. Moisture meter against framing or drywall. |
+| `PHOTO_CONTAINMENT_1` | **3:2** | Containment callout, on the dark band (every service page) | Poly sheeting with taped seams, negative air machine, ducting to an exterior opening. |
+| `PHOTO_PROCESS_1` | **3:2** | `/mold-remediation/`, after step 04 | Affected material bagged inside the containment, before it crosses the barrier. |
+| `PHOTO_BEFORE_1` / `PHOTO_AFTER_1` | **4:3** | `/mold-remediation/` before/after | Same angle and framing both times. Section is hidden until both exist. |
+| `PHOTO_ASBESTOS_1` | **3:2** | `/asbestos-abatement/`, `/demolition/` | Double-bagged, labelled asbestos waste inside the containment, label readable. |
+| `PHOTO_ASBESTOS_BEFORE_1` / `_AFTER_1` | **4:3** | `/asbestos-abatement/`, `/popcorn-ceiling-asbestos/` | A popcorn ceiling before and after, same camera position. Candidate pair on file (IMG_6414 → IMG_6444, school slab) was not approved. |
+| `PHOTO_LAB_SAMPLE_1` | **3:2** | `/mold-inspection-testing/`, `/asbestos-testing/`, two problem/audience pages | Bagged, labelled samples beside a chain-of-custody form. |
+| `PHOTO_CRAWLSPACE_1` | **3:2** | `/crawlspace-drainage/`, `/black-mold-in-crawl-space/` | Standing water in a crawlspace, barrier floated clear of the soil. |
+| `PHOTO_ENCAPSULATION_1` | **3:2** | `/crawlspace-encapsulation/` | Finished liner up the piers and stem wall, seams sealed. |
+| `PHOTO_RECONSTRUCTION_1` | **3:2** | `/reconstruction/` | Drywall going back into a space opened for remediation. |
+| `PHOTO_BEFORE_AFTER_1` / `_2` | **4:3** | `/reconstruction/` | Matched pair. |
+| `PHOTO_WATER_DRYING_1` | **3:2** | `/water-damage-restoration/`, after step 05 | Air movers against affected surfaces with a dehumidifier in frame. |
+| `PHOTO_RADON_1` | **16:9** | `/radon-mitigation/` hero | Finished sub-slab system: riser, inline fan, discharge above the roofline, manometer in frame. |
+| `PHOTO_RADON_2` | **3:2** | `/radon-mitigation/` process | The suction point cut and sealed into the slab. |
+| `PHOTO_DEMO_1` | **16:9** | `/demolition/`, `/remodeling/` | Interior strip-out with protection on what is staying. |
+| `PHOTO_LEAD_1` | **16:9** | `/lead-paint-removal/` hero | Interior prep on a pre-1978 home, work area sealed. |
+| `PHOTO_LEAD_2` | **3:2** | `/lead-paint-removal/` process | A painted component removed whole and wrapped inside the containment. |
+| `PHOTO_REMODEL_1` | **16:9** | `/remodeling/` hero | A finished remodel in an older Treasure Valley home. |
+| `PHOTO_REMODEL_BEFORE_1` / `_AFTER_1` | **4:3** | `/remodeling/` | Matched pair. |
 
-Reuses `PHOTO_CONTAINMENT_1` on the containment band.
+### Still empty: problem and audience pages
 
-**Shot list — /remodeling/ (3 new slots):**
+| Slot | Ratio | Page(s) | What to shoot |
+|---|---|---|---|
+| `PHOTO_CLEARANCE_DOC_1` | **3:2** | `/mold-found-during-home-inspection/`, `/for-realtors/`, `/for-property-managers/`, `/does-homeowners-insurance-cover-mold/` | A clearance package on a table: scope, moisture log, chain-of-custody form, the independent lab's clearance report, and our completion certificate. Redact addresses and owner names. |
+| `PHOTO_VERMICULITE_1` | **16:9** | `/vermiculite-insulation/` | Loose-fill vermiculite in an attic, granules identifiable. Candidate on file (`2-Apr 10…mrA3.jpg`, Twin Falls) needs Cody to confirm it is vermiculite. |
+| `PHOTO_CONTAINMENT_HERO` | **16:9** | `/commercial/` | A commercial containment, wide. |
 
-| Slot | Ratio | What to shoot |
+### Still empty: city pages (slot hidden until filled)
+
+| Slot | Page | Status |
 |---|---|---|
-| `PHOTO_REMODEL_1` | **16:9** | A finished remodel in an older Treasure Valley home. Hero shot — this one sells the work rather than explaining it, which is unusual for this site. |
-| `PHOTO_REMODEL_BEFORE_1` | **4:3** | Before. Same camera position as the after. |
-| `PHOTO_REMODEL_AFTER_1` | **4:3** | After. A mismatched pair reads as a different house. |
+| `PHOTO_CITY_MERIDIAN` | `/mold-remediation-meridian/` | No GPS-confirmed Meridian photo exists. |
+| `PHOTO_CITY_NAMPA` | `/mold-remediation-nampa/` | No GPS-confirmed Nampa photo exists. |
+| `PHOTO_CITY_EAGLE` | `/mold-remediation-eagle/` | None. Four photos (job-34) geocode to unincorporated Boise County near Avimor, not Eagle; they cannot carry an Eagle claim. |
 
-`/remodeling/` also reuses `PHOTO_CONTAINMENT_1` and `PHOTO_DEMO_1`.
+One job photo per city, **actually taken in that city**, confirmed by GPS or by
+Cody. Only 40 of the 201 photos supplied so far carry GPS. Turning on location
+for the camera on the next Meridian, Nampa, and Eagle jobs is the fastest fix.
 
-Still needed beyond this page:
+### Still needed beyond the slots
 
-- Three further containment shots for `/our-containment-process/`, the
-  signature page (§10): a decontamination chamber, a pressure/manometer
-  reading, and the filter stack.
-- Matched before/after pairs for the remaining service and city pages.
-- A real photo of **Cody Mortensen** for `/about/` (§7 — the owner-operator is
-  the wedge against franchise competitors).
+- A real photo of **Cody Mortensen** for `/about/` (§7). The page is not built
+  yet. One low-confidence candidate (IMG_2068, attic selfie in a respirator)
+  needs Cody to confirm it is him.
+- Photos with privacy flags were held back (faces, a teacher's name sign).
+  They need approval or a crop before they can be used.
 
 ## Scope
 
@@ -387,7 +369,7 @@ Still needed beyond this page:
   the reader they can see a sample before booking, and the FAQ repeats the
   offer. Right now that is answered by phone or the form. Ask Cody for a
   redacted clearance package from a completed job — scope of work, moisture
-  log, photographs, independent lab clearance report, chain of custody —
+  log, photographs, independent lab clearance report, chain of custody, our completion certificate —
   with address and owner details removed.
 
   Once it exists, host it and add a `cta` to that section's entry:

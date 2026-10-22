@@ -132,7 +132,7 @@ const graph = buildGraph({
       // `return` gets an implicit semicolon and the JSX below becomes dead.
       return section.band ? (
         <section class="band-full">
-          <div class="container band-full__inner">
+          <div class:list={["container band-full__inner", !section.photo?.src && "band-full__inner--text"]}>
             <div class="band-full__copy">
               <h2>{section.heading}</h2>
               {section.paragraphs.map((p) => <p set:html={renderProse(p)} />)}
@@ -347,6 +347,9 @@ const graph = buildGraph({
   @media (min-width: 900px) {
     .band-full__inner {
       grid-template-columns: 1.1fr 1fr;
+    }
+    .band-full__inner--text {
+      grid-template-columns: minmax(0, 46rem);
     }
   }
   .band-full h2 {

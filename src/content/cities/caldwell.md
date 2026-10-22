@@ -9,8 +9,10 @@ metaDescription: "Mold removal in Caldwell, where farmhouse-era homes expanded i
 subhead: "A lot of Caldwell housing was not built once. It was built, then added to, then added to again — and the seams between those phases are where the moisture problems live."
 photo:
   name: PHOTO_CITY_CALDWELL
+  src: ../../assets/photos/water-damage-restoration-subfloor-drying-caldwell-1.webp
+  alt: "Air movers drying a stripped subfloor after flooring removal on a Caldwell job"
   ratio: 16/9
-  caption: "Under a Caldwell addition, where a later crawlspace meets an older one at a different level."
+  caption: "Subfloor drying on a Caldwell job after the flooring came out."
 
 housingStock:
   heading: Houses that were built in instalments

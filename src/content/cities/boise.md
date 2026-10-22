@@ -9,6 +9,8 @@ metaDescription: "Mold removal in Boise's North End, Bench, and East End. Older 
 subhead: "In Boise's older neighbourhoods the mold is frequently not the only thing in the wall. That changes what has to happen first, and it is the reason a Boise job often looks different from the same job in Meridian."
 photo:
   name: PHOTO_CITY_BOISE
+  src: ../../assets/photos/negative-pressure-containment-zip-wall-boise-1.webp
+  alt: "Zip-pole plastic enclosure built in a kitchen on a Boise job"
   ratio: 16/9
   caption: "Containment on a Boise job. Older stock often means two hazards in one cavity."
 

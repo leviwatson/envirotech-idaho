@@ -57,7 +57,7 @@ const graph = buildGraph({
   </section>
 
   {
-    d.hero && (
+    d.hero?.src && (
       <div class="container g-hero__figure">
         <PhotoSlot
           name={d.hero.name}
@@ -92,7 +92,12 @@ const graph = buildGraph({
   <div class="elements">
     {
       d.build.elements.map((el, i) => (
-        <section class="container element" data-reveal data-flip={i % 2 === 1 ? "" : undefined}>
+        <section
+          class:list={["container element", !el.photo.src && "element--text"]}
+          data-reveal
+          data-flip={i % 2 === 1 ? "" : undefined}
+        >
+          {el.photo.src && (
           <div class="element__figure">
             <PhotoSlot
               name={el.photo.name}
@@ -104,6 +109,7 @@ const graph = buildGraph({
               sizes="(min-width: 900px) 46vw, 100vw"
             />
           </div>
+          )}
           <div class="element__copy">
             <h3 class="element__name">{el.name}</h3>
             <p class="element__what" set:html={renderProse(el.what)} />
@@ -263,6 +269,11 @@ const graph = buildGraph({
        only motif (§13). */
     .element[data-flip] .element__figure {
       order: 2;
+    }
+    /* No photo yet: the copy takes one readable column rather than sitting
+       beside an empty half. */
+    .element--text {
+      grid-template-columns: minmax(0, 46rem);
     }
   }
 
