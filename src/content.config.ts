@@ -344,12 +344,19 @@ const guides = defineCollection({
  */
 const home = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/home" }),
-  schema: () =>
+  schema: ({ image }) =>
     z.object({
       title: z.string().max(60),
       h1: z.string(),
       metaDescription: z.string().min(140).max(158),
       subhead: z.string(),
+
+      /**
+       * Sits under the call button on desktop, filling the height the form
+       * column has over the copy; below the form on phones, so it never
+       * pushes the form down. Renders nothing without src.
+       */
+      heroPhoto: slot(image).optional(),
 
       /** One line to the emergency page, for someone who lands here at 2am. */
       emergency: z.object({ text: z.string(), href: z.string() }),

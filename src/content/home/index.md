@@ -4,6 +4,12 @@ h1: Mold, Asbestos, and Water Damage Restoration in the Treasure Valley
 metaDescription: "Containment-first mold remediation, asbestos abatement, and water damage restoration across Boise, Meridian, and Nampa. Free inspection, we answer 24/7."
 subhead: "A sealed, negative-pressure containment goes up before any material is disturbed — on every job, whatever its size."
 
+heroPhoto:
+  name: PHOTO_HOME_HERO
+  src: ../../assets/photos/containment-air-scrubber-doorway-1.webp
+  alt: "Air scrubber on a poly-covered floor, its duct running through a plastic-lined doorway into the work area"
+  ratio: 16/9
+
 emergency:
   text: Water coming in right now? Start here.
   href: /emergency-water-damage/

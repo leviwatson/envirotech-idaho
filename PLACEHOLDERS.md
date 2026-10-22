@@ -303,6 +303,7 @@ exceed it at the 1600px JPEG fallback; re-export the source slightly softer.
 | `/commercial/` | hero, band | IMG_6255, IMG_6256 |
 | `/for-builders/`, `/for-property-managers/`, `/for-realtors/` | band | IMG_9434\*, IMG_8820, IMG_5676 |
 | `/mold-inspection-testing/` | process (`PHOTO_LAB_SAMPLE_1`) | 01a163e7-433e-70bc-bfeb-9417de80dc6a.JPG (Nampa, GPS-confirmed; third-party tester's air sample, sent by text 2026-10-22). Background softened, pump kept sharp. |
+| `/` homepage | hero, under the call button (`PHOTO_HOME_HERO`) | IMG_8173. Below the form on phones. |
 
 \* Blurred before export: room number (9441), desk paperwork (5901), whiteboard
 writing (9427), chalkboard teacher name (9434). Asbestos waste bags were

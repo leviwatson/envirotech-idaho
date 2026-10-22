@@ -18,6 +18,7 @@ import { buildGraph } from "../lib/schema";
 import SeamDivider from "../components/SeamDivider.astro";
 import LeadForm from "../components/LeadForm.astro";
 import TestimonialBand from "../components/TestimonialBand.astro";
+import PhotoSlot from "../components/PhotoSlot.astro";
 import { renderProse } from "../lib/prose";
 import { isBuilt, labelFor } from "../lib/links";
 import { TRUST_STRIP } from "../data/service-defaults";
@@ -64,6 +65,24 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
     <div class="hero__form">
       <LeadForm id="inspection" heading="Get a free inspection" fields="short" />
     </div>
+
+    {/* After the form in source order, so phones reach the form first. On
+        desktop the grid lifts it into the copy column, under the call button,
+        where the taller form column otherwise left open space. */}
+    {
+      d.heroPhoto?.src && (
+        <div class="hero__photo">
+          <PhotoSlot
+            name={d.heroPhoto.name}
+            src={d.heroPhoto.src}
+            alt={d.heroPhoto.alt}
+            ratio={d.heroPhoto.ratio}
+            loading="eager"
+            sizes="(min-width: 900px) 55vw, 100vw"
+          />
+        </div>
+      )
+    }
 
     {/* Full-bleed across both hero columns, as its own row. It was briefly
         inside the form column, where 21rem could not hold three items and the
@@ -235,7 +254,18 @@ const graph = buildGraph({ url: `${origin}/`, faqs: d.faqs });
       grid-template-columns: minmax(0, 55fr) minmax(21rem, 45fr);
       gap: 0 var(--space-7);
     }
-    /* Row two, spanning both columns. */
+    /* The form spans the copy row and the photo row, so the photo takes
+       the space under the call button instead of opening a new row. */
+    .hero__form {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .hero__photo {
+      grid-column: 1;
+      grid-row: 2;
+      margin-block-start: var(--space-6);
+    }
+    /* Last row, spanning both columns. */
     .hero .trust {
       grid-column: 1 / -1;
     }
